@@ -1,0 +1,51 @@
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Profile Page</title>
+		<link href="../createpost.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="error.css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+        <script src="//unpkg.com/alpinejs" defer></script>
+        <script>
+            function next() {document.location.href = "../profile.php";}setTimeout(() => next(),  2000);
+        </script>
+    </head>
+	<body class="loggedin">
+		<nav class="nav">
+			
+				<h3>Simon Sites</h3>
+                <div class="nav-content">
+                    <a href="home.php">Home</a>
+                    <a href="profile.php">Profile</a>
+				    <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                </div>
+    
+			
+		</nav>
+		<div class="content">
+			<h2>Create a Post</h2>
+            <form class="container" action="sendpost.php" method="POST">
+				<div class="form-content">
+					<label for="title">Title:</label>
+					<input name="title" id="title" type="text" maxlength="75">
+				</div>
+				<div class="form-content">
+					<label for="body">Body:</label>
+					<textarea name="body" id="body" type="text" maxlength="3000"></textarea>
+				</div>
+                <input type="submit" value="Submit">
+            </form>
+			
+		</div>
+        <div class="error-cont">
+            <div class="error">
+                <h2>Success</h2>
+                <p>Your Post was Successful</p>
+                <p>Redirecting to the Profile Page</p>
+            </div>
+        </div>
+	</body>
+</html>

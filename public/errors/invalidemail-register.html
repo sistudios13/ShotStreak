@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Register</title>
+		<link rel="stylesheet" href="../style.css">
+        <link rel="stylesheet" href="error.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+        <script>
+            function next() {document.location.href = "../register.html";}setTimeout(() => next(),  2000);
+        </script>
+    </head>
+	<body>
+        <nav class="nav">
+            <h3>Simon Sites</h3>
+            <a href="index.html">Login</a>
+        </nav>
+		<div class="login">
+			<h1>Register</h1>
+            <form action="register.php" method="post" autocomplete="off">
+                <div class="form-content">
+                    <label for="username"><i class="fas fa-user"></i></label>
+                    <input type="text" name="username" placeholder="Username" id="username" required maxlength="20">
+                </div>
+                <div class="form-content">
+                    <label for="password"><i class="fas fa-lock"></i></label>
+				    <input type="password" name="password" placeholder="Password" id="password" required minlength="5" maxlength="20">
+                </div>
+                <div class="form-content">
+                    <label for="email"><i class="fas fa-envelope"></i></label>
+                    <input type="email" name="email" placeholder="Email" id="email" required>
+                </div>
+				<input type="submit" value="Register">
+			</form>
+		</div>
+        <div class="error-cont">
+            <div class="error">
+                <h2>Error</h2>
+                <p>Email is Invalid!</p>
+            </div>
+        </div>
+	</body>
+</html>
