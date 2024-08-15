@@ -49,21 +49,34 @@ $today_shots_taken = $result_today_shots_taken->fetch_assoc()['total_shots_made'
 $shots_remaining = $today_goal - $today_shots_taken;
 
 // Fetch data for the progress chart (last 7 days)
-$sql_chart = "SELECT shots_taken, 
-              (SELECT SUM(user_shots.shots_made) FROM user_shots 
-               WHERE user_shots.user_id = ? AND user_shots.shot_date = ?) AS shots_made 
-              FROM user_shots 
-              WHERE user_shots.user_id = ? 
-              ORDER BY user_shots.shot_date DESC LIMIT 7";
-$stmt = $conn->prepare($sql_chart);
-$stmt->bind_param("isi", $user_id, $date_today, $user_id);
-$stmt->execute();
-$result_chart = $stmt->get_result();
+$query = "SELECT shot_date, shots_made, shots_taken FROM user_shots 
+          WHERE user_id = ? 
+          ORDER BY shot_date DESC 
+          LIMIT 7";
 
-$chart_data = [];
-while ($row = $result_chart->fetch_assoc()) {
-    $chart_data[] = $row;
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$data = [];
+while ($row = $result->fetch_assoc()) {
+    $date = $row['shot_date'];
+    $shots_made = $row['shots_made'];
+    $shots_taken = $row['shots_taken'];
+    
+    // Calculate shooting percentage
+    $shooting_percentage = ($shots_taken > 0) ? ($shots_made / $shots_taken) * 100 : 0;
+    
+    // Store the data for the chart
+    $data[] = [
+        'date' => $date,
+        'percentage' => round($shooting_percentage, 2) // Round to 2 decimal places
+    ];
 }
+
+// Return JSON data for the frontend
+echo json_encode($data);
 
 // Fetch quick stats
 $sql_stats = "SELECT SUM(user_shots.shots_made) AS total_shots, 
@@ -172,31 +185,50 @@ $stats_data = $result_stats->fetch_assoc();
 
     <!-- Chart.js Script -->
     <script>
-        const ctx = document.getElementById('progressChart').getContext('2d');
-        const progressChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: <?php echo json_encode(array_reverse(array_column($chart_data, 'goal_date'))); ?>,
-                datasets: [{
-                    label: 'Shooting Accuracy (%)',
-                    data: <?php echo json_encode(array_reverse(array_map(function($row) {
-                        return ($row['shots_made'] / $row['shots_taken']) * 100;
-                    }, $chart_data))); ?>,
-                    borderColor: '#FF6F61',
-                    backgroundColor: 'rgba(255, 90, 95, 0.2)',
-                    borderWidth: 2,
-                    fill: true,
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+    const ctx = document.getElementById('progressChart').getContext('2d');
+
+    // Fetch the data from PHP
+    fetch('home.php')
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.map(entry => entry.date);
+            const percentages = data.map(entry => entry.percentage);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Shooting Percentage',
+                        data: percentages,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1,
+                        fill: false,
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Shooting Percentage (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        }
                     }
                 }
-            }
+            });
         });
-    </script>
+</script>
 
 </body>
 </html>
