@@ -1,4 +1,4 @@
-<?php
+<div?php
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...
@@ -22,8 +22,8 @@ if (!isset($_SESSION['loggedin'])) {
     <script src="../tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
     <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon"></head>
-    <body class="bg-light-gray">
-    <!-- Navbar -->
+    <body class="bg-lightgray">
+      <!-- Navbar -->
     <nav class="bg-white shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
             <a href="#" class="text-2xl font-bold text-coral">ShotStreak</a>
@@ -39,15 +39,19 @@ if (!isset($_SESSION['loggedin'])) {
                 <!-- Logo -->
                 <div class="text-center mb-6">
                     <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
-                    <h1 class="text-2xl font-bold text-almostblack mt-4">Daily Shot Goal</h1>
+                    <h1 class="text-2xl font-bold text-almostblack mt-4">Today's Shots</h1>
                 </div>
     
                 <!-- Registration Form -->
-                <form action="set_goal.php" method="POST" class="flex flex-col justify-center gap-4">
-                    
-                    <label for="shotgoal" class="block text-lg text-gray-700">Enter your shot goal:</label>
-                    <input type="number" name="shotgoal" id="shotgoal" placeholder="100" class="mt-1 p-2 w-10/12 mx-auto border rounded-md focus-visible:outline-coral" required min="1" max="999">
-    
+                <form action="input_daily.php" method="POST" class="flex flex-col justify-center gap-4">
+                    <div>
+                    <label for="shotstaken" class="block text-lg text-gray-700">How many shots did you take?</label>
+                    <input type="number" name="shotstaken" id="shotstaken" placeholder="100" class="mt-1 p-2 w-10/12 mx-auto border rounded-md focus-visible:outline-coral" required min="1" max="999">
+                    </div>
+                    <div>
+                    <label for="shotsmade" class="block text-lg text-gray-700">How many shots did you make?</label>
+                    <input type="number" name="shotsmade" id="shotsmade" placeholder="61" class="mt-1 p-2 w-10/12 mx-auto border rounded-md focus-visible:outline-coral" required min="1" max="999">
+                    </div>
     
     
                     <!-- Submit Button -->

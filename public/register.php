@@ -50,15 +50,30 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?'
             // We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
             $stmt->bind_param('sss', $_POST['username'], $password, $_POST['email']);
-            $stmt->execute();
-            header('Location: errors/success-register.html');
-        } else {
+            $stmt->execute();	
+        }
+		else {
             // Something is wrong with the SQL statement, so you must check to make sure your accounts table exists with all three fields.
             echo 'Could not prepare statement!';
         }
-            }
-	$stmt->close();
-} else {
+		
+		$stmt_id = $con->prepare('SELECT id FROM accounts WHERE username = ?');
+		$stmt_id->bind_param('s', $_POST['username']);
+		$stmt_id->execute();
+		$get_id = $stmt_id->get_result();
+		$userid = $get_id->fetch_assoc()['id'] ?? 0;
+
+		$stmt_goal = $con->prepare('INSERT INTO user_goals (user_id, goal_date, shots_goal) VALUES (?, CURDATE(), 100)');
+		$stmt_goal->bind_param('i', $userid);
+		$stmt_goal->execute();
+				
+		}
+		
+
+	}
+	
+	
+else {
 	// Something is wrong with the SQL statement, so you must check to make sure your accounts table exists with all 3 fields.
 	echo 'Could not prepare statement!';
 }

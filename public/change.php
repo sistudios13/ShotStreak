@@ -9,16 +9,16 @@ if (!isset($_SESSION['loggedin'])) {
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '';
-$DATABASE_NAME = 'phplogin';
+$DATABASE_NAME = 'shotstreak';
 $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
 if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
 // Now we check if the data was submitted, isset() function will check if the data exists.
-//if (!isset($_POST['newpassword'])) {
+if (!isset($_POST['newpassword'])) {
 	// Could not get the data that should have been sent.
-//	exit('Please complete the registration form!');
-//}
+	exit('Please complete the registration form!');
+}
 // Make sure the submitted registration values are not empty.
 if (empty($_POST['newpassword'])) {
 	// One or more values are empty.

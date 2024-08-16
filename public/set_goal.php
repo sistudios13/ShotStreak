@@ -24,6 +24,7 @@ function setDailyGoal($conn, $user_id, $shots_goal) {
     $stmt->bind_param("iii", $user_id, $shots_goal, $shots_goal);
     $stmt->execute();
     $stmt->close();
+    header("Location: home.php");
 }
 
 setDailyGoal($conn, $_SESSION['id'], $_POST['shotgoal']);

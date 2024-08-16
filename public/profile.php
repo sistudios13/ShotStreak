@@ -24,56 +24,90 @@ $stmt->fetch();
 $stmt->close();
 ?>
 
+
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Profile Page</title>
-		<link href="profile.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
-        <script src="//unpkg.com/alpinejs" defer></script>
-    </head>
-	<body class="loggedin">
-		<nav class="nav">
-			
-				<h3>Simon Sites</h3>
-                <div class="nav-content">
-                    <a href="home.php"><i class="fa fa-home" aria-hidden="true" id="i"></i> Home</a>
-				    <a href="logout.php"><i class="fas fa-sign-out-alt" id="i"></i> Logout</a>
-                </div>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ShotStreak</title>
     
-			
-		</nav>
-		<div class="content">
-			<h2>Profile</h2>
-			<div class="account-content">
-                <div class="account-cont">
-                    <h3>Account Details</h3>
-                    <table class="info-table">
-                        <tr>
-                            <td>Username:</td>
-                            <td><?=htmlspecialchars($_SESSION['name'], ENT_QUOTES)?></td>
-                        </tr>
-                        <tr>
-                            <td>Email:</td>
-                            <td><?=htmlspecialchars($email, ENT_QUOTES)?></td>
-                        </tr>
-                    </table>
-                </div>
-				<div x-data="{change: false}">
-                    <h3>
-                        Edit Account
-                    </h3>
-                    <div class="change" @click.away="change = false">
-                        <a @click="change = !change" >Change Password</a>
-                        <form action="change.php" method="POST" x-show="change" x-cloak x-transition>
-                            <input autofocus type="password" name="newpassword" minlength="5" maxlength="20" id="newpassword" placeholder="New Password">
-                            <input type="submit" value="Change">
-                        </form>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../tailwindextras.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="main.css">
+    <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
+</head>
+<body class="bg-light-gray font-sans h-fit">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md py-4">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <a href="#" class="text-2xl font-bold text-coral">ShotStreak</a>
+            <div class="flex items-center space-x-4">
+                <a href="home.php" class="text-almostblack md:hover:text-coral">Home</a>
+                <a href="logout.php" class="text-almostblack md:hover:text-coral">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+
+
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- Daily Summary Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md flex flex-col gap-4">
+                <h3 class="text-xl font-semibold text-almostblack mb-4">Your Information</h3>
+                <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:gap-0">
+                    <div>
+                        <p class="text-lg font-bold text-coral">Username:</p>
+                        <p class="text-almostblack"><?=htmlspecialchars($_SESSION['name'], ENT_QUOTES)?></p>
+                    </div>
+                    <div>
+                        <p class="text-lg font-bold text-coral">Email:</p>
+                        <p class="text-almostblack"><?=htmlspecialchars($email, ENT_QUOTES)?></p>
                     </div>
                 </div>
-                
-			</div>
-		</div>
-	</body>
+            </div>
+
+            <!-- Progress Chart Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md" x-data="{change: false}">
+                <h3 class="text-lg font-semibold text-almostblack mb-4">Edit Account</h3>
+                <div class="flex flex-col gap-3" @click.away="change = false">
+                        <a @click="change = !change" class="text-lg text-coral font-bold mb-3 cursor-pointer">Change Password</a>
+                        <form class="flex flex-col gap-3" action="change.php" method="POST" id="registerForm" x-show="change" x-collapse >
+                            <!-- Password Input -->
+                    <div>
+                        <label for="newpassword" class="block text-md font-medium text-gray-700">New Password</label>
+                        <input autofocus type="password" id="password" name="newpassword" minlength="5" maxlength="20" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
+                    </div>
+    
+                    <!-- Confirm Password Input -->
+                    <div>
+                        <label for="confirm-password" class="block text-md font-medium text-gray-700">Confirm New Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
+                    </div>
+    
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full md:hover:bg-coralhov bg-coral text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Change Password</button>
+                        </form>
+                    </div>
+            </div>
+
+            
+    </div>
+    <footer class="bg-white pt-8 text-almostblack static md:py-8 md:absolute bottom-0 left-0 w-full">
+          <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
+    </footer>
+    <script src="confirmpass.js"></script>
+
+</body>
+
 </html>
