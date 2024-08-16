@@ -44,7 +44,7 @@ $stmt = $conn->prepare($sql_today_shots_taken);
 $stmt->bind_param("is", $user_id, $date_today);
 $stmt->execute();
 $result_today_shots_taken = $stmt->get_result();
-$today_shots_taken = $result_today_shots_taken->fetch_assoc()['total_shots_made'] ?? 0;
+$today_shots_taken = $result_today_shots_taken->fetch_assoc()['total_shots_taken'] ?? 0;
 // Calculate shots remaining
 $shots_remaining = $today_goal - $today_shots_taken;
 
@@ -63,13 +63,35 @@ while ($row = $result_chart->fetch_assoc()) {
     $chart_data[] = $row;
 }
 
+// Best day %
+function getBestShootingDay($conn, $user_id) {
+    $query = "SELECT shot_date, 
+                     (shots_made / shots_taken) * 100 AS shooting_percentage
+              FROM user_shots
+              WHERE user_id = ? AND shots_taken > 0
+              ORDER BY shooting_percentage DESC
+              LIMIT 1";
+
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $user_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        return $row; // Returns an associative array with 'shot_date' and 'shooting_percentage'
+    } else {
+        return null; // No valid records found
+    }
+}
+$best_day = getBestShootingDay($conn, $user_id);
 // Fetch quick stats
-$sql_stats = "SELECT SUM(user_shots.shots_taken) AS total_shots, 
-              MAX(user_shots.shots_made) AS best_day, 
-              COUNT(DISTINCT user_shots.shot_date) AS days_count, 
-              SUM(IF(user_shots.shots_made >= user_goals.shots_goal, 1, 0)) / COUNT(DISTINCT user_shots.shot_date) * 100 AS goal_achievement_rate 
+$sql_stats = "SELECT SUM(user_shots.shots_made) AS total_shots, 
+			  SUM(user_shots.shots_taken) AS total_taken,
+               
+              SUM(IF(user_shots.shots_taken >= user_goals.shots_goal, 1, 0))  AS days_count,
+              SUM(IF(user_shots.shots_taken >= user_goals.shots_goal, 1, 0)) / COUNT(DISTINCT user_shots.shot_date) * 100 AS goal_achievement_rate 
               FROM user_shots 
-              JOIN user_goals ON user_shots.user_id = user_goals.user_id AND user_shots.shot_date = user_goals.goal_date 
+              JOIN user_goals ON user_shots.user_id = user_goals.user_id
               WHERE user_shots.user_id = ?";
 $stmt = $conn->prepare($sql_stats);
 $stmt->bind_param("i", $user_id);
@@ -120,10 +142,10 @@ $stats_data = $result_stats->fetch_assoc();
             <!-- Daily Summary Card -->
             <div class="bg-white p-6 rounded-lg shadow-md">
                 <h3 class="text-lg font-semibold text-gray-700 mb-4">Today's Goal</h3>
-                <div class="flex items-center justify-between">
+                <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:gap-0">
                     <div>
                         <p class="text-4xl font-bold text-coral"><?php echo $today_goal; ?></p>
-                        <p class="text-gray-600">Shots to Take</p>
+                        <p class="text-gray-600">Daily Shot Goal</p>
                     </div>
                     <div>
                         <p class="text-4xl font-bold text-dark-gray"><?php echo $today_shots_made; ?></p>
@@ -151,12 +173,16 @@ $stats_data = $result_stats->fetch_assoc();
                 <span>Total Shots Made:</span>
                 <span class="font-semibold text-dark-gray"><?php echo $stats_data['total_shots']; ?></span>
             </li>
-            <li class="flex justify-between text-gray-600">
-                <span>Best Shooting Day:</span>
-                <span class="font-semibold text-dark-gray"><?php echo $stats_data['best_day']; ?> Shots</span>
+			<li class="flex justify-between text-gray-600">
+                <span>Total Shots Taken:</span>
+                <span class="font-semibold text-dark-gray"><?php echo $stats_data['total_taken']; ?></span>
             </li>
             <li class="flex justify-between text-gray-600">
-                <span>Current Streak:</span>
+                <span>Best Shooting Day:</span>
+                <span class="font-semibold text-dark-gray"><?php echo round($best_day['shooting_percentage'], 2) ?>%</span>
+            </li>
+            <li class="flex justify-between text-gray-600">
+                <span>Goal Reached:</span>
                 <span class="font-semibold text-dark-gray"><?php echo $stats_data['days_count']; ?> Days</span>
             </li>
             <li class="flex justify-between text-gray-600">
