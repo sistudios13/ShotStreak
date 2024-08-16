@@ -17,14 +17,14 @@ if (mysqli_connect_errno()) {
 $userid = $_SESSION['id'];
 //Get current
 
-$sql = 'SELECT shots_taken, shots_made FROM user_shots WHERE user_id = ?';
+$sql = 'SELECT shots_made, shots_taken FROM user_shots WHERE user_id = ? AND shot_date = CURDATE()';
 $getshots = $conn->prepare($sql);
 $getshots->bind_param('i', $userid);
 $getshots->execute();
-$result = $getshots->get_result();
 
-$today_shots_taken = $result->fetch_assoc()['shots_taken'] ?? 0;
-$today_shots_made = $result->fetch_assoc()['shots_made'] ?? 0;
+$getshots->bind_result($today_shots_made, $today_shots_taken);
+$getshots->fetch();
+$getshots->close();
 
 $added_taken = $today_shots_taken + $_POST['shotstaken'];
 $added_made = $today_shots_made + $_POST['shotsmade'];

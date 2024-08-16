@@ -1,44 +1,80 @@
+
+
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title>Register</title>
-		<link rel="stylesheet" href="../style.css">
-        <link rel="stylesheet" href="error.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="../tailwindextras.js"></script>
         <script>
             function next() {document.location.href = "../login.html";}setTimeout(() => next(),  2000);
         </script>
+        <link rel="stylesheet" href="error.css">
+        <link rel="stylesheet" href="main.css">
+        <link rel="shortcut icon" href="../assets/isoLogo.svg" type="image/x-icon">
     </head>
-	<body>
-        <nav class="nav">
-            <h3>Simon Sites</h3>
-            <a href="index.html">Login</a>
-        </nav>
-		<div class="login">
-			<h1>Register</h1>
-            <form action="register.php" method="post" autocomplete="off">
-                <div class="form-content">
-                    <label for="username"><i class="fas fa-user"></i></label>
-                    <input type="text" name="username" placeholder="Username" id="username" required maxlength="20">
+    <body class="bg-light-gray">
+
+        <!-- Registration Form Container -->
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+                <!-- Logo -->
+                <div class="text-center mb-6">
+                    <img src="../assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
+                    <h1 class="text-2xl font-bold text-almostblack mt-4">Sign In</h1>
                 </div>
-                <div class="form-content">
-                    <label for="password"><i class="fas fa-lock"></i></label>
-				    <input type="password" name="password" placeholder="Password" id="password" required minlength="5" maxlength="20">
+    
+                <!-- Registration Form -->
+                <form id="registerForm" class="space-y-4" action="authenticate.php" method="post" autocomplete="off">
+                    <!-- Name Input -->
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                        <input type="text" name="username"  id="username" maxlength="20" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
+                    </div>
+
+    
+                    <!-- Password Input -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" name="password"  id="password" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
+                    </div>
+    
+
+    
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full bg-coral md:hover:bg-coralhov text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Login</button>
+                </form>
+    
+                <!-- Already have an account -->
+                <div class="text-center mt-4">
+                    <p class="text-sm text-gray-600">Don't have an account? <a href="register.html" class="text-coral font-semibold">Register</a></p>
                 </div>
-                <div class="form-content">
-                    <label for="email"><i class="fas fa-envelope"></i></label>
-                    <input type="email" name="email" placeholder="Email" id="email" required>
-                </div>
-				<input type="submit" value="Register">
-			</form>
-		</div>
-        <div class="error-cont">
+            </div>
+        </div>
+        <footer class="bg-darkslate py-8 text-white">
+            <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="footer-links flex flex-col justify-center items-center">
+                <a href="index.html" class="block mb-2 text-center">Home</a>
+                <a href="register.html" class="block mb-2 text-center">Register</a>
+                <a href="login.html" class="block mb-2 text-center">Login</a>
+                <!-- Add more links -->
+              </div> 
+              <div class="text-center flex justify-center items-center">
+                <p class="text-xs">© 2024 ShotStreak. All rights reserved.</p>
+              </div>
+            </div>
+          </footer>
+          <div class="error-cont">
             <div class="error">
                 <h2>Success</h2>
                 <p>Registration was Successful</p>
                 <p>Redirecting to the Login Page</p>
             </div>
         </div>
-	</body>
-</html>
+    </body>
+    </html>

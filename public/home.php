@@ -64,9 +64,8 @@ while ($row = $result_chart->fetch_assoc()) {
 }
 
 // Best day %
-function getBestShootingDay($conn, $user_id) {
-    $query = "SELECT shot_date, 
-                     (shots_made / shots_taken) * 100 AS shooting_percentage
+
+    $query = "SELECT (shots_made / shots_taken) * 100 AS shooting_percentage
               FROM user_shots
               WHERE user_id = ? AND shots_taken > 0
               ORDER BY shooting_percentage DESC
@@ -76,14 +75,9 @@ function getBestShootingDay($conn, $user_id) {
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
+    $best_day = $result->fetch_assoc()['shooting_percentage'] ?? 0;
 
-    if ($row = $result->fetch_assoc()) {
-        return $row; // Returns an associative array with 'shot_date' and 'shooting_percentage'
-    } else {
-        return null; // No valid records found
-    }
-}
-$best_day = getBestShootingDay($conn, $user_id);
+
 // Fetch quick stats
 $sql_stats = "SELECT SUM(user_shots.shots_made) AS total_shots, 
 			  SUM(user_shots.shots_taken) AS total_taken,
@@ -184,7 +178,7 @@ $stats_data = $result_stats->fetch_assoc();
             </li>
             <li class="flex justify-between text-almostblack">
                 <span>Best Shooting Day:</span>
-                <span class="font-semibold text-dark-gray"><?php echo round($best_day['shooting_percentage'], 0) ?>% Accuracy</span>
+                <span class="font-semibold text-dark-gray"><?php echo round($best_day, 0) ?>% Accuracy</span>
             </li>
             <li class="flex justify-between text-almostblack">
                 <span>Goal Reached:</span>
