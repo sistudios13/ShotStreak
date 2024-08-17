@@ -111,7 +111,7 @@ if ($stats_data['total_shots'] >= 1000) {
     $badge3 = true;
 }
 
-if ($stats_data['goal_achievement_rate'] == 100) {
+if ($stats_data['goal_achievement_rate'] == 100 && $stats_data['days_count'] >= 7) {
     $badge4 = true;
 }
 if ($stats_data['total_taken'] == 0) {
@@ -244,7 +244,7 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
             <p x-show="b1" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Icebreaker: Take a total of over 500 shots</p>
             <p x-show="b2" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Precision Shooter: Maintain a total average of over 40%</p>
             <p x-show="b3" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Millenium Marksman: Make a total of over 1000 shots</p>
-            <p x-show="b4" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Goal Crusher: Beat your goal every day</p>
+            <p x-show="b4" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Goal Crusher: Beat your goal every day for at least 7 days</p>
             <p x-show="b5" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Pinpoint Shooter: Maintain a total average of over 70%</p>
         </div>
     </div>
