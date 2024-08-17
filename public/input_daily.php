@@ -29,13 +29,22 @@ $getshots->close();
 $added_taken = $today_shots_taken + $_POST['shotstaken'];
 $added_made = $today_shots_made + $_POST['shotsmade'];
 // Insert or update the shots data for the user
+if (!is_null($today_shots_made)){ //DUP
+	$query = "UPDATE user_shots SET shots_taken = ?, shots_made = ?
+            WHERE user_id = ? AND shot_date = CURDATE()";
+	$stmt = $conn->prepare($query);
+	$stmt->bind_param("iii",  $added_taken, $added_made, $userid);
+	$stmt->execute();
+	$stmt->close();
+}
 
-$query = "INSERT INTO user_shots (user_id, shot_date, shots_taken, shots_made) 
-            VALUES (?, CURDATE(), ?, ?)
-            ON DUPLICATE KEY UPDATE shots_taken = ?, shots_made = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("iiiii", $userid, $_POST['shotstaken'], $_POST['shotsmade'], $added_taken, $added_made);
-$stmt->execute();
+if (is_null($today_shots_made)){ //NEW
+	$query = "INSERT INTO user_shots (user_id, shot_date, shots_taken, shots_made) 
+            VALUES (?, CURDATE(), ?, ?)";
+	$stmt = $conn->prepare($query);
+	$stmt->bind_param("iii", $userid, $_POST['shotstaken'], $_POST['shotsmade']);
+	$stmt->execute();
 $stmt->close();
+}
 
 header('Location: home.php');

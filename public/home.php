@@ -92,6 +92,36 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result_stats = $stmt->get_result();
 $stats_data = $result_stats->fetch_assoc();
+
+
+// Badges
+
+if ($stats_data['total_taken'] >= 500) {
+    $badge1 = true;
+}
+if ($stats_data['total_taken'] == 0) {
+    $badge2 = false;
+} else {
+    if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 40 ) {
+        $badge2 = true;
+    }
+}
+
+if ($stats_data['total_shots'] >= 1000) {
+    $badge3 = true;
+}
+
+if ($stats_data['goal_achievement_rate'] == 100) {
+    $badge4 = true;
+}
+if ($stats_data['total_taken'] == 0) {
+    $badge5 = false;
+} else {
+if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
+    $badge5 = true;
+}
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -107,6 +137,7 @@ $stats_data = $result_stats->fetch_assoc();
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
 </head>
 <body class="bg-light-gray font-sans min-h-screen">
@@ -131,7 +162,7 @@ $stats_data = $result_stats->fetch_assoc();
         </div>
 
         <!-- Dashboard Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             <!-- Daily Summary Card -->
             <div class="bg-white p-6 rounded-lg shadow-md flex flex-col gap-4">
@@ -190,9 +221,37 @@ $stats_data = $result_stats->fetch_assoc();
             </li>
         </ul>
     </div>
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-almostblack mb-4">Badges</h3>
+        <div class="relative grid grid-cols-6 lg:grid-cols-10" x-data="{b1 : false, b2 : false, b3 : false, b4: false, b5 : false}">
+            
+            <div class=" <?php if(!$badge1) { echo 'hidden'; }?> ">
+                <img x-on:click="b1 = !b1" @click.away="b1 = false" class="h-16 cursor-pointer" src="assets/icebreaker.svg" alt="badge1">    
+            </div>
+
+            <div class=" <?php if(!$badge2) { echo 'hidden'; }?> ">
+                <img x-on:click="b2 = !b2" @click.away="b2 = false" class="h-16 cursor-pointer" src="assets/precision.svg" alt="badge2">
+            </div>
+            <div class=" <?php if(!$badge3) { echo 'hidden'; }?> ">
+                <img x-on:click="b3 = !b3" @click.away="b3 = false" class="h-16 cursor-pointer" src="assets/millenium.svg" alt="badge3">
+            </div>
+            <div class=" <?php if(!$badge4) { echo 'hidden'; }?> ">
+                <img x-on:click="b4 = !b4" @click.away="b4 = false" class="h-16 cursor-pointer" src="assets/crusher.svg" alt="badge4">
+            </div>
+            <div class=" <?php if(!$badge5) { echo 'hidden'; }?> ">
+                <img x-on:click="b5 = !b5" @click.away="b5 = false" class="h-16 cursor-pointer" src="assets/pinpoint.svg" alt="badge5">
+            </div>
+            <p x-show="b1" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Icebreaker: Take a total of over 500 shots</p>
+            <p x-show="b2" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Precision Shooter: Maintain a total average of over 40%</p>
+            <p x-show="b3" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Millenium Marksman: Make a total of over 1000 shots</p>
+            <p x-show="b4" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Goal Crusher: Beat your goal every day</p>
+            <p x-show="b5" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Pinpoint Shooter: Maintain a total average of over 70%</p>
+        </div>
+    </div>
     <footer class="bg-white pt-8 text-almostblack static md:py-8 md:absolute bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
+    
 
 
     <!-- Chart.js Script -->

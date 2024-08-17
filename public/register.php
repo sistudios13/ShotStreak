@@ -66,7 +66,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?'
 		$stmt_goal = $con->prepare('INSERT INTO user_goals (user_id, goal_date, shots_goal) VALUES (?, CURDATE(), 100)');
 		$stmt_goal->bind_param('i', $userid);
 		$stmt_goal->execute();
-				
+		header('Location: errors/success-register.html');
 		}
 		
 
