@@ -11,21 +11,18 @@ if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
 // Now we check if the data was submitted, isset() function will check if the data exists.
-if (!isset($_POST['username'], $_POST['password'], $_POST['email'])) {
+if (!isset($_POST['username'], $_POST['password'])) {
 	// Could not get the data that should have been sent.
 	exit('Please complete the registration form!');
 }
 // Make sure the submitted registration values are not empty.
-if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email'])) {
+if (empty($_POST['username']) || empty($_POST['password'])) {
 	// One or more values are empty.
 	exit('Please complete the registration form');
 }
 // We need to check if the account with that username exists.
 // Parameters
-if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-	header('Location: errors/invalidemail-register.html');
-    exit();
-}
+
 if (preg_match('/^[a-zA-Z0-9]+$/', $_POST['username']) == 0) {
     header('Location: errors/invaliduser-register.html');
     exit();
@@ -46,10 +43,10 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?'
         exit();
 	} else {
 		// Username doesn't exists, insert new account
-        if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email) VALUES (?, ?, ?)')) {
+        if ($stmt = $con->prepare('INSERT INTO accounts (username, password) VALUES (?, ?)')) {
             // We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $stmt->bind_param('sss', $_POST['username'], $password, $_POST['email']);
+            $stmt->bind_param('ss', $_POST['username'], $password);
             $stmt->execute();	
         }
 		else {

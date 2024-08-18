@@ -1,4 +1,4 @@
-<div?php
+<?php
 // We need to use sessions, so you should always start sessions using the below code.
 session_start();
 // If the user is not logged in redirect to the login page...
@@ -34,8 +34,8 @@ if (!isset($_SESSION['loggedin'])) {
         </div>
     </nav>
         <!-- Registration Form Container -->
-        <div class="flex items-center justify-center min-h-screen">
-            <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+        <div class="flex flex-col items-center gap-12 justify-center min-h-screen">
+            <div class="bg-white p-8 mt-6 rounded-lg shadow-lg max-w-md w-full">
                 <!-- Logo -->
                 <div class="text-center mb-6">
                     <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
@@ -58,10 +58,27 @@ if (!isset($_SESSION['loggedin'])) {
                     <button type="submit" class="w-full bg-coral text-white py-2 rounded-md font-semibold hover:bg-coralhov transition-colors">Submit</button>
                 </form>
                 
-                <!-- Already have an account -->
+
                 <div class="text-center mt-4">
                     <p class="text-sm text-gray-600"> <a href="home.php" class="text-coral font-semibold">Back to Home</a></p>
                 </div>
+            </div>
+
+
+            <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
+                <!-- Logo -->
+                <div class="text-center mb-6">
+                    <span class="text-coral text-3xl font-bold">OR</span>
+                    <h1 class="text-2xl font-bold text-almostblack mt-4">Shot Counter</h1>
+                </div>
+    
+
+                    <!-- Try Button -->
+                    <a href="counterbutton.php"><button class="w-full bg-coral text-white py-2 rounded-md font-semibold hover:bg-coralhov transition-colors">Try it</button></a>
+
+                
+
+
             </div>
         </div>
         <footer class="bg-white py-8 text-almostblack">
