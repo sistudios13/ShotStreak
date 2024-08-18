@@ -161,6 +161,10 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
             <p class="mt-2">Here's your progress for today:</p>
         </div>
 
+        <div class="w-full bg-coral rounded-lg h-6 mb-4">
+                <div id="progressBar" class="bg-golden h-6 rounded-lg text-darkslate text-sm text-center font-semibold"></div>
+        </div>
+
         <!-- Dashboard Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
@@ -281,6 +285,15 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
             }
         });
     </script>
+    <script>
+        function update() {
+            const progress = Math.min((<?php echo $today_shots_taken ?> / <?php echo $today_goal ?>) * 100, 100).toFixed(2)
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+        update();
+
+    </script>
+    
 
 </body>
 </html>

@@ -39,10 +39,9 @@ if (!isset($_SESSION['loggedin'])) {
         <h1 class="font-bold pt-4 text-coral text-2xl">How It Works</h1>
         <span @click="show = !show " class="pb-4">Show</span>
         <ul x-show="show" x-collapse class="w-11/12 text-lg flex flex-col py-4 gap-2">
-            <li><b>1. </b>Take a shot</li>
-            <li><b>2. </b>If you miss, press the missed shot button. <br> If you make the shot, press the made shot button.</li>
-            <li><b>3. </b>Your score will be kept and your shooting percentage will be automatically calculated</li>
-            <li><b>4. </b>When You're done, press the submit button. It will automatically submit your shot data</li>
+            <li><b class="text-coral">1. </b>Take a shot</li>
+            <li><b class="text-coral">2. </b>Your score will be kept and your shooting percentage will be automatically calculated.</li>
+            <li><b class="text-coral">3. </b>When You're done, press the submit button. It will automatically submit your shot data.</li>
         </ul>
     </div>
 <div class="bg-white p-8 rounded-lg shadow-md mt-6 mx-auto w-11/12 max-w-md text-center">
@@ -81,11 +80,11 @@ if (!isset($_SESSION['loggedin'])) {
             </button>
 
             <div>
-            <button type="button" onclick="resetCounts()" class="bg-almostblack text-white px-4 py-2 rounded mt-4 ">
+            <button type="button" onclick="resetCounts()" class="border border-coral font-bold text-coral px-4 py-2 rounded mt-4 ">
                 Reset
             </button>
 
-            <button type="submit" class="bg-golden text-dark-slate px-4 py-2 rounded mt-4 hover:bg-coral-red">
+            <button type="submit" class="bg-golden text-almostblack px-4 py-2 rounded mt-4 hover:bg-coral-red">
                 Submit
             </button>
             </div>
