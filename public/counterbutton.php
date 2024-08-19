@@ -23,6 +23,13 @@ if (!isset($_SESSION['loggedin'])) {
     <script src="../tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
     <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            touch-action: manipulation;
+        }
+    </style>
 </head>
 <body class="bg-lightgray h-screen">
 <!-- Navbar -->

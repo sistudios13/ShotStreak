@@ -122,7 +122,34 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
 }
 }
 
+$leaderquery = "
+    SELECT 
+        u.username, 
+        s.shots_taken, 
+        s.shots_made, 
+        (s.shots_made / s.shots_taken) * 100 AS shooting_percentage
+    FROM 
+        accounts u
+    JOIN 
+        user_shots s ON u.id = s.user_id
+    ORDER BY 
+        shooting_percentage DESC
+    LIMIT 10;
+";
+
+$result = $conn->query($leaderquery);
+
+$leaderboard = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $leaderboard[] = $row;
+    }
+} else {
+    echo "No leaderboard data available.";
+}
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -252,7 +279,40 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
             <p x-show="b5" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Pinpoint Shooter: Maintain a total average of over 70%</p>
         </div>
     </div>
-    <footer class="bg-white pt-8 text-almostblack static md:py-8 md:absolute bottom-0 left-0 w-full">
+    <div class="container mx-auto py-12 text-almostblack">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-md">
+            <h3 class="text-lg font-semibold text-almostblack mb-4">Leaderboard</h3>
+            <table class="min-w-full table-auto text-left">
+                <thead class="">
+                    <tr>
+                        <th class="px-2 py-2 w-1/6">Rank</th>
+                        <th class="px-2 py-2 w-2/6">Username</th>
+                        <th class="px-2 py-2 w-1/6">Shots</th>
+
+                        <th class="px-2 py-2 w-1/6">%</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-lightgray">
+                    <?php if (!empty($leaderboard)): ?>
+                        <?php foreach ($leaderboard as $index => $user): ?>
+                            <tr>
+                                <td class="border px-2 py-2"><?php echo $index + 1;?></td>
+                                <td class="border px-2 py-2 break-all"><?php echo htmlspecialchars($user['username']); ?></td>
+                                <td class="border px-2 py-2"><?php echo $user['shots_taken']; ?></td>
+                                <td class="border px-2 py-2"><?php echo number_format($user['shooting_percentage'], 0); ?>%</td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="5" class="border px-4 py-2 text-center">No leaderboard data available.</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
+    <footer class="bg-white pt-8 text-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
     
