@@ -42,15 +42,17 @@ $stmt->close();
     <link rel="stylesheet" href="main.css">
     <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
 </head>
-<body class="bg-light-gray font-sans h-fit">
+<body class="bg-lightgray dark:bg-almostblack h-fit">
 
     <!-- Navbar -->
-    <nav class="bg-white shadow-md py-4">
+    <nav class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
             <a href="#" class="text-2xl font-bold text-coral">ShotStreak</a>
-            <div class="flex items-center space-x-4">
-                <a href="home.php" class="text-almostblack md:hover:text-coral">Home</a>
-                <a href="logout.php" class="text-almostblack md:hover:text-coral">Logout</a>
+            <div class="flex items-center gap-2">
+                <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
+                
+                <a href="home.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Home</a>
+                <a href="logout.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Logout</a>
             </div>
         </div>
     </nav>
@@ -63,51 +65,70 @@ $stmt->close();
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             <!-- Daily Summary Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md flex flex-col gap-4">
-                <h3 class="text-xl font-semibold text-almostblack mb-4">Your Information</h3>
+            <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md flex flex-col gap-4">
+                <h3 class="text-xl font-semibold text-almostblack dark:text-lightgray  mb-4">Your Information</h3>
                 <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:gap-0">
                     <div>
                         <p class="text-lg font-bold text-coral">Username:</p>
-                        <p class="text-almostblack"><?=htmlspecialchars($_SESSION['name'], ENT_QUOTES)?></p>
+                        <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($_SESSION['name'], ENT_QUOTES)?></p>
                     </div>
                     <div>
                         <p class="text-lg font-bold text-coral">Email:</p>
-                        <p class="text-almostblack"><?=htmlspecialchars($email, ENT_QUOTES)?></p>
+                        <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($email, ENT_QUOTES)?></p>
                     </div>
                 </div>
             </div>
 
             <!-- Progress Chart Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md" x-data="{change: false}">
-                <h3 class="text-lg font-semibold text-almostblack mb-4">Edit Account</h3>
+            <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md" x-data="{change: false}">
+                <h3 class="text-lg font-semibold text-almostblack  dark:text-lightgray mb-4">Edit Account</h3>
                 <div class="flex flex-col gap-3" @click.away="change = false">
                         <a @click="change = !change" class="text-lg text-coral font-bold mb-3 cursor-pointer">Change Password</a>
                         <form class="flex flex-col gap-3" action="change.php" method="POST" id="registerForm" x-show="change" x-collapse >
                             <!-- Password Input -->
                     <div>
-                        <label for="newpassword" class="block text-md font-medium text-gray-700">New Password</label>
-                        <input autofocus type="password" id="password" name="newpassword" minlength="5" maxlength="20" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
+                        <label for="newpassword" class="block text-md font-medium text-gray-700 dark:text-lightgray ">New Password</label>
+                        <input autofocus type="password" id="password" name="newpassword" minlength="5" maxlength="20" class="mt-1 p-2 w-full border  dark:bg-lightgray rounded-md focus-visible:outline-coral" required>
                     </div>
     
                     <!-- Confirm Password Input -->
                     <div>
-                        <label for="confirm-password" class="block text-md font-medium text-gray-700">Confirm New Password</label>
-                        <input type="password" id="confirm-password" name="confirm-password" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
+                        <label for="confirm-password" class="block text-md font-medium text-gray-700 dark:text-lightgray ">Confirm New Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" class="mt-1 p-2 w-full border dark:bg-lightgray rounded-md focus-visible:outline-coral" required>
                     </div>
     
                     <!-- Submit Button -->
-                    <button type="submit" class="w-full md:hover:bg-coralhov bg-coral text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Change Password</button>
+                    <button type="submit" class="w-full md:hover:bg-coralhov bg-coral dark:text-lightgray  text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Change Password</button>
                         </form>
                     </div>
             </div>
 
             
     </div>
-    <footer class="bg-white pt-8 text-almostblack static md:py-8 md:absolute bottom-0 left-0 w-full">
+    </div>
+    <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
     <script src="confirmpass.js"></script>
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
 
+        themeToggleBtn.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+            htmlElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+            } else {
+            htmlElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Check local storage for theme preference on page load
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
+    </script>
 </body>
 
 </html>

@@ -1,4 +1,5 @@
 tailwind.config = {
+  darkMode: 'selector', // or 'media' if you want it to follow the user's system preference
     theme: {
       extend: {
         colors: {
@@ -8,8 +9,17 @@ tailwind.config = {
           lightgray: '#F5F5F5',
           almostblack: '#212121',
           coralhov: '#E16B4E'
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+    variants: {
+      extend: {
+        backgroundColor: ['dark'],
+        textColor: ['dark'],
+        borderColor: ['dark'],
+        placeholderColor: ['dark'],
+      },
+    },
+    plugins: [],
+  };
   

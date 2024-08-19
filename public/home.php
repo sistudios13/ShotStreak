@@ -174,15 +174,17 @@ if ($result->num_rows > 0) {
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
 </head>
-<body class="bg-light-gray font-sans min-h-screen">
+<body class="bg-lightgray dark:bg-almostblack min-h-screen">
 
     <!-- Navbar -->
-    <nav class="bg-white shadow-md py-4">
+    <nav class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
             <a href="#" class="text-2xl font-bold text-coral">ShotStreak</a>
-            <div class="flex items-center space-x-4">
-                <a href="profile.php" class="text-almostblack md:hover:text-coral">Profile</a>
-                <a href="logout.php" class="text-almostblack md:hover:text-coral">Logout</a>
+            <div class="flex items-center gap-2">
+                <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
+                
+                <a href="profile.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Profile</a>
+                <a href="logout.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Logout</a>
             </div>
         </div>
     </nav>
@@ -190,12 +192,12 @@ if ($result->num_rows > 0) {
     <!-- Main Content -->
     <div class="container mx-auto px-6 py-8">
         <!-- Welcome Banner -->
-        <div class="bg-coral text-white rounded-lg p-6 mb-8">
+        <div class="bg-coral text-white dark:text-lightgray rounded-lg p-6 mb-6">
             <h2 class="text-xl font-bold">Welcome back, <?php echo htmlspecialchars($user_name); ?>!</h2>
             <p class="mt-2">Here's your progress for today:</p>
         </div>
 
-        <div class="w-full bg-coral rounded-lg h-6 mb-4">
+        <div class="w-full bg-coral rounded-lg h-6 mb-6">
                 <div id="progressBar" class="bg-golden h-6 rounded-lg text-darkslate text-sm text-center font-semibold"></div>
         </div>
 
@@ -203,64 +205,64 @@ if ($result->num_rows > 0) {
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
             <!-- Daily Summary Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md flex flex-col gap-4">
-                <h3 class="text-lg font-semibold text-almostblack mb-4">Today's Goal</h3>
+            <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md flex flex-col gap-4">
+                <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Today's Goal</h3>
                 <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:gap-0">
                     <div>
                         <p class="text-4xl font-bold text-golden"><?php echo $today_goal; ?></p>
-                        <p class="text-almostblack">Daily Shot Goal</p>
+                        <p class="text-almostblack dark:text-lightgray">Daily Shot Goal</p>
                     </div>
                     <div>
-                        <p class="text-4xl font-bold text-almostblack"><?php echo $today_shots_made; ?></p>
-                        <p class="text-almostblack">Shots Made</p>
+                        <p class="text-4xl font-bold text-almostblack dark:text-lightgray"><?php echo $today_shots_made; ?></p>
+                        <p class="text-almostblack dark:text-lightgray">Shots Made</p>
                     </div>
 					<div>
                         <p class="text-4xl font-bold text-coral"><?php echo $today_shots_taken; ?></p>
-                        <p class="text-almostblack">Shots Taken</p>
+                        <p class="text-almostblack dark:text-lightgray">Shots Taken</p>
                     </div>
                 </div>
-                <p class=" text-almostblack"><?php echo $shots_remaining > 0 ? "You need <b class='text-coral'>$shots_remaining</b> more shots to meet your goal!" : "Goal achieved!"; ?></p>
+                <p class=" text-almostblack dark:text-lightgray"><?php echo $shots_remaining > 0 ? "You need <b class='text-coral'>$shots_remaining</b> more shots to meet your goal!" : "Goal achieved!"; ?></p>
                 <div class="flex flex-row justify-between">
-                    <a href="shotgoal.php"><button class="mt-1 text-white p-2 w-fit mx-auto border bg-coral rounded-md md:hover:bg-coralhov">Change Goal</button></a>
-                    <a href="dailyshots.php"><button class="mt-1 text-white p-2 w-fit mx-auto border bg-coral rounded-md md:hover:bg-coralhov">Input Today's Shots</button></a>
+                    <a href="shotgoal.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Change Goal</button></a>
+                    <a href="dailyshots.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Input Today's Shots</button></a>
 
                 </div>
                             </div>
 
             <!-- Progress Chart Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-almostblack mb-4">Progress Chart</h3>
+            <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Progress Chart</h3>
                 <canvas id="progressChart" width="400" height="200"></canvas>
             </div>
 
             <!-- Quick Stats Card -->
-            <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-lg font-semibold text-almostblack mb-4">Quick Stats</h3>
-        <ul class="space-y-2">
-            <li class="flex justify-between text-almostblack">
+            <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Quick Stats</h3>
+                <ul class="space-y-2">
+            <li class="flex justify-between text-almostblack dark:text-lightgray">
                 <span>Total Shots Made:</span>
                 <span class="font-semibold text-dark-gray"><?php echo $stats_data['total_shots']; ?></span>
             </li>
-			<li class="flex justify-between text-almostblack">
+			<li class="flex justify-between text-almostblack dark:text-lightgray">
                 <span>Total Shots Taken:</span>
                 <span class="font-semibold text-dark-gray"><?php echo $stats_data['total_taken']; ?></span>
             </li>
-            <li class="flex justify-between text-almostblack">
+            <li class="flex justify-between text-almostblack dark:text-lightgray">
                 <span>Best Shooting Day:</span>
                 <span class="font-semibold text-dark-gray"><?php echo round($best_day, 0) ?>% Accuracy</span>
             </li>
-            <li class="flex justify-between text-almostblack">
+            <li class="flex justify-between text-almostblack dark:text-lightgray">
                 <span>Goal Reached:</span>
                 <span class="font-semibold text-dark-gray"><?php echo $stats_data['days_count']; ?> Days</span>
             </li>
-            <li class="flex justify-between text-almostblack">
+            <li class="flex justify-between text-almostblack dark:text-lightgray">
                 <span>Goal Achievement Rate:</span>
                 <span class="font-semibold text-dark-gray"><?php echo round($stats_data['goal_achievement_rate'], 0); ?>%</span>
             </li>
         </ul>
     </div>
-    <div class="bg-white p-6 rounded-lg shadow-md">
-        <h3 class="text-lg font-semibold text-almostblack mb-4">Badges</h3>
+    <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Badges</h3>
         <div class="relative grid grid-cols-6 lg:grid-cols-10" x-data="{b1 : false, b2 : false, b3 : false, b4: false, b5 : false}">
             
             <div class=" <?php if(!$badge1) { echo 'hidden'; }?> ">
@@ -286,10 +288,10 @@ if ($result->num_rows > 0) {
             <p x-show="b5" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Pinpoint Shooter: Maintain a total average of over 70%</p>
         </div>
     </div>
-    <div class="container mx-auto py-12 text-almostblack">
-        <div class="bg-white p-8 rounded-lg shadow-md max-w-md">
-            <h3 class="text-lg font-semibold text-almostblack mb-4">Leaderboard</h3>
-            <table class="min-w-full table-auto text-left">
+    <div class="container mx-auto text-almostblack">
+        <div class="bg-white dark:bg-darkslate p-8 rounded-lg shadow-md max-w-md">
+            <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Leaderboard</h3>
+            <table class="min-w-full table-auto text-left dark:text-lightgray">
                 <thead class="">
                     <tr>
                         <th class="px-2 py-2 w-1/6">Rank</th>
@@ -299,7 +301,7 @@ if ($result->num_rows > 0) {
                         <th class="px-2 py-2 w-1/6">%</th>
                     </tr>
                 </thead>
-                <tbody class="bg-lightgray">
+                <tbody class="bg-lightgray dark:bg-almostblack">
                     <?php if (!empty($leaderboard)): ?>
                         <?php foreach ($leaderboard as $index => $user): ?>
                             <tr>
@@ -319,7 +321,8 @@ if ($result->num_rows > 0) {
         </div>
     </div>
     </div>
-    <footer class="bg-white pt-8 text-almostblack static bottom-0 left-0 w-full">
+    </div>
+    <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
     
@@ -359,6 +362,25 @@ if ($result->num_rows > 0) {
         }
         update();
 
+    </script>
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+            htmlElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+            } else {
+            htmlElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Check local storage for theme preference on page load
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
     </script>
     
 

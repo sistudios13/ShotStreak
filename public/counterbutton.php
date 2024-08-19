@@ -31,27 +31,29 @@ if (!isset($_SESSION['loggedin'])) {
         }
     </style>
 </head>
-<body class="bg-lightgray h-screen">
+<body class="bg-lightgray h-screen dark:bg-almostblack">
 <!-- Navbar -->
-    <nav class="bg-white shadow-md py-4">
+<nav class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
             <a href="#" class="text-2xl font-bold text-coral">ShotStreak</a>
-            <div class="flex items-center space-x-4">
-                <a href="profile.php" class="text-almostblack md:hover:text-coral">Home</a>
-                <a href="logout.php" class="text-almostblack md:hover:text-coral">Logout</a>
+            <div class="flex items-center gap-2">
+                <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
+                
+                <a href="home.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Home</a>
+                <a href="logout.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Logout</a>
             </div>
         </div>
-    </nav>    
-    <div x-data="{show : false}" class="flex flex-col bg-white justify-center mt-4 gap-4 items-center">
+    </nav> 
+    <div x-data="{show : false}" class="flex flex-col bg-white dark:bg-darkslate justify-center mt-4 gap-4 items-center">
         <h1 class="font-bold pt-4 text-coral text-2xl">How It Works</h1>
-        <span @click="show = !show " class="pb-4">Show</span>
-        <ul x-show="show" x-collapse class="w-11/12 text-lg flex flex-col py-4 gap-2">
+        <span @click="show = !show " class="pb-4 cursor-pointer dark:text-lightgray">Show</span>
+        <ul x-show="show" x-collapse class="w-11/12 text-lg flex flex-col py-4 gap-2 dark:text-lightgray">
             <li><b class="text-coral">1. </b>Take a shot</li>
             <li><b class="text-coral">2. </b>Your score will be kept and your shooting percentage will be automatically calculated.</li>
             <li><b class="text-coral">3. </b>When You're done, press the submit button. It will automatically submit your shot data.</li>
         </ul>
     </div>
-<div class="bg-white p-8 rounded-lg shadow-md mt-6 mx-auto w-11/12 max-w-md text-center">
+<div class="bg-white dark:text-lightgray dark:bg-darkslate p-8 rounded-lg shadow-md mt-6 mx-auto w-11/12 max-w-md text-center">
         <h1 class="text-3xl font-bold text-coral mb-6">Shot Counter</h1>
 
         <form action="input_daily.php" method="POST">
@@ -100,9 +102,9 @@ if (!isset($_SESSION['loggedin'])) {
                     <p class="text-sm text-gray-600"> <a href="home.php" class="text-coral font-semibold">Back to Home</a></p>
                 </div>
     </div>
-    <footer class="bg-white mt-12 py-8 text-almostblack md:absolute md:w-full md: bottom-0">
+    <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
-        </footer>
+    </footer>
     <script>
         let shotsTaken = 0;
         let shotsMade = 0;
@@ -132,6 +134,25 @@ if (!isset($_SESSION['loggedin'])) {
             shotsTaken = 0;
             shotsMade = 0;
             updateDisplay();
+        }
+    </script>
+        <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+            htmlElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+            } else {
+            htmlElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Check local storage for theme preference on page load
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
         }
     </script>
 </body>
