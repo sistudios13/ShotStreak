@@ -121,20 +121,27 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
     $badge5 = true;
 }
 }
+//Leaderboard
+
 
 $leaderquery = "
     SELECT 
-        u.username, 
-        s.shots_taken, 
-        s.shots_made, 
-        (s.shots_made / s.shots_taken) * 100 AS shooting_percentage
-    FROM 
-        accounts u
-    JOIN 
-        user_shots s ON u.id = s.user_id
-    ORDER BY 
-        shooting_percentage DESC
-    LIMIT 10;
+    u.id,
+    u.username,
+    SUM(s.shots_made) AS total_shots_made,
+    SUM(s.shots_taken) AS total_shots_taken,
+    (SUM(s.shots_made) / SUM(s.shots_taken)) * 100 AS shooting_percentage
+FROM 
+    accounts u
+JOIN 
+    user_shots s ON u.id = s.user_id
+GROUP BY 
+    u.id, u.username
+HAVING 
+    total_shots_taken > 0  -- Ensure users who have taken shots are considered
+ORDER BY 
+    shooting_percentage DESC
+LIMIT 10;
 ";
 
 $result = $conn->query($leaderquery);
@@ -298,13 +305,13 @@ if ($result->num_rows > 0) {
                             <tr>
                                 <td class="border px-2 py-2"><?php echo $index + 1;?></td>
                                 <td class="border px-2 py-2 break-all"><?php echo htmlspecialchars($user['username']); ?></td>
-                                <td class="border px-2 py-2"><?php echo $user['shots_taken']; ?></td>
+                                <td class="border px-2 py-2"><?php echo $user['total_shots_taken']; ?></td>
                                 <td class="border px-2 py-2"><?php echo number_format($user['shooting_percentage'], 0); ?>%</td>
                             </tr>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="5" class="border px-4 py-2 text-center">No leaderboard data available.</td>
+                            <td colspan="4" class="border px-4 py-2 text-center">No leaderboard data available.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
