@@ -72,10 +72,6 @@ $stmt->close();
                         <p class="text-lg font-bold text-coral">Username:</p>
                         <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($_SESSION['name'], ENT_QUOTES)?></p>
                     </div>
-                    <div>
-                        <p class="text-lg font-bold text-coral">Email:</p>
-                        <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($email, ENT_QUOTES)?></p>
-                    </div>
                 </div>
             </div>
 
