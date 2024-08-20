@@ -281,11 +281,11 @@ if ($result->num_rows > 0) {
             <div class=" <?php if(!$badge5) { echo 'hidden'; }?> ">
                 <img x-on:click="b5 = !b5" @click.away="b5 = false" class="h-16 cursor-pointer" src="assets/pinpoint.svg" alt="badge5">
             </div>
-            <p x-show="b1" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Icebreaker: Take a total of over 500 shots</p>
-            <p x-show="b2" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Precision Shooter: Maintain a total average of over 40%</p>
-            <p x-show="b3" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Millenium Marksman: Make a total of over 1000 shots</p>
-            <p x-show="b4" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Goal Crusher: Beat your goal every day for at least 7 days</p>
-            <p x-show="b5" class="absolute w-60 bg-white top-16 p-3 rounded-lg shadow-md">Pinpoint Shooter: Maintain a total average of over 70%</p>
+            <p x-show="b1" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Icebreaker: Take a total of over 500 shots</p>
+            <p x-show="b2" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Precision Shooter: Maintain a total average of over 40%</p>
+            <p x-show="b3" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Millenium Marksman: Make a total of over 1000 shots</p>
+            <p x-show="b4" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Goal Crusher: Beat your goal every day for at least 7 days</p>
+            <p x-show="b5" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Pinpoint Shooter: Maintain a total average of over 70%</p>
         </div>
     </div>
     <div class="container mx-auto text-almostblack">
@@ -306,7 +306,7 @@ if ($result->num_rows > 0) {
                         <?php foreach ($leaderboard as $index => $user): ?>
                             <tr>
                                 <td class="border px-2 py-2"><?php echo $index + 1;?></td>
-                                <td class="border px-2 py-2 break-all"><?php echo htmlspecialchars($user['username']); ?></td>
+                                <td class="border px-2 py-2 text-coral break-all"><a href="viewprofile.php?user_id=<?php echo $user['id']; ?>"><?php echo htmlspecialchars($user['username']); ?></a></td>
                                 <td class="border px-2 py-2"><?php echo $user['total_shots_taken']; ?></td>
                                 <td class="border px-2 py-2"><?php echo number_format($user['shooting_percentage'], 0); ?>%</td>
                             </tr>
@@ -318,7 +318,7 @@ if ($result->num_rows > 0) {
                     <?php endif; ?>
                 </tbody>
             </table>
-        </div>
+        </div> 
     </div>
     </div>
     </div>
