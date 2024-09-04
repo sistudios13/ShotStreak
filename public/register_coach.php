@@ -41,7 +41,7 @@ $stmt->bindParam(':team_name', $team_name);
 // Execute the statement
 try {
 $stmt->execute();
-echo "Registration successful!";
+header("Location: coachlog.html");
 } catch (PDOException $e) {
 if ($e->getCode() == 23000) { // Duplicate entry
 die("This email is already registered."); //ERROR PAGE
