@@ -35,9 +35,9 @@ if (strlen($_POST['email']) > 50) {
 	exit('Email must be less than 50 characters long!');
 }
 //
-if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?')) {
+if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? OR email = ?')) {
 	// Bind parameters (s = string, i = int, b = blob, etc), hash the password using the PHP password_hash function.
-	$stmt->bind_param('s', $_POST['username']);
+	$stmt->bind_param('ss', $_POST['username'], $_POST['email']);
 	$stmt->execute();
 	$stmt->store_result();
 	// Store the result so we can check if the account exists in the database.

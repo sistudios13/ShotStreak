@@ -7,6 +7,12 @@ if (!isset($_SESSION['loggedin'])) {
 	exit;
 }
 
+if ($_SESSION['type'] != 'user') {
+	header('Location: index.html');
+	exit;
+}
+
+
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '';

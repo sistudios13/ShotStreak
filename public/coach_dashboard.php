@@ -6,27 +6,51 @@ if (!isset($_SESSION['loggedin'])) {
 	header('Location: index.html');
 	exit;
 }
-if ($_SESSION['type'] != 'user') {
+
+if ($_SESSION['type'] != 'coach') {
 	header('Location: index.html');
 	exit;
 }
 
+
+$DATABASE_HOST = 'localhost';
+$DATABASE_USER = 'root';
+$DATABASE_PASS = '';
+$DATABASE_NAME = 'shotstreak';
+$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+if (mysqli_connect_errno()) {
+	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
+}
+
+
+$user_id = $_SESSION['id'];
+$coach_name = $_SESSION['name'];
+$email = $_SESSION['email'];
+
+$tmn = $con->prepare('SELECT team_name FROM coaches WHERE email = ?');
+$tmn->bind_param('s', $email);
+$tmn->execute();
+$tmn->bind_result($team_name);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shot Goal - ShotStreak</title>
+    <title>Dashboard - ShotStreak</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
-    <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon"></head>
-    <body class="bg-lightgray dark:bg-almostblack">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
+</head>
+<body class="bg-lightgray dark:bg-almostblack min-h-screen">
+
     <!-- Navbar -->
     <nav class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
@@ -40,37 +64,21 @@ if ($_SESSION['type'] != 'user') {
         </div>
     </nav>
 
-        <!-- Registration Form Container -->
-        <div class="flex items-center justify-center min-h-screen">
-            <div class="bg-white dark:bg-darkslate p-8 rounded-lg shadow-lg max-w-md w-full">
-                <!-- Logo -->
-                <div class="text-center mb-6">
-                    <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
-                    <h1 class="text-2xl font-bold text-almostblack dark:text-lightgray mt-4">Daily Shot Goal</h1>
-                </div>
-    
-                <!-- Registration Form -->
-                <form action="set_goal.php" method="POST" class="flex flex-col justify-center gap-4">
-                    
-                    <label for="shotgoal" class="block text-lg text-gray-700 dark:text-lightgray">Enter your shot goal:</label>
-                    <input type="number" name="shotgoal" id="shotgoal" placeholder="100" class="mt-1 p-2 w-10/12 dark:bg-lightgray mx-auto border rounded-md focus-visible:outline-coral" required min="1" max="999">
-    
-    
-    
-                    <!-- Submit Button -->
-                    <button type="submit" class="w-full dark:text-lightgray bg-coral text-white py-2 rounded-md font-semibold hover:bg-coralhov transition-colors">Submit</button>
-                </form>
-                
-                <!-- Already have an account -->
-                <div class="text-center mt-4">
-                    <p class="text-sm text-gray-600"> <a href="home.php" class="text-coral font-semibold">Back to Home</a></p>
-                </div>
-            </div>
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- Welcome Banner -->
+        <div class="bg-coral text-white dark:text-lightgray rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-bold">Welcome back, <?php echo htmlspecialchars($coach_name); ?>!</h2>
+            <p class="mt-2">Welcome to your coach dashboard</p>
         </div>
-        <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
+    </div>
+
+        
+    <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
-        </footer>
-        <script>
+    </footer>
+    
+    <script>
         const themeToggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
 
@@ -89,7 +97,7 @@ if ($_SESSION['type'] != 'user') {
             htmlElement.classList.add('dark');
         }
     </script>
-    </body>
-    </html>
+    
 
-
+</body>
+</html>

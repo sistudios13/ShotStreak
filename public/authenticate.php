@@ -45,6 +45,7 @@ if ($stmt = $con->prepare('SELECT id, password, username, user_type FROM account
             if ($type === 'coach') {
                 header('Location: coach_dashboard.php');
                 $_SESSION['type'] = $type;
+                $_SESSION['email'] = $_POST['email'];
             }
 
             if ($type === 'player') {
