@@ -42,6 +42,25 @@ $stmt->bindParam(':team_name', $team_name);
 try {
 $stmt->execute();
 header("Location: coachlog.html");
+
+
+// FIX THIS 
+// add the coach information to the accounts tables
+if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user_type) VALUES (?, ?, ?, "user")')) {
+    // We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
+    $stmt->bind_param(':coach_name', $coach_name);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':password', $hashed_password);
+    $stmt->execute();	
+}
+else {
+    // Something is wrong with the SQL statement, so you must check to make sure your accounts table exists with all three fields.
+    echo 'Could not prepare statement!';
+}
+
+//
+
 } catch (PDOException $e) {
 if ($e->getCode() == 23000) { // Duplicate entry
 die("This email is already registered."); //ERROR PAGE

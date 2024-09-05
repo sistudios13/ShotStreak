@@ -11,12 +11,12 @@ if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
 // Now we check if the data was submitted, isset() function will check if the data exists.
-if (!isset($_POST['username'], $_POST['password'])) {
+if (!isset($_POST['username'], $_POST['password'], $_POST['email'])) {
 	// Could not get the data that should have been sent.
 	exit('Please complete the registration form!');
 }
 // Make sure the submitted registration values are not empty.
-if (empty($_POST['username']) || empty($_POST['password'])) {
+if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email'])) {
 	// One or more values are empty.
 	exit('Please complete the registration form');
 }
@@ -29,6 +29,10 @@ if (preg_match('/^[a-zA-Z0-9]+$/', $_POST['username']) == 0) {
 }
 if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
 	exit('Password must be between 5 and 20 characters long!');
+}
+
+if (strlen($_POST['email']) > 50) {
+	exit('Email must be less than 50 characters long!');
 }
 //
 if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?')) {
@@ -43,10 +47,10 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ?'
         exit();
 	} else {
 		// Username doesn't exists, insert new account
-        if ($stmt = $con->prepare('INSERT INTO accounts (username, password) VALUES (?, ?)')) {
+        if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user_type) VALUES (?, ?, ?, "user")')) {
             // We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
             $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $stmt->bind_param('ss', $_POST['username'], $password);
+            $stmt->bind_param('sss', $_POST['username'], $password, $_POST['email']);
             $stmt->execute();	
         }
 		else {
