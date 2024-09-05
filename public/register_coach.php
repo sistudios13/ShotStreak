@@ -1,5 +1,14 @@
 <?php
 
+$DATABASE_HOST = 'localhost';
+$DATABASE_USER = 'root';
+$DATABASE_PASS = '';
+$DATABASE_NAME = 'shotstreak';
+$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
+if (mysqli_connect_errno()) {
+	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
+}
+
 // Connect to the database
 $host = 'localhost';
 $dbname = 'shotstreak';
@@ -46,17 +55,17 @@ header("Location: coachlog.html");
 
 // FIX THIS 
 // add the coach information to the accounts tables
-if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user_type) VALUES (?, ?, ?, "user")')) {
+if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user_type) VALUES (?, ?, ?, "coach")')) {
     // We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
-    $stmt->bind_param(':coach_name', $coach_name);
-    $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':password', $hashed_password);
-    $stmt->execute();	
+    $stmt->bind_param('sss', $coach_name, $password, $email);
+    $stmt->execute();
+    header('Location: login.html');
 }
+
 else {
     // Something is wrong with the SQL statement, so you must check to make sure your accounts table exists with all three fields.
-    echo 'Could not prepare statement!';
+    echo 'Could not prepare statement!'; // ERROR PAGE
 }
 
 //

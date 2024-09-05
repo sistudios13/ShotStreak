@@ -7,7 +7,6 @@ if (!isset($_SESSION['loggedin'])) {
 	exit;
 }
 
-
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '';
