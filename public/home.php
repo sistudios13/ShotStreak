@@ -232,7 +232,7 @@ if ($result->num_rows > 0) {
                     <a href="dailyshots.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Input Today's Shots</button></a>
 
                 </div>
-                            </div>
+            </div>
 
             <!-- Progress Chart Card -->
             <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">

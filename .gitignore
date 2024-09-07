@@ -13,3 +13,6 @@ bin-release/
 *.ipa
 *.apk
 *.txt
+
+# Database
+*.sql
