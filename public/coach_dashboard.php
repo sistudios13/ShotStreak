@@ -31,15 +31,43 @@ $tmn = $con->prepare('SELECT team_name, coach_id FROM coaches WHERE email = ?');
 $tmn->bind_param('s', $email);
 $tmn->execute();
 $tmn->bind_result($team_name, $coach_id);
-$tmn->close();
 
-// Query to get players linked to the coach
-$sql = "SELECT player_name FROM players WHERE coach_id = ?";
-$stmt = $con->prepare($sql);
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "shotstreak";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+
+
+// Query to get the list of players associated with the coach
+$sql = "SELECT id, player_name FROM players WHERE coach_id = ?";
+$stmt = $conn->prepare($sql);
+
+// Check if the statement was prepared correctly
+if ($stmt === false) {
+    die("SQL error: " . $conn->error);
+}
+
 $stmt->bind_param("i", $coach_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
+// Fetch all the players into an array
+$players = [];
+while ($row = $result->fetch_assoc()) {
+    $players[] = $row;
+}
+
+// Close the statement to reuse later
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -85,30 +113,13 @@ $result = $stmt->get_result();
     <!-- Players -->
     <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md flex flex-col gap-4">
                 <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Your Players:</h3>
-                <table>
-                <tbody class="text-gray-600 text-sm font-light">
+                <?php
+echo "<h2>Debugging Players List:</h2>";
+for ($i = 0; $i < count($players); $i++) {
+    echo "Player Name: " . $players[$i]['player_name'] . "<br>";
+}
+?>
 
-                    <?php
-                    if ($result->num_rows > 0) {
-                        // Output data of each player
-                        while ($row = $result->fetch_assoc()) {
-
-                            echo "<tr class='border-b border-gray-200 hover:bg-gray-100'>";
-                            echo "<td class='py-3 px-6 text-left whitespace-nowrap'>{$row['player_name']}</td>";
-                            
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='2' class='py-3 px-6 text-center'>No players found</td></tr>";
-                    }
-
-                    // Close the statement and connection
-                    $stmt->close();
-                    $con->close();
-                    ?>
-
-                    </tbody>
-                </table>
                 
                 <div class="flex flex-row justify-between">
                     <a href="shotgoal.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Change Goal</button></a>
