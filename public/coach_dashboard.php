@@ -31,36 +31,15 @@ $tmn = $con->prepare('SELECT team_name, coach_id FROM coaches WHERE email = ?');
 $tmn->bind_param('s', $email);
 $tmn->execute();
 $tmn->bind_result($team_name, $coach_id);
+$tmn->close();
 
-$playersquery = "
-    SELECT 
-    p.id,
-    p.player_name,
-    SUM(s.shots_made) AS total_shots_made,
-    SUM(s.shots_taken) AS total_shots_taken,
-    (SUM(s.shots_made) / SUM(s.shots_taken)) * 100 AS shooting_percentage
-FROM 
-    players p
-JOIN 
-    shots s ON p.id = s.player_id
-WHERE 
-    coach_id = ?
-";
+// Query to get players linked to the coach
+$sql = "SELECT player_name FROM players WHERE coach_id = ?";
+$stmt = $con->prepare($sql);
+$stmt->bind_param("i", $coach_id);
+$stmt->execute();
+$result = $stmt->get_result();
 
-$pl = $con->prepare($playersquery);
-$pl->bind_param('s', $email);
-$pl->execute();
-$res = $pl->get_result();
-
-
-$players = [];
-if ($res->num_rows > 0) {
-    while ($row = $res->fetch_assoc()) {
-        $players[] = $row;
-    }
-} else {
-    echo "No leaderboard data available.";
-}
 ?>
 
 <!DOCTYPE html>
@@ -106,25 +85,30 @@ if ($res->num_rows > 0) {
     <!-- Players -->
     <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md flex flex-col gap-4">
                 <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Your Players:</h3>
-                <div class="flex flex-col items-start gap-4 md:flex-row md:gap-0">
-                <?php if (!empty($players)): ?>
-                        <?php foreach ($players as $index => $user): ?>
-                            <div class="w-full bg-lightgray p-4 rounded-lg">
-                                <div class="flex justify-between ">
-                                    <h2 class="text-md font-bold text-almostblack dark:text-lightgray mb-4">Simon Papp</h2>
-                                    <a href="" class="text-coral underline underline-offset-4 decoration-coral">See More</a>
-                                </div>
-                                <div>
-                                    <span>Shooting Percentage: 67%</span>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                        <?php endif; ?>
+                <table>
+                <tbody class="text-gray-600 text-sm font-light">
 
+                    <?php
+                    if ($result->num_rows > 0) {
+                        // Output data of each player
+                        while ($row = $result->fetch_assoc()) {
 
+                            echo "<tr class='border-b border-gray-200 hover:bg-gray-100'>";
+                            echo "<td class='py-3 px-6 text-left whitespace-nowrap'>{$row['player_name']}</td>";
+                            
+                            echo "</tr>";
+                        }
+                    } else {
+                        echo "<tr><td colspan='2' class='py-3 px-6 text-center'>No players found</td></tr>";
+                    }
 
+                    // Close the statement and connection
+                    $stmt->close();
+                    $con->close();
+                    ?>
 
-                </div>
+                    </tbody>
+                </table>
                 
                 <div class="flex flex-row justify-between">
                     <a href="shotgoal.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Change Goal</button></a>
