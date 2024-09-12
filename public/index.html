@@ -18,22 +18,32 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
+    <style>
+      .box {
+  --mask:
+    radial-gradient(178.89px at 50% calc(100% - 240px),#000 99%,#0000 101%) calc(50% - 160px) 0/320px 100%,
+    radial-gradient(178.89px at 50% calc(100% + 160px),#0000 99%,#000 101%) 50% calc(100% - 80px)/320px 100% repeat-x;
+  -webkit-mask: var(--mask);
+          mask: var(--mask);
+}
+    </style>
 </head>
 <body class="bg-lightgray text-almostblack">
     <section>
-        <div class="h-fit w-full bg-white flex flex-col px-4 pt-4 items-center gap-6 pb-12">
+        <div class="h-fit w-full bg-white flex flex-col px-4 pt-4 items-center box gap-6 pb-32">
           <div class="flex flex-row gap-4 items-center">
             <img src="assets/isoLogo.svg" class="size-24">
             <h1 class="text-2xl font-bold text-center">Shotstreak</h1>
           </div>
-          <div class="space-y-4 flex flex-col items-center lg:flex-row lg:gap-12 lg:px-12">
-            <div class="space-y-4">
+          <div class="space-y-4 flex flex-col items-center xl:flex-row xl:gap-12 gap-6 xl:px-12">
+            <div class="space-y-4 md:px-16 md:pt-6">
               <h1 class="text-3xl font-bold">Track Your Shooting Progress With Shotstreak</h1>
               <p class="text-xl">See real progress and improve your skills with powerful analytics and statistics get started with Shotstreak today!</p>
             </div>
-            <div class="w-fit">
-              <img src="assets/dashcomputer.svg" alt="screen" class="w-[50rem]">
+            <div class="md:w-10/12 max-w-[50rem]">
+              <img src="assets/dashcomputer.svg" alt="screen" class="md:w-full">
             </div>
             
           </div>
@@ -71,10 +81,15 @@
         </div>
       </section>
       <section >
-        <div class="container mx-auto my-8">
-          <div>
-            <h2 class="text-3xl font-bold text-center">What Is Shotstreak?</h2>
-            <p class="text-lg px-4 mt-4 text-gray-600">ShotStreak is your personal basketball shot-tracking assistant designed to help you improve your game. Whether you're practicing on your own or competing with friends, ShotStreak allows you to set daily shooting goals, track your progress, and stay motivated. </p>
+        <div class="container mx-auto my-8 grid grid-cols-1 lg:grid-cols-2 lg:gap-12 items-center">
+          <div class="px-4">
+            <h2 class="text-3xl font-bold">What Is Shotstreak?</h2>
+            <p class="text-lg mt-4 text-gray-600">ShotStreak is your personal basketball shot-tracking assistant designed to help you improve your game. Whether you're practicing on your own or competing with friends, ShotStreak allows you to set daily shooting goals, track your progress, and stay motivated. With an easy-to-use interface and powerful analytics, you can visualize your performance, push your limits, and see real results.</p>
+          </div>
+          <!-- Progress Chart Card -->
+          <div class="bg-white p-6 mt-6 rounded-lg shadow-md mx-4">
+            <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Progress Chart</h3>
+            <canvas id="progressChart" width="680" height="340" class=" w-full" style="display: block; box-sizing: border-box; height: 340px; width: 680px;"></canvas>
           </div>
         </div>
       </section>
@@ -111,5 +126,33 @@
           </div>
         </div>
       </footer>
+    <!-- Chart.js Script -->
+    <script>
+      
+      const ctx = document.getElementById('progressChart').getContext('2d');
+        const progressChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ["2024-08-22","2024-08-29","2024-09-01","2024-09-03","2024-09-07","2024-09-09","2024-09-12"],
+                datasets: [{
+                    label: 'Shooting Accuracy (%)',
+                    data: [57.27272727272727,46.53465346534654,51.21951219512195,52,65.45454545454545,52,64.86486486486487],
+                    borderColor: '#FF6F61',
+                    backgroundColor: 'rgba(255, 90, 95, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    
+  </script>
+  
 </body>
 </html>
