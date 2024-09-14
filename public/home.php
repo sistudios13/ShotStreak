@@ -159,6 +159,43 @@ if ($result->num_rows > 0) {
 } else {
     echo "No leaderboard data available.";
 }
+
+//Streak
+
+// Fetch the user's daily shot records and goal data from the database
+$query = "SELECT shots_taken, shot_date FROM user_shots WHERE user_id = ? ORDER BY shot_date DESC";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+$streak = 0;
+$previous_day = null;
+
+// Check each record to calculate the streak
+while ($row = $result->fetch_assoc()) {
+    $shots_taken = $row['shots_taken'];
+    $shot_date = $row['shot_date'];
+    
+    // If the user met their goal on that day
+    if ($shots_taken >= $today_goal) {
+        // If this is the first day we're checking
+        if ($previous_day === null) {
+            $streak++;  // Start the streak
+        } else {
+            // Check if the previous day is exactly one day before the current day
+            $days_diff = (strtotime($previous_day) - strtotime($shot_date)) / (60 * 60 * 24);
+            if ($days_diff == 1) {
+                $streak++;  // Continue the streak
+            } else {
+                break;  // Break the streak if there's a gap
+            }
+        }
+        $previous_day = $shot_date;  // Update the last day checked
+    } else {
+        break;  // End the streak if the goal wasn't met
+    }
+}
 ?>
 
 
@@ -200,10 +237,14 @@ if ($result->num_rows > 0) {
         <div class="bg-coral text-white dark:text-lightgray rounded-lg p-6 mb-6">
             <h2 class="text-xl font-bold">Welcome back, <?php echo htmlspecialchars($user_name); ?>!</h2>
             <p class="mt-2">Here's your progress for today:</p>
+            
         </div>
 
         <div class="w-full bg-coral rounded-lg h-6 mb-6">
                 <div id="progressBar" class="bg-golden h-6 rounded-lg text-darkslate text-sm text-center font-semibold"></div>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold dark:text-lightgray py-8">&#x1F525; Streak: <span class="text-coral"><?php echo htmlspecialchars($streak)?></span></h2>
         </div>
 
         <!-- Dashboard Grid -->
