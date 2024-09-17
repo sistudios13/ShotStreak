@@ -38,19 +38,22 @@ if ($stmt = $con->prepare('SELECT id, password, username, user_type FROM account
             $_SESSION['id'] = $id;
 
             if ($type === 'user') {
-                header('Location: home.php');
+                
                 $_SESSION['type'] = $type;
+                header('Location: home.php');
             }
 
             if ($type === 'coach') {
-                header('Location: coach_dashboard.php');
+                
                 $_SESSION['type'] = $type;
                 $_SESSION['email'] = $_POST['email'];
+                header('Location: coach_dashboard.php');
             }
 
             if ($type === 'player') {
-                header('Location: player_dashboard.php');
+                
                 $_SESSION['type'] = $type;
+                header('Location: player_dashboard.php');
             }
         } else {
             // Incorrect password
