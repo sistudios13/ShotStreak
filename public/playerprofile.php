@@ -78,6 +78,22 @@ $shooting_percentage = 0;
 }
 
 
+//Ntt done
+$sql_stats = "SELECT SUM(shots.shots_made) AS total_shots, 
+			  SUM(shots.shots_taken) AS total_taken,
+               
+              SUM(IF(shots.shots_taken >= user_goals.shots_goal, 1, 0))  AS days_count,
+              SUM(IF(shots.shots_taken >= user_goals.shots_goal, 1, 0)) / COUNT(DISTINCT user_shots.shot_date) * 100 AS goal_achievement_rate 
+              FROM shots 
+              JOIN user_goals ON user_shots.user_id = user_goals.user_id
+              WHERE user_shots.user_id = ?";
+$stmt = $conn->prepare($sql_stats);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result_stats = $stmt->get_result();
+$stats_data = $result_stats->fetch_assoc();
+
+
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +137,34 @@ $shooting_percentage = 0;
     </div>
 
     
-                
+    <div class="container mx-auto px-6 py-8">
+        <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md flex flex-col gap-4">
+            <!-- Quick Stats Card -->
+                <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Stats</h3>
+                <ul class="space-y-2">
+            <li class="flex justify-between text-almostblack dark:text-lightgray">
+                <span>Total Shots Made:</span>
+                <span class="font-semibold text-dark-gray"><?php echo $stats_data['total_shots']; ?></span>
+            </li>
+			<li class="flex justify-between text-almostblack dark:text-lightgray">
+                <span>Total Shots Taken:</span>
+                <span class="font-semibold text-dark-gray"><?php echo $stats_data['total_taken']; ?></span>
+            </li>
+            <li class="flex justify-between text-almostblack dark:text-lightgray">
+                <span>Best Shooting Day:</span>
+                <span class="font-semibold text-dark-gray"><?php echo round($best_day, 0) ?>% Accuracy</span>
+            </li>
+            <li class="flex justify-between text-almostblack dark:text-lightgray">
+                <span>Goal Reached:</span>
+                <span class="font-semibold text-dark-gray"><?php echo $stats_data['days_count']; ?> Days</span>
+            </li>
+            <li class="flex justify-between text-almostblack dark:text-lightgray">
+                <span>Goal Achievement Rate:</span>
+                <span class="font-semibold text-dark-gray"><?php echo round($stats_data['goal_achievement_rate'], 0); ?>%</span>
+            </li>
+        </ul>
+        </div>
+    </div>
 
 
         
