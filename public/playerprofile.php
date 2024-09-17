@@ -79,14 +79,76 @@ $shooting_percentage = 0;
 
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <?php echo("<title>".$player_name."'s Profile - Shotstreak</title>")?>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../tailwindextras.js"></script>
+    <link rel="stylesheet" href="main.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
 </head>
-<body>
-    <?php echo($shooting_percentage) ?>
+<body class="bg-lightgray dark:bg-almostblack min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="bg-white dark:bg-darkslate shadow-md py-4">
+        <div class="container mx-auto flex justify-between items-center px-6">
+            <a href="#" class="text-2xl font-bold text-coral">ShotStreak</a>
+            <div class="flex items-center gap-2">
+                <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
+                
+                <a href="coach_dashboard.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Dashboard</a>
+                <a href="logout.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- Welcome Banner -->
+        <div class="bg-coral text-white dark:text-lightgray rounded-lg p-6 mb-6">
+            <h2 class="text-xl font-bold"><?php echo($player_name."'s Profile")?></h2>
+
+        </div>
+    </div>
+
+    
+                
+
+
+        
+    <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
+          <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+            htmlElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+            } else {
+            htmlElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Check local storage for theme preference on page load
+        if (localStorage.getItem('theme') === 'dark') {
+            htmlElement.classList.add('dark');
+        }
+    </script>
+    
+
 </body>
 </html>
