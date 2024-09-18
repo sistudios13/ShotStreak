@@ -42,7 +42,7 @@ if ($fetched_coach['coach_id'] != $coach_id) {
 
 //Get Player Data
 
-$p_sql = "SELECT player_name, email
+$p_sql = "SELECT player_name, email, created_at
 FROM players 
 WHERE id = ?";
 
@@ -54,8 +54,22 @@ $player_data = $p_result->fetch_assoc();
 
 $player_name = $player_data['player_name'];
 $player_email = $player_data['email'];
+$created_at = $player_data['created_at'];
+
 
 //Get SHooting Data
+
+$query = "SELECT (shots_made / shots_taken) * 100 AS shooting_percentage
+FROM shots
+WHERE player_id = ? AND shots_taken > 0
+ORDER BY shooting_percentage DESC
+LIMIT 1";
+
+$stmt = $con->prepare($query);
+$stmt->bind_param("i", $player_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$best_day = $result->fetch_assoc()['shooting_percentage'] ?? 0;
 
 $s_sql = "SELECT SUM(shots_made) as total_shots_made, SUM(shots_taken) as total_shots_taken 
 FROM shots 
@@ -77,23 +91,53 @@ $shooting_percentage = ($shots_made / $shots_taken) * 100;
 $shooting_percentage = 0;
 }
 
+//Chart
 
-//Ntt done
-$sql_stats = "SELECT SUM(shots.shots_made) AS total_shots, 
-			  SUM(shots.shots_taken) AS total_taken,
-               
-              SUM(IF(shots.shots_taken >= user_goals.shots_goal, 1, 0))  AS days_count,
-              SUM(IF(shots.shots_taken >= user_goals.shots_goal, 1, 0)) / COUNT(DISTINCT user_shots.shot_date) * 100 AS goal_achievement_rate 
-              FROM shots 
-              JOIN user_goals ON user_shots.user_id = user_goals.user_id
-              WHERE user_shots.user_id = ?";
-$stmt = $conn->prepare($sql_stats);
-$stmt->bind_param("i", $user_id);
+// 7 DAYS
+$sql_chart = "SELECT shot_date, shots_made, shots_taken FROM shots 
+            WHERE player_id = ? 
+            ORDER BY shot_date DESC 
+            LIMIT 7";
+$stmt = $con->prepare($sql_chart);
+$stmt->bind_param("i", $player_id);
 $stmt->execute();
-$result_stats = $stmt->get_result();
-$stats_data = $result_stats->fetch_assoc();
+$result_chart = $stmt->get_result();
 
+$chart_data = [];
+while ($row = $result_chart->fetch_assoc()) {
+    $chart_data[] = $row;
+}
+// ---
+// 14 DAYS
+$asql_chart = "SELECT shot_date, shots_made, shots_taken FROM shots 
+            WHERE player_id = ? 
+            ORDER BY shot_date DESC 
+            LIMIT 14";
+$stmt = $con->prepare($asql_chart);
+$stmt->bind_param("i", $player_id);
+$stmt->execute();
+$aresult_chart = $stmt->get_result();
 
+$achart_data = [];
+while ($arow = $aresult_chart->fetch_assoc()) {
+    $achart_data[] = $arow;
+}
+// ---
+// 90 DAYS
+$bsql_chart = "SELECT shot_date, shots_made, shots_taken FROM shots 
+            WHERE player_id = ? 
+            ORDER BY shot_date DESC 
+            LIMIT 90";
+$stmt = $con->prepare($bsql_chart);
+$stmt->bind_param("i", $player_id);
+$stmt->execute();
+$bresult_chart = $stmt->get_result();
+
+$bchart_data = [];
+while ($brow = $bresult_chart->fetch_assoc()) {
+    $bchart_data[] = $brow;
+}
+// ---
 ?>
 
 <!DOCTYPE html>
@@ -109,8 +153,22 @@ $stats_data = $result_stats->fetch_assoc();
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.4.1/dist/preline.min.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
+    <script>
+        var time = 2;
+        function atime(number) {
+             time = number;
+             update()
+             
+             
+             
+        }
+        
+        
+    </script>
 </head>
 <body class="bg-lightgray dark:bg-almostblack min-h-screen">
 
@@ -134,44 +192,211 @@ $stats_data = $result_stats->fetch_assoc();
             <h2 class="text-xl font-bold"><?php echo($player_name."'s Profile")?></h2>
 
         </div>
-    </div>
+    
 
     
-    <div class="container mx-auto px-6 py-8">
-        <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md flex flex-col gap-4">
+    
+        <div class="bg-white dark:bg-darkslate p-6 mb-6 rounded-lg shadow-md flex flex-col gap-4">
             <!-- Quick Stats Card -->
                 <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Stats</h3>
                 <ul class="space-y-2">
             <li class="flex justify-between text-almostblack dark:text-lightgray">
                 <span>Total Shots Made:</span>
-                <span class="font-semibold text-dark-gray"><?php echo $stats_data['total_shots']; ?></span>
+                <span class="font-semibold text-dark-gray"><?php echo $shots_made; ?></span>
             </li>
 			<li class="flex justify-between text-almostblack dark:text-lightgray">
                 <span>Total Shots Taken:</span>
-                <span class="font-semibold text-dark-gray"><?php echo $stats_data['total_taken']; ?></span>
+                <span class="font-semibold text-dark-gray"><?php echo $shots_taken; ?></span>
             </li>
             <li class="flex justify-between text-almostblack dark:text-lightgray">
                 <span>Best Shooting Day:</span>
-                <span class="font-semibold text-dark-gray"><?php echo round($best_day, 0) ?>% Accuracy</span>
+                <span class="font-semibold text-dark-gray"><?php echo round($best_day, 1) ?>% Accuracy</span>
             </li>
             <li class="flex justify-between text-almostblack dark:text-lightgray">
-                <span>Goal Reached:</span>
-                <span class="font-semibold text-dark-gray"><?php echo $stats_data['days_count']; ?> Days</span>
+                <span>Shooting Accuracy:</span>
+                <span class="font-semibold text-dark-gray"><?php echo round($shooting_percentage, 1) ?>%</span>
             </li>
-            <li class="flex justify-between text-almostblack dark:text-lightgray">
-                <span>Goal Achievement Rate:</span>
-                <span class="font-semibold text-dark-gray"><?php echo round($stats_data['goal_achievement_rate'], 0); ?>%</span>
-            </li>
+
         </ul>
         </div>
+    
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Progress Chart Card -->
+        <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">
+
+            
+                <div class="flex justify-between mb-4">
+                
+                    <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray">Progress Chart</h3>
+                    <div class="hs-dropdown relative inline-flex">
+                        <button id="hs-dropdown-default" type="button" class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+                            <span id="btn-label">7 Days</span>
+                            <svg class="hs-dropdown-open:rotate-180 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 hidden min-w-32 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-default">
+                            <a onclick="atime(1); " class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
+                            7 Days
+                            </a>
+                            <a onclick="atime(2); " class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" >
+                            14 Days
+                            </a>
+                            <a onclick="atime(3); " class="flex items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" >
+                            90 Days
+                            </a>
+                
+                        </div>
+                        </div>
+                    </div>
+                    <div id="pc1">
+                    <canvas id="progressChart" width="400" height="200"></canvas>
+                </div>
+
+                
+                
+                <div id="pc2" style="display: none;">
+                    
+                    
+                    <canvas id="progressChart2" width="400" height="200"></canvas>
+                </div>
+                
+
+                
+                <div id="pc3" style="display: none;">
+                    
+                    
+                    <canvas id="progressChart3" width="400" height="200"></canvas>
+                </div>
+                
+            </div>
+
+            <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">
+                <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray">Player Info</h3>
+                <ul>
+                    <li class="text-lg font-semibold text-almostblack dark:text-lightgray">Player Name:<?php echo $player_name; ?></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+        </div>
+
+        
     </div>
-
-
         
     <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
+    <!-- Chart.js Script -->
+    <script>
     
+        
+        
+            console.log(time);
+            
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            const progressChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: <?php echo json_encode(array_reverse(array_column($chart_data, 'shot_date'))); ?>,
+                    datasets: [{
+                        label: 'Shooting Accuracy (%)',
+                        data: <?php echo json_encode(array_reverse(array_map(function($row) {
+                            return ($row['shots_made'] / $row['shots_taken']) * 100;
+                        }, $chart_data))); ?>,
+                        borderColor: '#FF6F61',
+                        backgroundColor: 'rgba(255, 90, 95, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+        });
+
+       
+            console.log(time);
+            const ctx2 = document.getElementById('progressChart2').getContext('2d');
+            const progressChart2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: <?php echo json_encode(array_reverse(array_column($achart_data, 'shot_date'))); ?>,
+                    datasets: [{
+                        label: 'Shooting Accuracy (%)',
+                        data: <?php echo json_encode(array_reverse(array_map(function($arow) {
+                            return ($arow['shots_made'] / $arow['shots_taken']) * 100;
+                        }, $achart_data))); ?>,
+                        borderColor: '#FF6F61',
+                        backgroundColor: 'rgba(255, 90, 95, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+        });
+
+        
+            const ctx3 = document.getElementById('progressChart3').getContext('2d');
+            const progressChart3 = new Chart(ctx3, {
+                type: 'line',
+                data: {
+                    labels: <?php echo json_encode(array_reverse(array_column($bchart_data, 'shot_date'))); ?>,
+                    datasets: [{
+                        label: 'Shooting Accuracy (%)',
+                        data: <?php echo json_encode(array_reverse(array_map(function($brow) {
+                            return ($brow['shots_made'] / $brow['shots_taken']) * 100;
+                        }, $bchart_data))); ?>,
+                        borderColor: '#FF6F61',
+                        backgroundColor: 'rgba(255, 90, 95, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+        });
+        
+        function update(){
+        if (time == 1) {
+            document.getElementById('pc1').style.display = 'block';
+            document.getElementById('pc2').style.display = 'none';
+            document.getElementById('pc3').style.display = 'none';
+            document.getElementById('btn-label').innerHTML = '7 Days'
+        }
+
+        if (time == 2) {
+            document.getElementById('pc1').style.display = 'none';
+            document.getElementById('pc2').style.display = 'block';
+            document.getElementById('pc3').style.display = 'none';
+            document.getElementById('btn-label').innerHTML = '14 Days'
+        }
+
+        if (time == 3) {
+            document.getElementById('pc1').style.display = 'none';
+            document.getElementById('pc2').style.display = 'none';
+            document.getElementById('pc3').style.display = 'block';
+            document.getElementById('btn-label').innerHTML = '90 Days'
+        }
+    }
+
+    
+    </script>
+
     <script>
         const themeToggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
@@ -192,6 +417,5 @@ $stats_data = $result_stats->fetch_assoc();
         }
     </script>
     
-
 </body>
 </html>
