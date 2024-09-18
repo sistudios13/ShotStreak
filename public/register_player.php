@@ -9,8 +9,6 @@ if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
 
-// Connect to the database
-
 
 try {
     $pdo = new PDO("mysql:host=$DATABASE_HOST;dbname=$DATABASE_NAME", $DATABASE_USER, $DATABASE_PASS);
@@ -21,10 +19,11 @@ try {
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-$coach_name = $_POST['coach_name'];
+$username = $_POST['username'];
 $email = $_POST['email'];
 $password = $_POST['password'];
-$team_name = $_POST['team_name'];
+$coach_id = $_POST['coach_id'];
+$token = $_POST['invite_token'];
 
 // Validate input
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -37,22 +36,21 @@ die("Invalid email format."); //ADD ERROR PAGE
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
 // Prepare SQL and bind parameters
-$stmt = $pdo->prepare("INSERT INTO coaches (coach_name, email, password, team_name) VALUES (:coach_name, :email,
-:password, :team_name)");
-$stmt->bindParam(':coach_name', $coach_name);
+$stmt = $pdo->prepare("INSERT INTO players (player_name, email, password, coach_id) VALUES (:player_name, :email,
+:password, :coach_id)");
+$stmt->bindParam(':player_name', $username);
 $stmt->bindParam(':email', $email);
 $stmt->bindParam(':password', $hashed_password);
-$stmt->bindParam(':team_name', $team_name);
+$stmt->bindParam(':coach_id', $coach_id);
 
 // Execute the statement
 try {
 $stmt->execute();
-header("Location: coachlog.html");
-
+header("Location: login.html");
 
 if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? OR email = ?')) {
 	// Bind parameters (s = string, i = int, b = blob, etc), hash the password using the PHP password_hash function.
-	$stmt->bind_param('ss', $_POST['coach_name'], $_POST['email']);
+	$stmt->bind_param('ss', $_POST['username'], $_POST['email']);
 	$stmt->execute();
 	$stmt->store_result();
 	// Store the result so we can check if the account exists in the database.
@@ -62,12 +60,17 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? 
         exit('User already exists');
 	} else {
 
-
-// add the coach information to the accounts tables
-if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user_type) VALUES (?, ?, ?, "coach")')) {
+// add the player information to the accounts tables
+if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user_type) VALUES (?, ?, ?, "player")')) {
     // We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
-    $stmt->bind_param('sss', $coach_name, $password, $email);
+    $stmt->bind_param('sss', $username, $password, $email);
+    $stmt->execute();
+    
+}
+
+if ($stmt = $con->prepare('UPDATE invitations SET status="accepted" WHERE token = ?')) {
+    $stmt->bind_param('s', $token);
     $stmt->execute();
     header('Location: login.html');
 }
@@ -77,10 +80,10 @@ else {
     echo 'Could not prepare statement!'; // ERROR PAGE
 }
 }
+//
 }
 else {
     exit('ERROR');}
-//
 
 } catch (PDOException $e) {
 if ($e->getCode() == 23000) { // Duplicate entry
@@ -90,3 +93,5 @@ die("An error occurred: " . $e->getMessage());
 }
 }
 }
+
+
