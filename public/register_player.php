@@ -46,11 +46,11 @@ $stmt->bindParam(':coach_id', $coach_id);
 // Execute the statement
 try {
 $stmt->execute();
-header("Location: login.html");
 
-if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? OR email = ?')) {
+
+if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE email = ?')) {
 	// Bind parameters (s = string, i = int, b = blob, etc), hash the password using the PHP password_hash function.
-	$stmt->bind_param('ss', $_POST['username'], $_POST['email']);
+	$stmt->bind_param('s',  $_POST['email']);
 	$stmt->execute();
 	$stmt->store_result();
 	// Store the result so we can check if the account exists in the database.
@@ -69,7 +69,7 @@ if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user
     
 }
 
-if ($stmt = $con->prepare('UPDATE invitations SET status="accepted" WHERE token = ?')) {
+if ($stmt = $con->prepare('UPDATE invitations SET status = "accepted" WHERE token = ?')) {
     $stmt->bind_param('s', $token);
     $stmt->execute();
     header('Location: login.html');

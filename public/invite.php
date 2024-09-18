@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ";
 
         if (mail($player_email, "You've been invited to join ShotStreak!", $message, $headers)) {
-            echo "Invitation sent to $player_email!";
+            header("Location: coach_dashboard.php");
         }
         else {
             echo "Email failed to send";

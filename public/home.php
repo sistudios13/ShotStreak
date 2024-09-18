@@ -26,6 +26,10 @@ if (mysqli_connect_errno()) {
 $user_id = $_SESSION['id'];
 $user_name = $_SESSION['name'];
 
+//CREATE DAILY GOAL FROM MAIN
+$stmt = $conn->prepare('INSERT INTO user_goals (user_id, goal_date, type) VALUES (?, CURDATE(), "daily")');
+$stmt->bind_param('i', $user_id);
+
 // Fetch today's shot goal
 $date_today = date('Y-m-d');
 $sql_today_goal = "SELECT shots_goal FROM user_goals WHERE user_id = ? ";
@@ -267,7 +271,7 @@ while ($row = $result->fetch_assoc()) {
                         <p class="text-almostblack dark:text-lightgray">Shots Taken</p>
                     </div>
                 </div>
-                <p class=" text-almostblack dark:text-lightgray"><?php echo $shots_remaining > 0 ? "You need <b class='text-coral'>$shots_remaining</b> more shots to meet your goal!" : "Goal achieved!"; ?></p>
+                <p class=" text-almostblack dark:text-lightgray"><?php echo $shots_remaining > 0 ? "You need to take <b class='text-coral'>$shots_remaining</b> more shots to meet your goal!" : "Goal achieved!"; ?></p>
                 <div class="flex flex-row justify-between">
                     <a href="shotgoal.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Change Goal</button></a>
                     <a href="dailyshots.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Input Today's Shots</button></a>

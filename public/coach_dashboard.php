@@ -69,6 +69,30 @@ while ($row = $result->fetch_assoc()) {
 // Close the statement to reuse later
 $stmt->close();
 
+
+
+// Query to get the invites
+$sql2 = "SELECT player_name, player_email FROM invitations WHERE coach_id = ? AND status = 'pending'";
+$stmt2 = $con->prepare($sql2);
+
+// Check if the statement was prepared correctly
+if ($stmt2 === false) {
+    die("SQL error: " . $con->error);
+}
+
+$stmt2->bind_param("i", $coach_id);
+$stmt2->execute();
+$result2 = $stmt2->get_result();
+
+// Fetch all the players into an array
+$invites = [];
+while ($row2 = $result2->fetch_assoc()) {
+    $invites[] = $row2;
+}
+
+// Close the statement to reuse later
+$stmt2->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -169,7 +193,7 @@ $stmt->close();
                 }
 
                 // Close the connection
-                $con->close();
+                
                 ?>
 
                 </tbody>
@@ -177,10 +201,55 @@ $stmt->close();
                     
                     <div class="flex flex-row justify-between">
                         <a href="inviteplayer.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Invite Player</button></a>
-                        <a href="dailyshots.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Input Today's Shots</button></a>
+                        
                         
                         
                     </div>
+                </div>
+            </div>
+
+
+
+            <!-- Invites -->
+    <div class="container mx-auto px-6 py-8">
+        <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md flex flex-col gap-4">
+                    <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Pending Invites</h3>
+                    <table class="table-auto min-w-full bg-white dark:bg-darkslate shadow-md rounded-lg">
+                <thead>
+                    <tr class="bg-coral text-lightgray uppercase text-sm leading-normal">
+                        <th class="py-3 px-6 text-left">Player Name</th>
+                        <th class="py-3 px-6 text-left">Email:</th>
+
+                    </tr>
+                </thead>
+                <tbody class="text-gray-600 text-sm font-light">
+
+                <?php
+                // Loop through each player and fetch their shot data
+                for ($i = 0; $i < count($invites); $i++) {
+                    $player_name = $invites[$i]['player_name'];
+                    $player_email = $invites[$i]['player_email'];
+                   
+
+                    // Output the player's data in a table row
+                    echo "<tr class='border-b border-lightgray dark:border-almostblack dark:bg-darkslate dark:text-lightgray bg-white dark:hover:bg-almostblack hover:bg-lightgray'>";
+                    echo "<td class='py-3 px-6 text-left break-all'>$player_name</td>";
+                    echo "<td class='py-3 px-6 text-left'>$player_email</td>";
+                    
+                    echo "</tr>";
+
+                    // Close statement
+                    
+                }
+
+                // Close the connection
+                $con->close();
+                ?>
+
+                </tbody>
+            </table>
+                    
+                    
                 </div>
             </div>
 
