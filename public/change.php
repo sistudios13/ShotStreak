@@ -6,10 +6,7 @@ if (!isset($_SESSION['loggedin'])) {
 	header('Location: index.html');
 	exit;
 }
-if ($_SESSION['type'] != 'user') {
-	header('Location: index.html');
-	exit;
-}
+
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '';
@@ -38,5 +35,5 @@ if ($stmt = $con->prepare('UPDATE accounts SET password = ? WHERE id = ?')) {
 }
 
 $stmt->close();
-header('Location: index.html')
+header('Location: logout.php')
 ?>

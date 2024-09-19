@@ -154,7 +154,6 @@ while ($brow = $bresult_chart->fetch_assoc()) {
     <script src="../tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
     <script src="https://cdn.jsdelivr.net/npm/preline@2.4.1/dist/preline.min.js"></script>
-    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
     <script>

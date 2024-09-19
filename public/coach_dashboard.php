@@ -72,7 +72,7 @@ $stmt->close();
 
 
 // Query to get the invites
-$sql2 = "SELECT player_name, player_email FROM invitations WHERE coach_id = ? AND status = 'pending'";
+$sql2 = "SELECT player_name, player_email, token FROM invitations WHERE coach_id = ? AND status = 'pending'";
 $stmt2 = $con->prepare($sql2);
 
 // Check if the statement was prepared correctly
@@ -121,7 +121,7 @@ $stmt2->close();
             <div class="flex items-center gap-2">
                 <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
                 
-                <a href="profile.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Profile</a>
+                <a href="coachprofile.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Profile</a>
                 <a href="logout.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Logout</a>
             </div>
         </div>
@@ -219,7 +219,7 @@ $stmt2->close();
                     <tr class="bg-coral text-lightgray uppercase text-sm leading-normal">
                         <th class="py-3 px-6 text-left">Player Name</th>
                         <th class="py-3 px-6 text-left">Email:</th>
-
+                        <th class="py-3 px-3 text-left"></th>
                     </tr>
                 </thead>
                 <tbody class="text-gray-600 text-sm font-light">
@@ -229,12 +229,14 @@ $stmt2->close();
                 for ($i = 0; $i < count($invites); $i++) {
                     $player_name = $invites[$i]['player_name'];
                     $player_email = $invites[$i]['player_email'];
+                    $token = $invites[$i]['token'];
                    
 
                     // Output the player's data in a table row
                     echo "<tr class='border-b border-lightgray dark:border-almostblack dark:bg-darkslate dark:text-lightgray bg-white dark:hover:bg-almostblack hover:bg-lightgray'>";
                     echo "<td class='py-3 px-6 text-left break-all'>$player_name</td>";
-                    echo "<td class='py-3 px-6 text-left'>$player_email</td>";
+                    echo "<td class='py-3 px-6 text-left break-all'>$player_email</td>";
+                    echo "<td class='pr-3  text-left'><form id='removeform' onsubmit='return confirm(`Are you sure you want to delete this invite? This action is permanent`)' action='delete_invite.php' method='POST'><input type='hidden' name='token' value='$token'><button type='submit' ><svg class='fill-almostblack dark:fill-lightgray size-5' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d='M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z'/></svg></button></form></td>";
                     
                     echo "</tr>";
 
@@ -252,9 +254,11 @@ $stmt2->close();
                     
                 </div>
             </div>
+            
+
 
         
-    <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
+    <footer class="bg-lightgray py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
     

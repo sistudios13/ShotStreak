@@ -6,7 +6,7 @@ if (!isset($_SESSION['loggedin'])) {
 	header('Location: index.html');
 	exit;
 }
-if ($_SESSION['type'] != 'user') {
+if ($_SESSION['type'] != 'coach') {
 	header('Location: index.html');
 	exit;
 }
@@ -18,14 +18,13 @@ $con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_
 if (mysqli_connect_errno()) {
 	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
 }
-// We don't have the password or email info stored in sessions, so instead, we can get the results from the database.
-$stmt = $con->prepare('SELECT password, email FROM accounts WHERE id = ?');
-// In this case we can use the account ID to get the account info.
-$stmt->bind_param('i', $_SESSION['id']);
-$stmt->execute();
-$stmt->bind_result($password, $email);
-$stmt->fetch();
-$stmt->close();
+
+$tmn = $con->prepare('SELECT team_name FROM coaches WHERE email = ?');
+$tmn->bind_param('s', $_SESSION['email']);
+$tmn->execute();
+$a = $tmn->get_result();
+$team_name = $a->fetch_assoc()['team_name'];
+
 ?>
 
 
@@ -55,7 +54,7 @@ $stmt->close();
             <div class="flex items-center gap-2">
                 <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
                 
-                <a href="home.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Home</a>
+                <a href="coach_dashboard.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Dashboard</a>
                 <a href="logout.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Logout</a>
             </div>
         </div>
@@ -73,12 +72,16 @@ $stmt->close();
                 <h3 class="text-xl font-semibold text-almostblack dark:text-lightgray  mb-4">Your Information</h3>
                 <div class="flex flex-col items-start justify-between gap-4 ">
                     <div>
-                        <p class="text-lg font-bold text-coral">Username:</p>
+                        <p class="text-lg font-bold text-coral">Name:</p>
                         <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($_SESSION['name'], ENT_QUOTES)?></p>
                     </div>
                     <div>
                         <p class="text-lg font-bold text-coral">Email:</p>
-                        <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($email, ENT_QUOTES)?></p>
+                        <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($_SESSION['email'], ENT_QUOTES)?></p>
+                    </div>
+                    <div>
+                        <p class="text-lg font-bold text-coral">Team Name:</p>
+                        <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($team_name, ENT_QUOTES)?></p>
                     </div>
                 </div>
             </div>

@@ -94,9 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     margin-top: 20px;
                 }
 
-                .logo {
-                    height: 200px;
-                }
+                
             </style>
         </head>
         <body>
@@ -104,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class='email-container'>
             <div class='email-header'>
                 <h1>Join ShotStreak!</h1>
-                <img class='logo' src='https://shotstreak.simonsites.com/assets/isoLogo.svg' alt='Logo'>
+                <img title='logo' src='https://shotstreak.simonsites.com/assets/isoLogo.svg' alt='Logo' height='200' width='200'>
             </div>
             
             <div class='email-body'>

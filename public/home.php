@@ -26,18 +26,15 @@ if (mysqli_connect_errno()) {
 $user_id = $_SESSION['id'];
 $user_name = $_SESSION['name'];
 
-//CREATE DAILY GOAL FROM MAIN
-$stmt = $conn->prepare('INSERT INTO user_goals (user_id, goal_date, type) VALUES (?, CURDATE(), "daily")');
-$stmt->bind_param('i', $user_id);
 
 // Fetch today's shot goal
 $date_today = date('Y-m-d');
-$sql_today_goal = "SELECT shots_goal FROM user_goals WHERE user_id = ? ";
+$sql_today_goal = "SELECT goal FROM user_shots WHERE user_id = ? AND shot_date = CURDATE()";
 $stmt = $conn->prepare($sql_today_goal);
 $stmt->bind_param("i", $user_id,);
 $stmt->execute();
 $result_today_goal = $stmt->get_result();
-$today_goal = $result_today_goal->fetch_assoc()['shots_goal'] ?? 0;
+$today_goal = $result_today_goal->fetch_assoc()['goal'] ?? 0;
 
 // Fetch today's shots made
 $sql_today_shots = "SELECT SUM(shots_made) AS total_shots_made FROM user_shots WHERE user_id = ? AND shot_date = ?";
@@ -72,6 +69,36 @@ while ($row = $result_chart->fetch_assoc()) {
     $chart_data[] = $row;
 }
 
+// Fetch data for the progress chart (last 14 days)
+$asql_chart = "SELECT shot_date, shots_made, shots_taken FROM user_shots 
+            WHERE user_id = ? 
+            ORDER BY shot_date DESC 
+            LIMIT 14";
+$astmt = $conn->prepare($asql_chart);
+$astmt->bind_param("i", $user_id);
+$astmt->execute();
+$aresult_chart = $astmt->get_result();
+
+$achart_data = [];
+while ($arow = $aresult_chart->fetch_assoc()) {
+    $achart_data[] = $arow;
+}
+
+// Fetch data for the progress chart (last 90 days)
+$bsql_chart = "SELECT shot_date, shots_made, shots_taken FROM user_shots 
+            WHERE user_id = ? 
+            ORDER BY shot_date DESC 
+            LIMIT 90";
+$bstmt = $conn->prepare($bsql_chart);
+$bstmt->bind_param("i", $user_id);
+$bstmt->execute();
+$bresult_chart = $bstmt->get_result();
+
+$bchart_data = [];
+while ($brow = $bresult_chart->fetch_assoc()) {
+    $bchart_data[] = $brow;
+}
+
 // Best day %
 
     $query = "SELECT (shots_made / shots_taken) * 100 AS shooting_percentage
@@ -88,14 +115,12 @@ while ($row = $result_chart->fetch_assoc()) {
 
 
 // Fetch quick stats
-$sql_stats = "SELECT SUM(user_shots.shots_made) AS total_shots, 
-			  SUM(user_shots.shots_taken) AS total_taken,
+$sql_stats = "SELECT SUM(shots_made) AS total_shots, 
+			  SUM(shots_taken) AS total_taken,
                
-              SUM(IF(user_shots.shots_taken >= user_goals.shots_goal, 1, 0))  AS days_count,
-              SUM(IF(user_shots.shots_taken >= user_goals.shots_goal, 1, 0)) / COUNT(DISTINCT user_shots.shot_date) * 100 AS goal_achievement_rate 
+              SUM(IF(shots_taken >= goal, 1, 0))  AS days_count
               FROM user_shots 
-              JOIN user_goals ON user_shots.user_id = user_goals.user_id
-              WHERE user_shots.user_id = ?";
+              WHERE user_id = ?";
 $stmt = $conn->prepare($sql_stats);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -104,6 +129,13 @@ $stats_data = $result_stats->fetch_assoc();
 
 
 // Badges
+
+$badge1 = false;
+$badge2 = false;
+$badge3 = false;
+$badge4 = false;
+$badge5 = false;
+
 
 if ($stats_data['total_taken'] >= 500) {
     $badge1 = true;
@@ -120,9 +152,7 @@ if ($stats_data['total_shots'] >= 1000) {
     $badge3 = true;
 }
 
-if ($stats_data['goal_achievement_rate'] == 100 && $stats_data['days_count'] >= 7) {
-    $badge4 = true;
-}
+
 if ($stats_data['total_taken'] == 0) {
     $badge5 = false;
 } else {
@@ -200,6 +230,12 @@ while ($row = $result->fetch_assoc()) {
         break;  // End the streak if the goal wasn't met
     }
 }
+
+//Streak Badge
+if ($streak >= 3) {
+    $badge4 = true;
+}
+
 ?>
 
 
@@ -219,6 +255,14 @@ while ($row = $result->fetch_assoc()) {
     <link rel="stylesheet" href="main.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/preline@2.4.1/dist/preline.min.js"></script>
+    <script>
+        var time = 2;
+        function atime(number) {
+             time = number;
+             aupdate()    
+        }  
+    </script>
 </head>
 <body class="bg-lightgray dark:bg-almostblack min-h-screen">
 
@@ -238,15 +282,21 @@ while ($row = $result->fetch_assoc()) {
     <!-- Main Content -->
     <div class="container mx-auto px-6 py-8">
         <!-- Welcome Banner -->
-        <div class="bg-coral text-white dark:text-lightgray rounded-lg p-6 mb-6">
+        <div class="bg-coral text-white dark:text-lightgray rounded-lg p-6">
+            
             <h2 class="text-xl font-bold">Welcome back, <?php echo htmlspecialchars($user_name); ?>!</h2>
-            <p class="mt-2">Here's your progress for today:</p>
+            
+            <div class="flex flex-col-reverse md:flex-row md:justify-between">
+                <p class="mt-2">Here's your progress for today:</p>
+                <a href="dailyshots.php"><button class=" text-white font-bold mt-4 p-3 md:px-6 md:py-4 w-fit mx-auto border-2 border-golden md:hover:bg-golden md:hover:text-almostblack transition-colors rounded-md ">Input Today's Shots</button></a>
+            </div>
+            
             
         </div>
 
-        <div class="w-full bg-coral rounded-lg h-6 mb-6">
-                <div id="progressBar" class="bg-golden h-6 rounded-lg text-darkslate text-sm text-center font-semibold"></div>
-        </div>
+
+
+        
         <div>
             <h2 class="text-2xl font-bold dark:text-lightgray py-8">&#x1F525; Streak: <span class="text-coral"><?php echo htmlspecialchars($streak)?></span></h2>
         </div>
@@ -258,32 +308,82 @@ while ($row = $result->fetch_assoc()) {
             <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md flex flex-col gap-4">
                 <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Today's Goal</h3>
                 <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:gap-0">
-                    <div>
+                    <div class="w-full md:w-fit">
                         <p class="text-4xl font-bold text-golden"><?php echo $today_goal; ?></p>
                         <p class="text-almostblack dark:text-lightgray">Daily Shot Goal</p>
+                        <hr class="mt-4 border-gray-200 dark:border-almostblack md:hidden">
                     </div>
-                    <div>
+                    
+                    <div class="w-full md:w-fit">
                         <p class="text-4xl font-bold text-almostblack dark:text-lightgray"><?php echo $today_shots_made; ?></p>
                         <p class="text-almostblack dark:text-lightgray">Shots Made</p>
+                        <hr class="mt-4 border-gray-200 dark:border-almostblack md:hidden">
                     </div>
-					<div>
+					<div class="w-full md:w-fit">
                         <p class="text-4xl font-bold text-coral"><?php echo $today_shots_taken; ?></p>
                         <p class="text-almostblack dark:text-lightgray">Shots Taken</p>
+                        
                     </div>
                 </div>
+                <div class="w-full bg-coral rounded-lg h-6 ring-2 ring-golden">
+                    <div style="width: 0;" id="progressBar" class="bg-golden h-6 rounded-lg text-darkslate transition-all duration-700 ease-in-out text-sm text-center font-semibold"></div>
+                </div>
                 <p class=" text-almostblack dark:text-lightgray"><?php echo $shots_remaining > 0 ? "You need to take <b class='text-coral'>$shots_remaining</b> more shots to meet your goal!" : "Goal achieved!"; ?></p>
-                <div class="flex flex-row justify-between">
-                    <a href="shotgoal.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Change Goal</button></a>
-                    <a href="dailyshots.php"><button class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Input Today's Shots</button></a>
+                
+                <div class="flex flex-row justify-between mt-auto">
+                    <a href="shotgoal.php"><button class="mt-1 text-coral font-bold p-1 px-1.5 md:px-6 md:py-4 w-fit mx-auto border-2 border-coral md:hover:bg-coral md:hover:text-white transition-colors rounded-md ">Change Goal</button></a>
+                    <a href="dailyshots.php"><button class="mt-1 text-coral bg-coral font-bold p-1 px-1.5 md:px-6 md:py-4 w-fit mx-auto border-2 border-coral md:hover:bg-white md:hover:text-coral dark:md:hover:bg-darkslate text-white transition-colors rounded-md ">Input Today's Shots</button></a>
 
                 </div>
             </div>
 
             <!-- Progress Chart Card -->
-            <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">
-                <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Progress Chart</h3>
+        <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">
+
+            
+            <div class="flex justify-between mb-4">
+
+    <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray">Progress Chart</h3>
+    <div class="hs-dropdown relative inline-flex">
+        <button id="hs-dropdown-default" type="button" class="hs-dropdown-toggle py-3 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
+            <span id="btn-label">7 Days</span>
+            <svg class="hs-dropdown-open:rotate-180 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 hidden min-w-32 bg-white shadow-md rounded-lg p-1 space-y-0.5 mt-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700 after:h-4 after:absolute after:-bottom-4 after:start-0 after:w-full before:h-4 before:absolute before:-top-4 before:start-0 before:w-full" role="menu" aria-orientation="vertical" aria-labelledby="hs-dropdown-default">
+            <a onclick="atime(1); " class="flex cursor-pointer items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700">
+            7 Days
+            </a>
+            <a onclick="atime(2); " class="flex cursor-pointer items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" >
+            14 Days
+            </a>
+            <a onclick="atime(3); " class="flex cursor-pointer items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700" >
+            90 Days
+            </a>
+
+        </div>
+        </div>
+        </div>
+            <div id="pc1">
                 <canvas id="progressChart" width="400" height="200"></canvas>
             </div>
+
+
+
+            <div id="pc2" style="display: none;">
+        
+        
+                <canvas id="progressChart2" width="400" height="200"></canvas>
+            </div>
+
+
+
+            <div id="pc3" style="display: none;">
+        
+        
+                <canvas id="progressChart3" width="400" height="200"></canvas>
+            </div>
+
+        </div>
 
             <!-- Quick Stats Card -->
             <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">
@@ -306,9 +406,10 @@ while ($row = $result->fetch_assoc()) {
                 <span class="font-semibold text-dark-gray"><?php echo $stats_data['days_count']; ?> Days</span>
             </li>
             <li class="flex justify-between text-almostblack dark:text-lightgray">
-                <span>Goal Achievement Rate:</span>
-                <span class="font-semibold text-dark-gray"><?php echo round($stats_data['goal_achievement_rate'], 0); ?>%</span>
+                <span>Shooting Accuracy:</span>
+                <span class="font-semibold text-dark-gray"><?php echo round($stats_data['total_shots'] / $stats_data['total_taken'] * 100, 0) ?>% Accuracy</span>
             </li>
+            
         </ul>
     </div>
     <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">
@@ -334,7 +435,7 @@ while ($row = $result->fetch_assoc()) {
             <p x-show="b1" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Icebreaker: Take a total of over 500 shots</p>
             <p x-show="b2" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Precision Shooter: Maintain a total average of over 40%</p>
             <p x-show="b3" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Millenium Marksman: Make a total of over 1000 shots</p>
-            <p x-show="b4" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Goal Crusher: Beat your goal every day for at least 7 days</p>
+            <p x-show="b4" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">On a Roll: Maintain a current streak over 3 days long. Keep it up!</p>
             <p x-show="b5" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Pinpoint Shooter: Maintain a total average of over 70%</p>
         </div>
     </div>
@@ -380,30 +481,113 @@ while ($row = $result->fetch_assoc()) {
 
     <!-- Chart.js Script -->
     <script>
-        const ctx = document.getElementById('progressChart').getContext('2d');
-        const progressChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: <?php echo json_encode(array_reverse(array_column($chart_data, 'shot_date'))); ?>,
-                datasets: [{
-                    label: 'Shooting Accuracy (%)',
-                    data: <?php echo json_encode(array_reverse(array_map(function($row) {
-                        return ($row['shots_made'] / $row['shots_taken']) * 100;
-                    }, $chart_data))); ?>,
-                    borderColor: '#FF6F61',
-                    backgroundColor: 'rgba(255, 90, 95, 0.2)',
-                    borderWidth: 2,
-                    fill: true,
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+    
+        
+        
+            
+            
+            const ctx = document.getElementById('progressChart').getContext('2d');
+            const progressChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: <?php echo json_encode(array_reverse(array_column($chart_data, 'shot_date'))); ?>,
+                    datasets: [{
+                        label: 'Shooting Accuracy (%)',
+                        data: <?php echo json_encode(array_reverse(array_map(function($row) {
+                            return ($row['shots_made'] / $row['shots_taken']) * 100;
+                        }, $chart_data))); ?>,
+                        borderColor: '#FF6F61',
+                        backgroundColor: 'rgba(255, 90, 95, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
         });
+
+       
+            
+            const ctx2 = document.getElementById('progressChart2').getContext('2d');
+            const progressChart2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: <?php echo json_encode(array_reverse(array_column($achart_data, 'shot_date'))); ?>,
+                    datasets: [{
+                        label: 'Shooting Accuracy (%)',
+                        data: <?php echo json_encode(array_reverse(array_map(function($arow) {
+                            return ($arow['shots_made'] / $arow['shots_taken']) * 100;
+                        }, $achart_data))); ?>,
+                        borderColor: '#FF6F61',
+                        backgroundColor: 'rgba(255, 90, 95, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+        });
+
+        
+            const ctx3 = document.getElementById('progressChart3').getContext('2d');
+            const progressChart3 = new Chart(ctx3, {
+                type: 'line',
+                data: {
+                    labels: <?php echo json_encode(array_reverse(array_column($bchart_data, 'shot_date'))); ?>,
+                    datasets: [{
+                        label: 'Shooting Accuracy (%)',
+                        data: <?php echo json_encode(array_reverse(array_map(function($brow) {
+                            return ($brow['shots_made'] / $brow['shots_taken']) * 100;
+                        }, $bchart_data))); ?>,
+                        borderColor: '#FF6F61',
+                        backgroundColor: 'rgba(255, 90, 95, 0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+        });
+        
+        function aupdate(){
+        if (time == 1) {
+            document.getElementById('pc1').style.display = 'block';
+            document.getElementById('pc2').style.display = 'none';
+            document.getElementById('pc3').style.display = 'none';
+            document.getElementById('btn-label').innerHTML = '7 Days'
+        }
+
+        if (time == 2) {
+            document.getElementById('pc1').style.display = 'none';
+            document.getElementById('pc2').style.display = 'block';
+            document.getElementById('pc3').style.display = 'none';
+            document.getElementById('btn-label').innerHTML = '14 Days'
+        }
+
+        if (time == 3) {
+            document.getElementById('pc1').style.display = 'none';
+            document.getElementById('pc2').style.display = 'none';
+            document.getElementById('pc3').style.display = 'block';
+            document.getElementById('btn-label').innerHTML = '90 Days'
+        }
+    }
+
+    
     </script>
     <script>
         function update() {

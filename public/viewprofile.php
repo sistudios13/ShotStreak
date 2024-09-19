@@ -33,24 +33,29 @@ $user = $result->fetch_assoc();
 
 
 
-$sql_stats = "SELECT SUM(user_shots.shots_made) AS total_shots, 
-			  SUM(user_shots.shots_taken) AS total_taken,
+// Fetch quick stats
+$sql_stats = "SELECT SUM(shots_made) AS total_shots, 
+			  SUM(shots_taken) AS total_taken,
                
-              SUM(IF(user_shots.shots_taken >= user_goals.shots_goal, 1, 0))  AS days_count,
-              SUM(IF(user_shots.shots_taken >= user_goals.shots_goal, 1, 0)) / COUNT(DISTINCT user_shots.shot_date) * 100 AS goal_achievement_rate 
+              SUM(IF(shots_taken >= goal, 1, 0))  AS days_count
               FROM user_shots 
-              JOIN user_goals ON user_shots.user_id = user_goals.user_id
-              WHERE user_shots.user_id = ?";
+              WHERE user_id = ?";
 $stmt = $conn->prepare($sql_stats);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result_stats = $stmt->get_result();
 $stats_data = $result_stats->fetch_assoc();
 
-
-$shooting_percentage = ($stats_data['total_shots'] / $stats_data['total_taken']) * 100;
+$shooting_percentage = $stats_data['total_shots'] / $stats_data['total_taken'] * 100;
 
 // Badges
+
+$badge1 = false;
+$badge2 = false;
+$badge3 = false;
+$badge4 = false;
+$badge5 = false;
+
 
 if ($stats_data['total_taken'] >= 500) {
     $badge1 = true;
@@ -67,9 +72,7 @@ if ($stats_data['total_shots'] >= 1000) {
     $badge3 = true;
 }
 
-if ($stats_data['goal_achievement_rate'] == 100 && $stats_data['days_count'] >= 7) {
-    $badge4 = true;
-}
+
 if ($stats_data['total_taken'] == 0) {
     $badge5 = false;
 } else {
@@ -157,7 +160,7 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
             <p x-show="b1" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Icebreaker: Take a total of over 500 shots</p>
             <p x-show="b2" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Precision Shooter: Maintain a total average of over 40%</p>
             <p x-show="b3" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Millenium Marksman: Make a total of over 1000 shots</p>
-            <p x-show="b4" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Goal Crusher: Beat your goal every day for at least 7 days</p>
+            <p x-show="b4" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">On a Roll: Maintain a total streak over 3 days long. Keep it up!</p>
             <p x-show="b5" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Pinpoint Shooter: Maintain a total average of over 70%</p>
         </div>
             </div>

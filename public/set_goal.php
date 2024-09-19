@@ -27,6 +27,12 @@ function setDailyGoal($conn, $user_id, $shots_goal) {
     $stmt = $conn->prepare($query);
     $stmt->bind_param("iii", $user_id, $shots_goal, $shots_goal);
     $stmt->execute();
+
+    $query = "UPDATE user_shots SET goal = ? WHERE user_id = ? AND shot_date = CURDATE()";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("ii",  $shots_goal, $user_id);
+    $stmt->execute();
+
     $stmt->close();
     header("Location: home.php");
 }

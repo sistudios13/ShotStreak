@@ -40,12 +40,12 @@ if ($_SESSION['type'] != 'user') {
         </div>
     </nav>
         <!-- Registration Form Container -->
-        <div class="flex flex-col items-center gap-12 justify-center min-h-screen">
+        <div class="flex flex-col-reverse items-center gap-12 justify-center min-h-screen">
             <div class="bg-white dark:bg-darkslate p-8 mt-6 rounded-lg shadow-lg max-w-md w-full">
                 <!-- Logo -->
                 <div class="text-center mb-6">
-                    <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
-                    <h1 class="text-2xl font-bold dark:text-lightgray text-almostblack mt-4">Today's Shots</h1>
+                <span class="text-coral text-3xl font-bold">OR</span>
+                    <h1 class="text-2xl font-bold dark:text-lightgray text-almostblack mt-4">Enter manually:</h1>
                 </div>
     
                 <!-- Registration Form -->
@@ -74,13 +74,13 @@ if ($_SESSION['type'] != 'user') {
             <div class="bg-white dark:bg-darkslate p-8 rounded-lg shadow-lg max-w-md w-full">
                 <!-- Logo -->
                 <div class="text-center mb-6">
-                    <span class="text-coral text-3xl font-bold">OR</span>
+                <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
                     <h1 class="text-2xl dark:text-lightgray font-bold text-almostblack mt-4">Shot Counter</h1>
                 </div>
     
 
                     <!-- Try Button -->
-                    <a href="counterbutton.php"><button class="w-full bg-coral dark:text-lightgray text-white py-2 rounded-md font-semibold hover:bg-coralhov transition-colors">Try it</button></a>
+                    <a href="counterbutton.php"><button class="w-full bg-coral dark:text-lightgray text-white py-2 rounded-md font-semibold hover:bg-coralhov transition-colors">Start Counting</button></a>
 
                 
 
