@@ -6,30 +6,25 @@ if (!isset($_SESSION['loggedin'])) {
 	header('Location: index.html');
 	exit;
 }
-
 if ($_SESSION['type'] != 'coach') {
 	header('Location: index.html');
 	exit;
 }
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - ShotStreak</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Shot Goal - ShotStreak</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../tailwindextras.js"></script>
-    
     <link rel="stylesheet" href="main.css">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
-</head>
-<body class="bg-lightgray dark:bg-almostblack min-h-screen">
-
+    <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon"></head>
+    <body class="bg-lightgray dark:bg-almostblack">
     <!-- Navbar -->
     <nav class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
@@ -42,38 +37,38 @@ if ($_SESSION['type'] != 'coach') {
             </div>
         </div>
     </nav>
+
+        <!-- Registration Form Container -->
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white dark:bg-darkslate p-8 rounded-lg shadow-lg max-w-md w-full">
+                <!-- Logo -->
+                <div class="text-center mb-6">
+                    <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
+                    <h1 class="text-2xl font-bold text-almostblack dark:text-lightgray mt-4">Daily Shot Goal</h1>
+                </div>
     
-    <div class="container mx-auto px-6 py-8">
-        <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md flex flex-col gap-4">
-            <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Invite a Player</h3>
-            <div>
-            <form class="space-y-4" action="invite.php" method="POST" autocomplete="off">
-                    <!-- Name Input -->
-                    <div>
-                        <label for="player_name" class="block text-sm font-medium dark:text-lightgray text-gray-700">Player's Name:</label>
-                        <input type="text" name="player_name"  maxlength="255" class="mt-1 p-2 w-full border dark:border-lightgray rounded-md dark:text-lightgray dark:bg-darkslate dark: focus-visible:outline-coral" required>
-                    </div>
-
-
-
+                <!-- Registration Form -->
+                <form action="c_newgoal.php" method="POST" class="flex flex-col justify-center gap-4">
+                    
+                    <label for="shotgoal" class="block text-lg text-gray-700 dark:text-lightgray">Enter the new shot goal for your team:</label>
+                    <input type="number" name="shotgoal" id="shotgoal" placeholder="100" class="mt-1 p-2 w-10/12 dark:bg-darkslate dark:text-lightgray mx-auto border rounded-md focus-visible:outline-coral" required min="1" max="999">
     
-                    <!-- Email Input -->
-                    <div>
-                        <label for="player_email" class="block text-sm font-medium dark:text-lightgray text-gray-700">Player's Email</label>
-                        <input type="email" name="player_email"  class="mt-1 p-2 w-full border dark:border-lightgray rounded-md dark:text-lightgray dark:bg-darkslate focus-visible:outline-coral" required>
-                    </div>
     
-
     
                     <!-- Submit Button -->
-                    <button type="submit" class="w-full bg-coral md:hover:bg-coralhov text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Send Invite</button>
+                    <button type="submit" class="w-full dark:text-lightgray bg-coral text-white py-2 rounded-md font-semibold hover:bg-coralhov transition-colors">Submit</button>
                 </form>
+                
+                <!-- Already have an account -->
+                <div class="text-center mt-4">
+                    <p class="text-sm text-gray-600"> <a href="coach_dashboard.php" class="text-coral font-semibold">Back to Dashboard</a></p>
+                </div>
             </div>
         </div>
-
-    </div>
-
-    <script>
+        <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
+          <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
+        </footer>
+        <script>
         const themeToggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
 
@@ -92,5 +87,7 @@ if ($_SESSION['type'] != 'coach') {
             htmlElement.classList.add('dark');
         }
     </script>
-</body>
-</html>
+    </body>
+    </html>
+
+

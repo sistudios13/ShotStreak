@@ -6,7 +6,7 @@ if (!isset($_SESSION['loggedin'])) {
 	header('Location: index.html');
 	exit;
 }
-if ($_SESSION['type'] != 'user') {
+if ($_SESSION['type'] != 'player') {
 	header('Location: index.html');
 	exit;
 }
@@ -32,7 +32,7 @@ if ($_SESSION['type'] != 'user') {
             <div class="flex items-center gap-2">
                 <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
                 
-                <a href="profile.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Profile</a>
+                <a href="p_profile.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Profile</a>
                 <a href="logout.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Logout</a>
             </div>
         </div>
@@ -47,7 +47,7 @@ if ($_SESSION['type'] != 'user') {
                 </div>
     
                 <!-- Registration Form -->
-                <form action="input_daily.php" method="POST" class="flex flex-col justify-center gap-4">
+                <form action="p_input_daily.php" method="POST" class="flex flex-col justify-center gap-4">
                     <div>
                     <label for="shotstaken" class="block dark:text-lightgray text-lg text-gray-700">How many shots did you take?</label>
                     <input type="number" name="shotstaken" id="shotstaken" placeholder="100" class="mt-1 p-2 w-10/12 mx-auto border dark:bg-darkslate dark:text-lightgray rounded-md focus-visible:outline-coral" required min="1" max="999">
@@ -64,7 +64,7 @@ if ($_SESSION['type'] != 'user') {
                 
 
                 <div class="text-center mt-4">
-                    <p class="text-sm text-gray-600"> <a href="home.php" class="text-coral font-semibold">Back to Home</a></p>
+                    <p class="text-sm text-gray-600"> <a href="player_dashboard.php" class="text-coral font-semibold">Back to Dashboard</a></p>
                 </div>
             </div>
 
@@ -78,7 +78,7 @@ if ($_SESSION['type'] != 'user') {
     
 
                     <!-- Try Button -->
-                    <a href="counterbutton.php"><button class="w-full bg-coral dark:text-lightgray text-white py-2 rounded-md font-semibold hover:bg-coralhov transition-colors">Start Counting</button></a>
+                    <a href="p_counterbutton.php"><button class="w-full bg-coral dark:text-lightgray text-white py-2 rounded-md font-semibold hover:bg-coralhov transition-colors">Start Counting</button></a>
 
                 
 

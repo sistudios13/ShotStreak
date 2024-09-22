@@ -19,9 +19,7 @@ if ($_SESSION['type'] != 'user') {
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shot Goal - ShotStreak</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
@@ -53,7 +51,7 @@ if ($_SESSION['type'] != 'user') {
                 <form action="set_goal.php" method="POST" class="flex flex-col justify-center gap-4">
                     
                     <label for="shotgoal" class="block text-lg text-gray-700 dark:text-lightgray">Enter your shot goal:</label>
-                    <input type="number" name="shotgoal" id="shotgoal" placeholder="100" class="mt-1 p-2 w-10/12 dark:bg-lightgray mx-auto border rounded-md focus-visible:outline-coral" required min="1" max="999">
+                    <input type="number" name="shotgoal" id="shotgoal" placeholder="100" class="mt-1 p-2 w-10/12 dark:bg-darkslate dark:text-lightgray mx-auto border rounded-md focus-visible:outline-coral" required min="1" max="999">
     
     
     

@@ -1,5 +1,17 @@
 <?php
+// We need to use sessions, so you should always start sessions using the below code.
 session_start();
+// If the user is not logged in redirect to the login page...
+if (!isset($_SESSION['loggedin'])) {
+	header('Location: index.html');
+	exit;
+}
+
+if ($_SESSION['type'] != 'coach') {
+	header('Location: index.html');
+	exit;
+}
+
 $DATABASE_HOST = 'localhost';
 $DATABASE_USER = 'root';
 $DATABASE_PASS = '';
@@ -130,12 +142,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: coach_dashboard.php");
         }
         else {
-            echo "Email failed to send";
+            header('Location: error.php?a=Email failed to send&b=inviteplayer.php');
+            exit();
         }
 
         
     } else {
-        echo "An error occured";
+        header('Location: error.php?a=An error occurred&b=coach_dashboard.php');
+            exit();
     }
 }
 ?>

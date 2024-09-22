@@ -24,15 +24,15 @@ if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['emai
 // Parameters
 
 if (preg_match('/^[a-zA-Z0-9]+$/', $_POST['username']) == 0) {
-    header('Location: errors/invaliduser-register.html');
-    exit();
+    header('Location: error.php?a=Invalid User&b=register.html');
+            exit();
 }
 if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
 	exit('Password must be between 5 and 20 characters long!');
 }
 
-if (strlen($_POST['email']) > 50) {
-	exit('Email must be less than 50 characters long!');
+if (strlen($_POST['email']) > 200) {
+	exit('Email must be less than 200 characters long!');
 }
 //
 if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? OR email = ?')) {
@@ -43,8 +43,9 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? 
 	// Store the result so we can check if the account exists in the database.
 	if ($stmt->num_rows > 0) {
 		// Username already exists
-		header('Location: errors/userexists-register.html');
-        exit();
+		header('Location: error.php?a=User already exists&b=register.html');
+            exit();
+        
 	} else {
 		// Username doesn't exists, insert new account
         if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user_type) VALUES (?, ?, ?, "user")')) {
@@ -67,7 +68,8 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? 
 		$stmt_goal = $con->prepare('INSERT INTO user_goals (user_id, goal_date, shots_goal) VALUES (?, CURDATE(), 100, "master")');
 		$stmt_goal->bind_param('i', $userid);
 		$stmt_goal->execute();
-		header('Location: errors/success-register.html');
+		header('Location: success.php?b=login.html');
+            exit();
 		}
 		
 

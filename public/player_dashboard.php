@@ -24,23 +24,36 @@ if (mysqli_connect_errno()) {
 
 
 //Fetch player id
-$pid = $conn->prepare('SELECT id from players WHERE email = ?');
+$pid = $conn->prepare('SELECT id FROM players WHERE email = ?');
 $pid->bind_param('s', $_SESSION['email']);
 $pid->execute();
 $pidinfo = $pid->get_result();
 $user_id = $pidinfo->fetch_assoc()['id'];
 
+session_regenerate_id();
+$_SESSION['player_id'] = $user_id;
+
 $user_name = $_SESSION['name'];
 
 
+$cid = $conn->prepare('SELECT coach_id FROM players WHERE id = ?');
+$cid->bind_param('i', $user_id);
+$cid->execute();
+$cidinfo = $cid->get_result();
+$coach_id = $cidinfo->fetch_assoc()['coach_id'];
+
+session_regenerate_id();
+$_SESSION['coach_id'] = $coach_id;
+
 // Fetch today's shot goal
 $date_today = date('Y-m-d');
-$sql_today_goal = "SELECT daily_goal FROM goals WHERE player_id = ?";
+$sql_today_goal = "SELECT goal FROM coaches WHERE coach_id = ?";
 $stmt = $conn->prepare($sql_today_goal);
-$stmt->bind_param("i", $user_id);
+$stmt->bind_param("i", $coach_id);
 $stmt->execute();
 $result_today_goal = $stmt->get_result();
-$today_goal = $result_today_goal->fetch_assoc()['daily_goal'] ?? 0;
+$today_goal = $result_today_goal->fetch_assoc()['goal'] ?? 0;
+
 
 // Fetch today's shots made
 $sql_today_shots = "SELECT SUM(shots_made) AS total_shots_made FROM shots WHERE player_id = ? AND shot_date = ?";
@@ -224,11 +237,7 @@ if ($streak >= 3) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - ShotStreak</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-        rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">

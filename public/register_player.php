@@ -44,7 +44,8 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE email = ?')) 
 	if ($stmt->num_rows > 0) {
 		// Username already exists
 		
-        exit('User already exists');
+        header('Location: error.php?a=User already exists&b=index.html');
+            exit();
 	} else {
 
 // Prepare SQL and bind parameters
@@ -91,7 +92,8 @@ else {
 
 catch (PDOException $e) {
     if ($e->getCode() == 23000) { // Duplicate entry
-    die("This email is already registered."); //ERROR PAGE
+        header('Location: error.php?a=User already exists&b=index.html');
+        exit(); //ERROR PAGE
     } else {
     die("An error occurred: " . $e->getMessage());
     }

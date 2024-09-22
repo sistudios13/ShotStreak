@@ -116,11 +116,7 @@ $stmt2->close();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - ShotStreak</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-        rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="../tailwindextras.js"></script>
 
@@ -182,10 +178,10 @@ $stmt2->close();
             <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md">
                 <div>
                     <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Team Goal</h3>
-                    <h3 class="text-xl font-semibold text-coral mb-4"><?php echo $goal; ?></h3>
+                    <h3 class="text-2xl font-bold text-coral mb-4"><?php echo $goal; ?></h3>
                     <p class="text-almostblack dark:text-lightgray">Each player needs to take <b class="text-coral"><?php echo $goal; ?></b> shots per day</p>
                 </div>
-                <a href="inviteplayer.php"><button
+                <a href="c_changegoal.php"><button
                         class=" text-white mt-6 p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Change Goal</button></a>
 
 

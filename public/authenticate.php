@@ -14,7 +14,8 @@ if ( mysqli_connect_errno() ) {
 // Now we check if the data from the login form was submitted, isset() will check if the data exists.
 if (!isset($_POST['email'], $_POST['password']) ) {
 	// Could not get the data that should have been sent.
-	exit('Please fill both the username and password fields!');
+    header('Location: error.php?a=Please fill both the username and password fields!&b=login.html');
+    exit('');
 }
 // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
 if ($stmt = $con->prepare('SELECT id, password, username, user_type FROM accounts WHERE email = ?')) {
@@ -58,14 +59,14 @@ if ($stmt = $con->prepare('SELECT id, password, username, user_type FROM account
         } else {
             // Incorrect password
             
-            header('Location: errors/incorrect-login.html');
+            header('Location: error.php?a=Invalid email or password&b=login.html');
             exit();
             
         }
     } else {
         // Incorrect username
-        header('Location: errors/incorrect-login.html');
-        exit();
+        header('Location: error.php?a=Invalid email or password&b=login.html');
+            exit();
     }
 
 	$stmt->close();

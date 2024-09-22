@@ -6,7 +6,7 @@ if (!isset($_SESSION['loggedin'])) {
 	header('Location: index.html');
 	exit;
 }
-if ($_SESSION['type'] != 'user') {
+if ($_SESSION['type'] != 'player') {
 	header('Location: index.html');
 	exit;
 }
@@ -41,7 +41,7 @@ if ($_SESSION['type'] != 'user') {
             <div class="flex items-center gap-2">
                 <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
                 
-                <a href="home.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Home</a>
+                <a href="player_dashboard.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Dashboard</a>
                 <a href="logout.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Logout</a>
             </div>
         </div>
@@ -58,7 +58,7 @@ if ($_SESSION['type'] != 'user') {
 <div class="bg-white dark:text-lightgray dark:bg-darkslate p-8 rounded-lg shadow-md mt-6 mx-auto w-11/12 max-w-md text-center">
         <h1 class="text-3xl font-bold text-coral mb-6">Shot Counter</h1>
 
-        <form action="input_daily.php" method="POST">
+        <form action="p_input_daily.php" method="POST">
             <div class="flex justify-center gap-3">
 
             
@@ -101,7 +101,7 @@ if ($_SESSION['type'] != 'user') {
             </div>
         </form>
         <div class="text-center mt-4">
-                    <p class="text-sm text-gray-600"> <a href="home.php" class="text-coral font-semibold">Back to Home</a></p>
+                    <p class="text-sm text-gray-600"> <a href="player_dashboard.php" class="text-coral font-semibold">Back to Dashboard</a></p>
                 </div>
     </div>
     <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
