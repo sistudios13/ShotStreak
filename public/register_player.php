@@ -35,6 +35,18 @@ die("Invalid email format."); //ADD ERROR PAGE
 // Hash the password
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
+if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE email = ?')) {
+	// Bind parameters (s = string, i = int, b = blob, etc), hash the password using the PHP password_hash function.
+	$stmt->bind_param('s',  $_POST['email']);
+	$stmt->execute();
+	$stmt->store_result();
+	// Store the result so we can check if the account exists in the database.
+	if ($stmt->num_rows > 0) {
+		// Username already exists
+		
+        exit('User already exists');
+	} else {
+
 // Prepare SQL and bind parameters
 $stmt = $pdo->prepare("INSERT INTO players (player_name, email, password, coach_id) VALUES (:player_name, :email,
 :password, :coach_id)");
@@ -48,17 +60,7 @@ try {
 $stmt->execute();
 
 
-if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE email = ?')) {
-	// Bind parameters (s = string, i = int, b = blob, etc), hash the password using the PHP password_hash function.
-	$stmt->bind_param('s',  $_POST['email']);
-	$stmt->execute();
-	$stmt->store_result();
-	// Store the result so we can check if the account exists in the database.
-	if ($stmt->num_rows > 0) {
-		// Username already exists
-		
-        exit('User already exists');
-	} else {
+
 
 // add the player information to the accounts tables
 if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user_type) VALUES (?, ?, ?, "player")')) {
@@ -85,19 +87,20 @@ else {
     // Something is wrong with the SQL statement, so you must check to make sure your accounts table exists with all three fields.
     echo 'Could not prepare statement!'; // ERROR PAGE
 }
-}
+} 
+
+catch (PDOException $e) {
+    if ($e->getCode() == 23000) { // Duplicate entry
+    die("This email is already registered."); //ERROR PAGE
+    } else {
+    die("An error occurred: " . $e->getMessage());
+    }
+    }
+    }
 //
 }
-else {
-    exit('ERROR');}
 
-} catch (PDOException $e) {
-if ($e->getCode() == 23000) { // Duplicate entry
-die("This email is already registered."); //ERROR PAGE
-} else {
-die("An error occurred: " . $e->getMessage());
-}
-}
-}
+
+} 
 
 

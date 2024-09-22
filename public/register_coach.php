@@ -36,20 +36,6 @@ die("Invalid email format."); //ADD ERROR PAGE
 // Hash the password
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-// Prepare SQL and bind parameters
-$stmt = $pdo->prepare("INSERT INTO coaches (coach_name, email, password, team_name) VALUES (:coach_name, :email,
-:password, :team_name)");
-$stmt->bindParam(':coach_name', $coach_name);
-$stmt->bindParam(':email', $email);
-$stmt->bindParam(':password', $hashed_password);
-$stmt->bindParam(':team_name', $team_name);
-
-// Execute the statement
-try {
-$stmt->execute();
-header("Location: coachlog.html");
-
-
 if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? OR email = ?')) {
 	// Bind parameters (s = string, i = int, b = blob, etc), hash the password using the PHP password_hash function.
 	$stmt->bind_param('ss', $_POST['coach_name'], $_POST['email']);
@@ -61,6 +47,21 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? 
 		
         exit('User already exists');
 	} else {
+
+// Prepare SQL and bind parameters
+$stmt = $pdo->prepare("INSERT INTO coaches (coach_name, email, password, team_name, goal) VALUES (:coach_name, :email,
+:password, :team_name, 100)");
+$stmt->bindParam(':coach_name', $coach_name);
+$stmt->bindParam(':email', $email);
+$stmt->bindParam(':password', $hashed_password);
+$stmt->bindParam(':team_name', $team_name);
+
+// Execute the statement
+try {
+$stmt->execute();
+
+
+
 
 
 // add the coach information to the accounts tables
@@ -77,16 +78,18 @@ else {
     echo 'Could not prepare statement!'; // ERROR PAGE
 }
 }
+
+catch (PDOException $e) {
+    if ($e->getCode() == 23000) { // Duplicate entry
+    die("This email is already registered."); //ERROR PAGE
+    } else {
+    die("An error occurred: " . $e->getMessage());
+    }
+    }
+    }
+
 }
-else {
-    exit('ERROR');}
+
 //
 
-} catch (PDOException $e) {
-if ($e->getCode() == 23000) { // Duplicate entry
-die("This email is already registered."); //ERROR PAGE
-} else {
-die("An error occurred: " . $e->getMessage());
-}
-}
-}
+} 
