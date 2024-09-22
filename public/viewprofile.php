@@ -29,7 +29,9 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
-
+if (!isset($user)) {
+    exit("User does not exist");
+}
 
 
 
@@ -46,7 +48,7 @@ $stmt->execute();
 $result_stats = $stmt->get_result();
 $stats_data = $result_stats->fetch_assoc();
 
-$shooting_percentage = $stats_data['total_shots'] / $stats_data['total_taken'] * 100;
+$shooting_percentage = $stats_data['total_shots'] / ($stats_data['total_taken'] + 1) * 100;
 
 // Badges
 

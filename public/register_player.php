@@ -75,6 +75,12 @@ if ($stmt = $con->prepare('UPDATE invitations SET status = "accepted" WHERE toke
     header('Location: login.html');
 }
 
+if ($stmt = $con->prepare(query: 'INSERT INTO goals (player_id, daily_goal)')) {
+    $stmt->bind_param('s', $token);
+    $stmt->execute();
+    header('Location: login.html');
+}
+
 else {
     // Something is wrong with the SQL statement, so you must check to make sure your accounts table exists with all three fields.
     echo 'Could not prepare statement!'; // ERROR PAGE

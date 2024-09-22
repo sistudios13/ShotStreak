@@ -29,12 +29,12 @@ $user_name = $_SESSION['name'];
 
 // Fetch today's shot goal
 $date_today = date('Y-m-d');
-$sql_today_goal = "SELECT goal FROM user_shots WHERE user_id = ? AND shot_date = CURDATE()";
+$sql_today_goal = "SELECT shots_goal FROM user_goals WHERE user_id = ? ";
 $stmt = $conn->prepare($sql_today_goal);
 $stmt->bind_param("i", $user_id,);
 $stmt->execute();
 $result_today_goal = $stmt->get_result();
-$today_goal = $result_today_goal->fetch_assoc()['goal'] ?? 0;
+$today_goal = $result_today_goal->fetch_assoc()['shots_goal'] ?? 0;
 
 // Fetch today's shots made
 $sql_today_shots = "SELECT SUM(shots_made) AS total_shots_made FROM user_shots WHERE user_id = ? AND shot_date = ?";
@@ -197,7 +197,7 @@ if ($result->num_rows > 0) {
 //Streak
 
 // Fetch the user's daily shot records and goal data from the database
-$query = "SELECT shots_taken, shot_date FROM user_shots WHERE user_id = ? ORDER BY shot_date DESC";
+$query = "SELECT shots_taken, shot_date, goal FROM user_shots WHERE user_id = ? ORDER BY shot_date DESC";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -210,9 +210,10 @@ $previous_day = null;
 while ($row = $result->fetch_assoc()) {
     $shots_taken = $row['shots_taken'];
     $shot_date = $row['shot_date'];
+    $goal = $row['goal'];
     
     // If the user met their goal on that day
-    if ($shots_taken >= $today_goal) {
+    if ($shots_taken >= $goal) {
         // If this is the first day we're checking
         if ($previous_day === null) {
             $streak++;  // Start the streak
@@ -288,7 +289,7 @@ if ($streak >= 3) {
             
             <div class="flex flex-col-reverse md:flex-row md:justify-between">
                 <p class="mt-2">Here's your progress for today:</p>
-                <a href="dailyshots.php"><button class=" text-white font-bold mt-4 p-3 md:px-6 md:py-4 w-fit mx-auto border-2 border-golden md:hover:bg-golden md:hover:text-almostblack transition-colors rounded-md ">Input Today's Shots</button></a>
+                <a href="dailyshots.php"><button class=" text-white md:-translate-y-5 font-bold mt-4 p-3 md:px-6 md:py-4 w-fit mx-auto border-2 border-golden md:hover:bg-golden md:hover:text-almostblack transition-colors rounded-md ">Input Today's Shots</button></a>
             </div>
             
             

@@ -51,7 +51,7 @@ if ($stmt = $con->prepare('SELECT id, password, username, user_type FROM account
             }
 
             if ($type === 'player') {
-                
+                $_SESSION['email'] = $_POST['email'];
                 $_SESSION['type'] = $type;
                 header('Location: player_dashboard.php');
             }
