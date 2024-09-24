@@ -5,4 +5,4 @@
  For players and coaches
  <br>
  <br>
- <a href="https://shotstreak.simonsites.com">Shotstreak</a>
+ <a href="https://shotstreak.simonsites.com" target="_blank">Shotstreak</a>
