@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Success - Shotstreak</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../tailwindextras.js"></script>
+    <script src="tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
     <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
 

@@ -168,7 +168,7 @@ $stmt2->close();
                     <li class="flex justify-between text-almostblack dark:text-lightgray">
                         <span>Team Shooting:</span>
                         <span
-                            class="font-semibold text-dark-gray"><?php echo round($stats_data['total_shots'] / $stats_data['total_taken'] * 100, 0) ?>%
+                            class="font-semibold text-dark-gray"><?php if($stats_data['total_taken'] == 0) {echo 0;} else {echo round($stats_data['total_shots'] / $stats_data['total_taken'] * 100, 0);} ?>%
                             Accuracy</span>
                     </li>
 

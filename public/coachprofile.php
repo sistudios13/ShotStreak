@@ -81,6 +81,13 @@ $team_name = $a->fetch_assoc()['team_name'];
                         <p class="text-lg font-bold text-coral">Team Name:</p>
                         <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($team_name, ENT_QUOTES)?></p>
                     </div>
+                    <div x-data="{de: false}">
+                    <a @click="de = !de" class="text-lg text-coral font-bold mb-3 cursor-pointer">Delete Account</a>
+                        <form action="delete_account.php"  method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.')" x-show="de" x-collapse>
+                            <input type="hidden" name="user_type" value="<?php echo $_SESSION["type"]; ?>"> <!-- 'coach', 'player', or 'user' -->
+                            <button type="submit" class="bg-red-600 text-white mt-2 p-1 px-2 rounded">Delete Account</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
