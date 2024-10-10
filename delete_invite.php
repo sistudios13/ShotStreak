@@ -12,15 +12,7 @@ if ($_SESSION['type'] != 'coach') {
 	exit;
 }
 
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'u937462812_shotstreak';
-$DATABASE_PASS = 'Shott10?';
-$DATABASE_NAME = 'u937462812_shotstreak';
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-if (mysqli_connect_errno()) {
-	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
-}
-
+require 'db/db_connect.php';
 
 $stmt = $con->prepare('UPDATE invitations SET status = "revoked" WHERE token = ?');
 $stmt->bind_param('s', $_POST['token']);
