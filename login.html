@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Login - ShotStreak</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - ShotStreak</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
 
 
-        <link rel="stylesheet" href="main.css">
-        <link rel="icon" type="image/png" href="assets/favicon-48x48.png" sizes="48x48" />
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" type="image/png" href="assets/favicon-48x48.png" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="shortcut icon" href="assets/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Shotstreak" />
     <link rel="manifest" href="assets/site.webmanifest" />
-    </head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
     <body class="bg-light-gray">
 
         <!-- Registration Form Container -->
-        <div class="flex items-center justify-center min-h-screen">
+        <div class="flex items-center justify-center min-h-screen" x-data="{loading : false}">
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
                 <!-- Logo -->
                 <div class="text-center mb-6">
@@ -28,7 +29,7 @@
                 </div>
     
                 <!-- Registration Form -->
-                <form id="registerForm" class="space-y-4" action="authenticate.php" method="post" autocomplete="on">
+                <form id="registerForm" x-on:submit.prevent="loading = true; setTimeout(() => $el.submit(), 500)" class="space-y-4" action="authenticate.php" method="post" autocomplete="on">
                     <!-- Name Input -->
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
@@ -47,7 +48,7 @@
 
     
                     <!-- Submit Button -->
-                    <button type="submit" class="w-full bg-coral md:hover:bg-coralhov text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Login</button>
+                    <button type="submit"  class="w-full bg-coral md:hover:bg-coralhov text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Login</button>
                 </form>
     
                 <!-- Already have an account -->
@@ -55,6 +56,9 @@
                     <p class="text-sm text-gray-600">Don't have an account? <a href="register.html" class="text-coral font-semibold">Register</a></p>
                     <p class="text-sm text-gray-600"><a href="resetpassword.html" class="text-coral font-semibold">Forgot Password?</a></p>
                 </div>
+            </div>
+            <div class="fixed top-1/2 " x-show="loading">
+                <svg  width="40" height="40" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_qM83{animation:spinner_8HQG 1.05s infinite}.spinner_oXPr{animation-delay:.1s}.spinner_ZTLf{animation-delay:.2s}@keyframes spinner_8HQG{0%,57.14%{animation-timing-function:cubic-bezier(0.33,.66,.66,1);transform:translate(0)}28.57%{animation-timing-function:cubic-bezier(0.33,0,.66,.33);transform:translateY(-6px)}100%{transform:translate(0)}}</style><circle class="spinner_qM83" fill="#ff6f61" cx="4" cy="12" r="3"/><circle fill="#ff6f61" class="spinner_qM83 spinner_oXPr" cx="12" cy="12" r="3"/><circle fill="#ff6f61" class="spinner_qM83 spinner_ZTLf" cx="20" cy="12" r="3"/></svg>
             </div>
         </div>
         <footer class="bg-darkslate py-8 text-white">
