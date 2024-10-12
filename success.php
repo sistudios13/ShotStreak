@@ -7,7 +7,12 @@
 <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
-    <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
+    <link rel="icon" type="image/png" href="assets/favicon-48x48.png" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="shortcut icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Shotstreak" />
+    <link rel="manifest" href="assets/site.webmanifest" />
 
     <script>
         function next() {document.location.href = "<?php echo $_GET['b'] ?? 'index.html' ?>";}setTimeout(() => next(),  2000);

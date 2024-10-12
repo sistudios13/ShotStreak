@@ -245,7 +245,12 @@ if ($streak >= 3) {
 
     <link rel="stylesheet" href="main.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="shortcut icon" href="assets/isoLogo.svg" type="image/x-icon">
+    <link rel="icon" type="image/png" href="assets/favicon-48x48.png" sizes="48x48" />
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="shortcut icon" href="assets/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Shotstreak" />
+    <link rel="manifest" href="assets/site.webmanifest" />
     <script src="https://cdn.jsdelivr.net/npm/preline@2.4.1/dist/preline.min.js"></script>
     <script>
         var time = 2;
