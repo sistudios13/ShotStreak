@@ -34,6 +34,10 @@ $cid = $conn->prepare('SELECT coach_id FROM players WHERE id = ?');
 $cid->bind_param('i', $user_id);
 $cid->execute();
 $cidinfo = $cid->get_result();
+if ($cidinfo -> num_rows == 0) {
+    header('Location: error.php?a=Your coach has deleted the team&b=delete_account.php');
+    exit();
+}
 $coach_id = $cidinfo->fetch_assoc()['coach_id'];
 
 session_regenerate_id();
