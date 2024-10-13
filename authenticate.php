@@ -5,7 +5,7 @@ require 'db/db_connect.php';
 // Now we check if the data from the login form was submitted, isset() will check if the data exists.
 if (!isset($_POST['email'], $_POST['password']) ) {
 	// Could not get the data that should have been sent.
-    header('Location: error.php?a=Please fill both the username and password fields!&b=login.html');
+    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Please fill both the username and password fields!&b=login.html', 700);</script>";
     exit('');
 }
 // Prepare our SQL, preparing the SQL statement will prevent SQL injection.
@@ -32,31 +32,30 @@ if ($stmt = $con->prepare('SELECT id, password, username, user_type FROM account
             if ($type === 'user') {
                 
                 $_SESSION['type'] = $type;
-                header('Location: home.php');
+                echo "<script>setTimeout(() => window.location.href = 'home.php', 700);</script>";
             }
 
             if ($type === 'coach') {
                 
                 $_SESSION['type'] = $type;
                 $_SESSION['email'] = $_POST['email'];
-                header('Location: coach_dashboard.php');
+                echo "<script>setTimeout(() => window.location.href = 'coach_dashboard.php', 700);</script>";
             }
 
             if ($type === 'player') {
                 $_SESSION['email'] = $_POST['email'];
                 $_SESSION['type'] = $type;
-                header('Location: player_dashboard.php');
+                echo "<script>setTimeout(() => window.location.href = 'player_dashboard.php', 700);</script>";
             }
         } else {
             // Incorrect password
-            
-            header('Location: error.php?a=Invalid email or password&b=login.html');
+            echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid email or password&b=login.html', 700);</script>";
             exit();
             
         }
     } else {
         // Incorrect username
-        header('Location: error.php?a=Invalid email or password&b=login.html');
+            echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid email or password&b=login.html', 700);</script>";
             exit();
     }
 
