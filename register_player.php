@@ -37,9 +37,8 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE email = ?')) 
 	// Store the result so we can check if the account exists in the database.
 	if ($stmt->num_rows > 0) {
 		// Username already exists
-		
-        header('Location: error.php?a=User already exists&b=index.html');
-            exit();
+		echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=index.html', 700);</script>";
+        exit();
 	} else {
 
 // Prepare SQL and bind parameters
@@ -69,14 +68,11 @@ if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user
 if ($stmt = $con->prepare('UPDATE invitations SET status = "accepted" WHERE token = ?')) {
     $stmt->bind_param('s', $token);
     $stmt->execute();
-    header('Location: login.html');
+    echo "<script>setTimeout(() => window.location.href = 'success.php?b=login.html', 700);</script>";
+
 }
 
-if ($stmt = $con->prepare(query: 'INSERT INTO goals (player_id, daily_goal)')) {
-    $stmt->bind_param('s', $token);
-    $stmt->execute();
-    header('Location: login.html');
-}
+
 
 else {
     // Something is wrong with the SQL statement, so you must check to make sure your accounts table exists with all three fields.
@@ -86,7 +82,7 @@ else {
 
 catch (PDOException $e) {
     if ($e->getCode() == 23000) { // Duplicate entry
-        header('Location: error.php?a=User already exists&b=index.html');
+        echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=index.html', 700);</script>";
         exit(); //ERROR PAGE
     } else {
     die("An error occurred: " . $e->getMessage());

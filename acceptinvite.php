@@ -1,6 +1,7 @@
 <?php
 
 require 'db/db_connect.php';
+$conn = $con;
 
 
 // Get the token from the URL
@@ -54,11 +55,18 @@ if ($result->num_rows === 1) {
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Shotstreak" />
     <link rel="manifest" href="assets/site.webmanifest" />
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org"></script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
     </head>
     <body class="bg-light-gray">
 
         <!-- Registration Form Container -->
-        <div class="flex items-center justify-center min-h-screen">
+        <div class="flex items-center justify-center min-h-screen" x-data="{loading : false}">
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
                 <!-- Logo -->
                 <div class="text-center mb-6">
@@ -67,7 +75,7 @@ if ($result->num_rows === 1) {
                 </div>
     
                 <!-- Registration Form -->
-                <form id="registerForm" class="space-y-4" action="register_player.php" method="POST" autocomplete="off">
+                <form hx-post="register_player.php" hx-trigger="submit" hx-target="#response" hx-swap="innerHTML" @submit="loading = true" class="space-y-4" autocomplete="off">
                     <input type="hidden" name="coach_id" value="<?php echo htmlspecialchars($coach_id); ?>">
                     <input type="hidden" name="invite_token" value="<?php echo htmlspecialchars($token); ?>">
                 <!-- Name Input -->
@@ -93,6 +101,13 @@ if ($result->num_rows === 1) {
                 </form>
     
                 
+            </div>
+            <!-- Response Div -->
+            <div id="response"></div>
+
+
+            <div class="fixed top-1/2 " x-show="loading" x-cloak>
+                <svg  width="40" height="40" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_qM83{animation:spinner_8HQG 1.05s infinite}.spinner_oXPr{animation-delay:.1s}.spinner_ZTLf{animation-delay:.2s}@keyframes spinner_8HQG{0%,57.14%{animation-timing-function:cubic-bezier(0.33,.66,.66,1);transform:translate(0)}28.57%{animation-timing-function:cubic-bezier(0.33,0,.66,.33);transform:translateY(-6px)}100%{transform:translate(0)}}</style><circle class="spinner_qM83" fill="#ff6f61" cx="4" cy="12" r="3"/><circle fill="#ff6f61" class="spinner_qM83 spinner_oXPr" cx="12" cy="12" r="3"/><circle fill="#ff6f61" class="spinner_qM83 spinner_ZTLf" cx="20" cy="12" r="3"/></svg>
             </div>
         </div>
         <footer class="bg-darkslate py-8 text-white">
