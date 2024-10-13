@@ -1,26 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Register - ShotStreak</title>
-        <script src="https://cdn.tailwindcss.com"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - ShotStreak</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
-
-        
-
-        <link rel="stylesheet" href="main.css">
-        <link rel="icon" type="image/png" href="assets/favicon-48x48.png" sizes="48x48" />
+    <link rel="stylesheet" href="main.css">
+    <link rel="icon" type="image/png" href="assets/favicon-48x48.png" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
     <link rel="shortcut icon" href="assets/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Shotstreak" />
     <link rel="manifest" href="assets/site.webmanifest" />
-    </head>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org"></script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+</head>
     <body class="bg-light-gray">
 
         <!-- Registration Form Container -->
-        <div class="flex items-center justify-center min-h-screen">
+        <div class="flex items-center justify-center min-h-screen" x-data="{loading : false}">
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
                 <!-- Logo -->
                 <div class="text-center mb-6">
@@ -29,7 +33,7 @@
                 </div>
     
                 <!-- Registration Form -->
-                <form id="registerForm" class="space-y-4" action="register_coach.php" method="post" autocomplete="off">
+                <form hx-post="register_coach.php" hx-trigger="submit" hx-target="#response" hx-swap="innerHTML" @submit="loading = true" class="space-y-4" autocomplete="off">
                     <!-- Name Input -->
                     <div>
                         <label for="coach_name" class="block text-sm font-medium text-gray-700">Full Name</label>
@@ -52,11 +56,6 @@
                         <input type="password" name="password"  id="password" minlength="5" maxlength="20" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
                     </div>
     
-                    <!-- Confirm Password Input -->
-                    <div>
-                        <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                        <input type="password" id="confirm-password" name="confirm-password" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
-                    </div>
     
                     <!-- Submit Button -->
                     <button type="submit" class="w-full md:hover:bg-coralhov bg-coral text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Register</button>
@@ -67,6 +66,14 @@
                     <p class="text-sm text-gray-600">Already have an account? <a href="login.html" class="text-coral font-semibold">Log in</a></p>
                     <p class="text-sm text-gray-600">Not a coach? <a href="register.html" class="text-coral font-semibold">Create an account</a></p>
                 </div>
+                
+            </div>
+            <!-- Response Div -->
+            <div id="response"></div>
+
+
+            <div class="fixed top-1/2 " x-show="loading" x-cloak>
+                <svg  width="40" height="40" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_qM83{animation:spinner_8HQG 1.05s infinite}.spinner_oXPr{animation-delay:.1s}.spinner_ZTLf{animation-delay:.2s}@keyframes spinner_8HQG{0%,57.14%{animation-timing-function:cubic-bezier(0.33,.66,.66,1);transform:translate(0)}28.57%{animation-timing-function:cubic-bezier(0.33,0,.66,.33);transform:translateY(-6px)}100%{transform:translate(0)}}</style><circle class="spinner_qM83" fill="#ff6f61" cx="4" cy="12" r="3"/><circle fill="#ff6f61" class="spinner_qM83 spinner_oXPr" cx="12" cy="12" r="3"/><circle fill="#ff6f61" class="spinner_qM83 spinner_ZTLf" cx="20" cy="12" r="3"/></svg>
             </div>
         </div>
         <footer class="bg-darkslate py-8 text-white">
@@ -82,7 +89,6 @@
               </div>
             </div>
           </footer>
-        <script src="confirmpass.js"></script>
 
     </body>
     </html>

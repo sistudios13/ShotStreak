@@ -1,13 +1,6 @@
 <?php
 
-$DATABASE_HOST = 'localhost';
-$DATABASE_USER = 'u937462812_shotstreak';
-$DATABASE_PASS = 'Shott10?';
-$DATABASE_NAME = 'u937462812_shotstreak';
-$con = mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME);
-if (mysqli_connect_errno()) {
-	exit('Failed to connect to MySQL: ' . mysqli_connect_error());
-}
+require 'db/db_connect.php';
 
 // Connect to the database
 
@@ -28,7 +21,7 @@ $team_name = $_POST['team_name'];
 
 // Validate input
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    header('Location: error.php?a=Invalid registration&b=index.html');
+    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid registration&b=index.html', 700);</script>";
     exit(); 
 }
 
@@ -46,7 +39,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? 
 	if ($stmt->num_rows > 0) {
 		// Username already exists
 		
-        header('Location: error.php?a=User already exists&b=coachreg.html');
+        echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=coachreg.html', 700);</script>";
             exit();
 	} else {
 
@@ -72,7 +65,7 @@ if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
     $stmt->bind_param('sss', $coach_name, $password, $email);
     $stmt->execute();
-    header('Location: login.html');
+    echo "<script>setTimeout(() => window.location.href = 'success.php?b=login.html', 700);</script>";
 }
 
 else {
@@ -83,7 +76,7 @@ else {
 
 catch (PDOException $e) {
     if ($e->getCode() == 23000) { // Duplicate entry
-        header('Location: error.php?a=User already exists&b=coachreg.html');
+        echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=coachreg.html', 700);</script>";
         exit(); //ERROR PAGE
     } else {
     die("An error occurred: " . $e->getMessage());

@@ -16,8 +16,8 @@ if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['emai
 // Parameters
 
 if (preg_match('/^[a-zA-Z0-9]+$/', $_POST['username']) == 0) {
-    header('Location: error.php?a=Invalid User&b=register.html');
-            exit();
+	echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid User&b=register.html', 700);</script>";
+    exit();
 }
 if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
 	exit('Password must be between 5 and 20 characters long!');
@@ -35,7 +35,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? 
 	// Store the result so we can check if the account exists in the database.
 	if ($stmt->num_rows > 0) {
 		// Username already exists
-		header('Location: error.php?a=User already exists&b=register.html');
+		echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=register.html', 700);</script>";
             exit();
         
 	} else {
@@ -60,8 +60,8 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? 
 		$stmt_goal = $con->prepare('INSERT INTO user_goals (user_id, goal_date, shots_goal) VALUES (?, CURDATE(), 100)');
 		$stmt_goal->bind_param('i', $userid);
 		$stmt_goal->execute();
-		header('Location: success.php?b=login.html');
-            exit();
+		echo "<script>setTimeout(() => window.location.href = 'success.php?b=login.html', 700);</script>";
+        exit();
 		}
 		
 

@@ -87,11 +87,6 @@ if ($result->num_rows === 1) {
                         <input type="password" name="password"  id="password" minlength="5" maxlength="20" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
                     </div>
     
-                    <!-- Confirm Password Input -->
-                    <div>
-                        <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-                        <input type="password" id="confirm-password" name="confirm-password" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
-                    </div>
     
                     <!-- Submit Button -->
                     <button type="submit" class="w-full md:hover:bg-coralhov bg-coral text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Register</button>
@@ -113,7 +108,5 @@ if ($result->num_rows === 1) {
               </div>
             </div>
           </footer>
-        <script src="confirmpass.js"></script>
-
     </body>
     </html>

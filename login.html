@@ -17,6 +17,11 @@
     <link rel="manifest" href="assets/site.webmanifest" />
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/htmx.org"></script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 </head>
     <body class="bg-light-gray">
 
@@ -63,7 +68,7 @@
             <div id="response"></div>
 
 
-            <div class="fixed top-1/2 " x-show="loading">
+            <div class="fixed top-1/2 " x-show="loading" x-cloak>
                 <svg  width="40" height="40" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_qM83{animation:spinner_8HQG 1.05s infinite}.spinner_oXPr{animation-delay:.1s}.spinner_ZTLf{animation-delay:.2s}@keyframes spinner_8HQG{0%,57.14%{animation-timing-function:cubic-bezier(0.33,.66,.66,1);transform:translate(0)}28.57%{animation-timing-function:cubic-bezier(0.33,0,.66,.33);transform:translateY(-6px)}100%{transform:translate(0)}}</style><circle class="spinner_qM83" fill="#ff6f61" cx="4" cy="12" r="3"/><circle fill="#ff6f61" class="spinner_qM83 spinner_oXPr" cx="12" cy="12" r="3"/><circle fill="#ff6f61" class="spinner_qM83 spinner_ZTLf" cx="20" cy="12" r="3"/></svg>
             </div>
         </div>
