@@ -32,4 +32,4 @@ Have ideas, feature requests, or found a bug? Open an issue or drop your suggest
 
 ---
 
-![Shooting Streak Progress](https://www.shotstreak.simonsites.com/assets/isoLogo.svg) *(Add a cool image or logo here!)*
+![Shooting Streak Progress](https://www.shotstreak.simonsites.com/assets/isoLogo.svg)
