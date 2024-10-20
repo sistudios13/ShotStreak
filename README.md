@@ -32,4 +32,6 @@ Have ideas, feature requests, or found a bug? Open an issue or drop your suggest
 
 ---
 
+Lines of code: 6535 (no blanks)
+
 ![Shooting Streak Progress](https://www.shotstreak.simonsites.com/assets/isoLogo.svg)
