@@ -171,7 +171,7 @@ JOIN
 GROUP BY 
     u.id, u.username
 HAVING 
-    total_shots_taken > 10  -- Ensure users who have taken shots are considered
+    total_shots_taken > 100  -- Ensure users who have taken shots are considered
 ORDER BY 
     total_shots_taken DESC
 LIMIT 10;
