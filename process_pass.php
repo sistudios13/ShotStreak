@@ -24,6 +24,6 @@ if (isset($_POST['password'], $_POST['token'])) {
         
         header("Location: success.php?b=login.html");
     } else {
-        header("Location: error.php?a=(Invalid or expired token, try resetting again!)&b=login.html");
+        header("Location: error.php?a=Invalid or expired token, try resetting again!&b=login.html");
     }
 }

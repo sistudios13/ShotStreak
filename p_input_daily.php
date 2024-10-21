@@ -15,7 +15,10 @@ $conn = $con;
 $userid = $_SESSION['player_id'];
 $coach_id = $_SESSION['coach_id'];
 //Get current
-
+if ($_POST['shotsmade'] > $_POST['shotstaken']) {
+	header("Location: error.php?a=Shots made cannot me greater than shots taken!&b=home.php");
+	exit();
+}
 //Get master Goal
 $stmt = $conn->prepare('SELECT goal FROM coaches WHERE coach_id = ?');
 $stmt->bind_param('i', $coach_id);
