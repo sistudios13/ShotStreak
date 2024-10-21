@@ -235,9 +235,10 @@ if ($streak >= 3) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - ShotStreak</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/persist@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="icon" type="image/png" href="assets/favicon-48x48.png" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -484,6 +485,50 @@ if ($streak >= 3) {
         </div>
     </div>
     </div>
+    <div id="add-to" class="w-full hidden" x-data="{showModal : $persist(true)}">
+        <div x-show="showModal" class="t fixed top-0 lg:flex lg:justify-center backdrop-blur-sm lg:items-center p-4 w-full h-full">
+            <div class="bg-white dark:bg-darkslate shadow-lg lg:max-w-lg lg:max-h-[630px] h-full w-full rounded-md h-full">
+                <div class="flex justify-end p-4 w-full">
+                    <button @click="showModal = false">
+                        <svg fill="#000000" height="17" width="17px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            viewBox="0 0 460.775 460.775" xml:space="preserve">
+                            <path d="M285.08,230.397L456.218,59.27c6.076-6.077,6.076-15.911,0-21.986L423.511,4.565c-2.913-2.911-6.866-4.55-10.992-4.55
+                            c-4.127,0-8.08,1.639-10.993,4.55l-171.138,171.14L59.25,4.565c-2.913-2.911-6.866-4.55-10.993-4.55
+                            c-4.126,0-8.08,1.639-10.992,4.55L4.558,37.284c-6.077,6.075-6.077,15.909,0,21.986l171.138,171.128L4.575,401.505
+                            c-6.074,6.077-6.074,15.911,0,21.986l32.709,32.719c2.911,2.911,6.865,4.55,10.992,4.55c4.127,0,8.08-1.639,10.994-4.55
+                            l171.117-171.12l171.118,171.12c2.913,2.911,6.866,4.55,10.993,4.55c4.128,0,8.081-1.639,10.992-4.55l32.709-32.719
+                            c6.074-6.075,6.074-15.909,0-21.986L285.08,230.397z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-6 pt-0 text-white dark:text-lightgray space-y-2">
+                <div class="text-center mb-6">
+                        <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
+                        <h1 class="text-2xl font-bold dark:text-lightgray text-almostblack mt-4">Enjoying Shotstreak?</h1>
+                    </div>
+                    <p class="font-semibold text-almostblack dark:text-lightgray text-lg">Add Shotstreak to your home screen with these steps:</p>
+                    <ol class="list-decimal ml-6 marker:font-bold text-almostblack dark:text-lightgray marker:text-coral">
+                        <li>Click the share button</li>
+                        <li>Then find "<b>Add to Home Screen</b>"</li>
+                        <li>Press "<b>Add</b>"</li>
+                    </ol>
+                    <img class="rounded-lg hidden lg:inline w-full max-w-80 ring ring-coral" src="assets/iosScreen.jpg" alt="screenshot">
+                    <div class="flex justify-center items-end w-full py-6">
+                        <button @click="showModal = false" class="p-2 px-4 bg-coral rounded-md mx-auto text-white">
+                            Done!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var isIphone = /(iPhone)/i.test(navigator.userAgent);
+        var isSafari = !!navigator.userAgent.match(/Version\/[\d\.]+.*Safari/);
+        if(isIphone && isSafari){
+            document.getElementById('add-to').classList.remove('hidden')
+        }
+    </script>
     <footer
         class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
         <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
