@@ -96,13 +96,13 @@ $stmt->close();
                             <!-- Password Input -->
                     <div>
                         <label for="newpassword" class="block text-md font-medium text-gray-700 dark:text-lightgray ">New Password</label>
-                        <input autofocus type="password" id="password" name="newpassword" minlength="5" maxlength="20" class="mt-1 p-2 w-full border  dark:bg-lightgray rounded-md focus-visible:outline-coral" required>
+                        <input autofocus type="password" id="password" name="newpassword" minlength="5" maxlength="20" class="mt-1 p-2 w-full border dark:bg-darkslate rounded-md focus-visible:outline-coral" required>
                     </div>
     
                     <!-- Confirm Password Input -->
                     <div>
                         <label for="confirm-password" class="block text-md font-medium text-gray-700 dark:text-lightgray ">Confirm New Password</label>
-                        <input type="password" id="confirm-password" name="confirm-password" class="mt-1 p-2 w-full border dark:bg-lightgray rounded-md focus-visible:outline-coral" required>
+                        <input type="password" id="confirm-password" name="confirm-password" class="mt-1 p-2 w-full border dark:bg-darkslate rounded-md focus-visible:outline-coral" required>
                     </div>
     
                     <!-- Submit Button -->

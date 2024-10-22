@@ -61,7 +61,7 @@ if ($_SESSION['type'] != 'user') {
             <li><b class="text-coral">3. </b>When You're done, press the submit button. It will automatically submit your shot data.</li>
         </ul>
     </div>
-<div class="bg-white dark:text-lightgray dark:bg-darkslate p-8 rounded-lg shadow-md mt-6 mx-auto w-11/12 max-w-md text-center">
+<div class="bg-white mb-4 dark:text-lightgray dark:bg-darkslate p-8 rounded-lg shadow-md mt-6 mx-auto w-11/12 max-w-md text-center">
         <h1 class="text-3xl font-bold text-coral mb-6">Shot Counter</h1>
 
         <form action="input_daily.php" method="POST">
@@ -110,7 +110,7 @@ if ($_SESSION['type'] != 'user') {
                     <p class="text-sm text-gray-600"> <a href="home.php" class="text-coral font-semibold">Back to Home</a></p>
                 </div>
     </div>
-    <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
+    <footer class="bg-lightgray py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
     <script>
