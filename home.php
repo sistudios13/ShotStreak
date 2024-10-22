@@ -154,9 +154,9 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
     $badge5 = true;
 }
 }
+
+
 //Leaderboard
-
-
 $leaderquery = "
     SELECT 
     u.id,
@@ -263,7 +263,7 @@ if ($streak >= 3) {
 
 </head>
 <body class="bg-lightgray dark:bg-almostblack min-h-screen" >
-
+    
     <!-- Navbar -->
     <nav id="test" class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
@@ -380,7 +380,7 @@ if ($streak >= 3) {
         
                 <canvas id="progressChart3" width="400" height="200"></canvas>
             </div>
-
+        <div class="pt-2"><a href="export.php" class="p-2 dark:bg-almostblack border border-grey-600 dark:border-none dark:text-lightgray rounded-md">Export All Data</a></div>
         </div>
 
             <!-- Quick Stats Card -->
