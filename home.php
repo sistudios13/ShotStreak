@@ -380,7 +380,6 @@ if ($streak >= 3) {
         
                 <canvas id="progressChart3" width="400" height="200"></canvas>
             </div>
-        <div class="pt-2"><a href="export.php" class="p-2 dark:bg-almostblack border border-grey-600 dark:border-none dark:text-lightgray rounded-md">Export All Data</a></div>
         </div>
 
             <!-- Quick Stats Card -->

@@ -77,8 +77,10 @@ $stmt->close();
                         <p class="text-lg font-bold text-coral">Email:</p>
                         <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($email, ENT_QUOTES)?></p>
                     </div>
+                    <div class="pt-2"><a href="export.php" class="py-2 text-coral text-lg font-bold">Export All Data</a></div>
+        
                     <div x-data="{de: false}">
-                    <a @click="de = !de" class="text-lg text-coral font-bold mb-3 cursor-pointer">Delete Account</a>
+                    <a @click="de = !de" class="text-lg dark:text-lightgray text-almostblack font-bold mb-3 cursor-pointer">Delete Account</a>
                         <form action="delete_account.php"  method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.')" x-show="de" x-collapse>
                             <input type="hidden" name="user_type" value="<?php echo $_SESSION["type"]; ?>"> <!-- 'coach', 'player', or 'user' -->
                             <button type="submit" class="bg-red-600 text-white mt-2 p-1 px-2 rounded">Delete Account</button>
@@ -114,7 +116,7 @@ $stmt->close();
             
     </div>
     </div>
-    <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
+    <footer class="bg-lightgray py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
     <script src="confirmpass.js"></script>
