@@ -85,6 +85,7 @@ $team_name = $res->fetch_assoc()['team_name'];
                         <p class="text-lg font-bold text-coral">Team:</p>
                         <p class="text-almostblack dark:text-lightgray "><?=htmlspecialchars($team_name, )?></p>
                     </div>
+                    <div class="pt-2"><a href="p_export.php" class="py-2 text-coral text-lg font-bold">Export All Data</a></div>
                     <div x-data="{de: false}">
                     <a @click="de = !de" class="text-lg text-coral font-bold mb-3 cursor-pointer">Delete Account</a>
                         <form action="delete_account.php"  method="POST" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.')" x-show="de" x-collapse>

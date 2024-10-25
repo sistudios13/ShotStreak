@@ -8,17 +8,17 @@ if (!isset($_SESSION['loggedin'])) {
 	exit;
 }
 
-if ($_SESSION['type'] != 'user') {
+if ($_SESSION['type'] != 'player') {
 	header('Location: index.html');
 	exit;
 }
 
 
-$user_id = $_SESSION['id'];
+$user_id = $_SESSION['player_id'];
 $conn = $con;
 
 // Query to fetch the user's data
-$sql = "SELECT * FROM user_shots WHERE user_id = ?";
+$sql = "SELECT * FROM shots WHERE player_id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -29,7 +29,6 @@ header('Content-Type: text/csv; charset=utf-8');
 $filename = 'Content-Disposition: attachment; filename=';
 $filename .= $_SESSION['name'] .'_shotstreak.csv';
 header($filename);
-
 
 // Open output stream
 $output = fopen('php://output', 'w');
