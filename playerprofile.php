@@ -278,6 +278,10 @@ while ($brow = $bresult_chart->fetch_assoc()) {
                     <li class=" text-almostblack flex justify-between dark:text-lightgray"><b>Email:</b> <?php echo $player_email; ?></li>
                     <li class=" text-almostblack flex justify-between dark:text-lightgray"><b>Joined On:</b> <?php echo $created_at; ?></li>
                 </ul>
+                <form action="c_export.php" method="POST">
+                    <input type="hidden" name="player_id" value="<?php echo htmlspecialchars($player_id); ?>">
+                    <button type="submit" class="py-2 text-coral text-lg font-bold">Export All Data</button>
+                </form>
                 <form id="removeform" onsubmit="return confirm('Are you sure you want to remove this player? This action is permanent')" action="remove_player.php" method="POST">
                     <input type="hidden" name="player_id" value="<?php echo htmlspecialchars($player_id); ?>">
                     <input type="hidden" name="player_email" value="<?php echo htmlspecialchars($player_email); ?>">
