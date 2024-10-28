@@ -18,7 +18,7 @@ $user_id = $_SESSION['player_id'];
 $conn = $con;
 
 // Query to fetch the user's data
-$sql = "SELECT * FROM shots WHERE player_id = ?";
+$sql = "SELECT * FROM shots WHERE player_id = ? ORDER BY shot_date";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
