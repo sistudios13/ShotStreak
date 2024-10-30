@@ -291,7 +291,7 @@ while ($brow = $bresult_chart->fetch_assoc()) {
         </div>
     </div>
         
-    <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
+    <footer class="bg-lightgray py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
     <!-- Chart.js Script -->

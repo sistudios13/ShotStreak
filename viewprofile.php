@@ -165,6 +165,9 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
             </div>
         </div>
     </div>
+    <footer class="bg-lightgray py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
+          <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
+    </footer>
     <script>
         const themeToggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
