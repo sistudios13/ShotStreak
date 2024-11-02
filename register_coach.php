@@ -25,7 +25,21 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit(); 
 }
 
-//MORE VALIDATION
+if (preg_match('/^[a-zA-Z0-9 \-]+$/', $_POST['coach_name']) == 0) {
+	echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Username&b=register.html', 700);</script>";
+    exit();
+}
+if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
+	exit('Password must be between 5 and 20 characters long!');
+}
+
+if (strlen($_POST['coach_name']) > 50 || strlen($_POST['coach_name']) < 2) {
+	exit('Username must be between 2 and 20 characters long!');
+}
+
+if (strlen($_POST['email']) > 200) {
+	exit('Email must be less than 200 characters long!');
+}
 
 // Hash the password
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -44,8 +58,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? 
 	} else {
 
 // Prepare SQL and bind parameters
-$stmt = $pdo->prepare("INSERT INTO coaches (coach_name, email, password, team_name, goal) VALUES (:coach_name, :email,
-:password, :team_name, 100)");
+$stmt = $pdo->prepare("INSERT INTO coaches (coach_name, email, password, team_name, goal) VALUES (:coach_name, :email, :password, :team_name, 100)");
 $stmt->bindParam(':coach_name', $coach_name);
 $stmt->bindParam(':email', $email);
 $stmt->bindParam(':password', $hashed_password);
@@ -53,25 +66,18 @@ $stmt->bindParam(':team_name', $team_name);
 
 // Execute the statement
 try {
-$stmt->execute();
-
-
-
-
-
-// add the coach information to the accounts tables
-if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user_type) VALUES (?, ?, ?, "coach")')) {
-    // We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
-    $stmt->bind_param('sss', $coach_name, $password, $email);
     $stmt->execute();
-    echo "<script>setTimeout(() => window.location.href = 'success.php?b=login.html', 700);</script>";
-}
-
-else {
-    // Something is wrong with the SQL statement, so you must check to make sure your accounts table exists with all three fields.
-    echo 'Could not prepare statement!'; // ERROR PAGE
-}
+    // add the coach information to the accounts tables
+    if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user_type) VALUES (?, ?, ?, "coach")')) {
+        // We do not want to expose passwords in our database, so hash the password and use password_verify when a user logs in.
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
+        $stmt->bind_param('sss', $coach_name, $password, $email);
+        $stmt->execute();
+        echo "<script>setTimeout(() => window.location.href = 'success.php?b=login.html', 700);</script>";
+    } else {
+        // Something is wrong with the SQL statement, so you must check to make sure your accounts table exists with all three fields.
+        echo 'Could not prepare statement!'; // ERROR PAGE
+    }
 }
 
 catch (PDOException $e) {
