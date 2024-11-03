@@ -47,7 +47,7 @@ if ($_SESSION['type'] != 'coach') {
         </div>
     </nav>
     
-    <div class="container mx-auto px-6 py-8">
+    <div class="container mx-auto px-6 py-8 pb-0">
         <div class="bg-white dark:bg-darkslate p-6 rounded-lg shadow-md flex flex-col gap-4">
             <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Invite a Player</h3>
             <div>
@@ -76,7 +76,9 @@ if ($_SESSION['type'] != 'coach') {
         </div>
 
     </div>
-
+    <footer class="bg-lightgray py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
+          <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
+    </footer>
     <script>
         const themeToggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;

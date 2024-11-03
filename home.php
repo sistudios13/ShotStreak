@@ -286,7 +286,7 @@ if ($streak >= 3) {
             
             <div class="flex flex-col-reverse md:flex-row md:justify-between">
                 <p class="mt-2">Here's your progress for today:</p>
-                <a href="dailyshots.php"><button class=" text-white md:-translate-y-5 font-bold mt-4 p-3 md:px-6 md:py-4 w-fit mx-auto border-2 border-golden outline outline-golden md:hover:bg-golden md:hover:text-almostblack transition-colors rounded-md ">Input Today's Shots</button></a>
+                <a href="dailyshots.php" class=" text-white md:-translate-y-3 font-bold mt-4 md:mt-0 p-3 md:px-6 md:py-4 w-fit border-2 border-golden  md:hover:bg-golden md:hover:text-almostblack transition-colors rounded-md ">Input Today's Shots</a>
             </div>
             
             
