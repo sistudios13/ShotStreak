@@ -64,7 +64,7 @@ if ($_SESSION['type'] != 'coach') {
                     <!-- Email Input -->
                     <div>
                         <label for="player_email" class="block text-sm font-medium dark:text-lightgray text-gray-700">Player's Email</label>
-                        <input type="email" name="player_email"  class="mt-1 p-2 w-full border dark:border-lightgray rounded-md dark:text-lightgray dark:bg-darkslate focus-visible:outline-coral" required>
+                        <input type="email" maxlength="200" name="player_email"  class="mt-1 p-2 w-full border dark:border-lightgray rounded-md dark:text-lightgray dark:bg-darkslate focus-visible:outline-coral" required>
                     </div>
     
 

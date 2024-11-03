@@ -25,6 +25,16 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit(); 
 }
 
+if (!isset($_POST['coach_name'], $_POST['password'], $_POST['email'])) {
+	// Could not get the data that should have been sent.
+	exit('Please complete the registration form!');
+}
+// Make sure the submitted registration values are not empty.
+if (empty($_POST['coach_name']) || empty($_POST['password']) || empty($_POST['email'])) {
+	// One or more values are empty.
+	exit('Please complete the registration form');
+}
+
 if (preg_match('/^[a-zA-Z0-9 \-]+$/', $_POST['coach_name']) == 0) {
 	echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Username&b=register.html', 700);</script>";
     exit();

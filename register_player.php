@@ -24,7 +24,19 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 die("Invalid email format."); //ADD ERROR PAGE
 }
 
-//MORE VALIDATION
+if (!isset($_POST['username'], $_POST['password'], $_POST['email'])) {
+	// Could not get the data that should have been sent.
+	exit('Please complete the registration form!');
+}
+// Make sure the submitted registration values are not empty.
+if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email'])) {
+	// One or more values are empty.
+	exit('Please complete the registration form');
+}
+
+if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
+	exit('Password must be between 5 and 20 characters long!');
+}
 
 // Hash the password
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
