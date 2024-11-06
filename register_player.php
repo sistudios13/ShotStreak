@@ -38,6 +38,35 @@ if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
 	exit('Password must be between 5 and 20 characters long!');
 }
 
+if (strlen($_POST['username']) > 50 || strlen($_POST['username']) < 2) {
+	exit('Name must be between 2 and 50 characters long!');
+}
+
+if (strlen($_POST['email']) > 200) {
+	exit('Email must be less than 200 characters long!');
+}
+
+$cn = $con->prepare("SELECT * FROM invitations WHERE token = ?");
+$cn->bind_param('s', $token);
+$cn->execute();
+$cr = $cn->get_result();
+$ca = $cr->fetch_assoc();
+
+if ($ca['coach_id'] != $coach_id) {
+    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Registration&b=index.html', 700);</script>";
+    exit();
+}
+
+if ($ca['player_name'] != $username) {
+    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Registration&b=index.html', 700);</script>";
+    exit();
+}
+
+if ($ca['email'] != $email) {
+    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Registration&b=index.html', 700);</script>";
+}
+
+
 // Hash the password
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 

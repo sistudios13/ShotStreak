@@ -25,11 +25,11 @@ if (isset($_POST['email'])) {
 
         $headers = "MIME-Version: 1.0" . "\r\n";
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-        $headers .= "From: Shotstreak <shotstreak@shotstreak.simonsites.com> \r\n";
+        $headers .= "From: Shotstreak <shotstreak@shotstreak.ca> \r\n";
 
 
         // Send reset email (Example)
-        $reset_link = "https://shotstreak.simonsites.com/reset_password.php?token=$token";
+        $reset_link = "https://localhost/shotstreak/reset_password.php?token=$token";
 
         $message = "
         <!DOCTYPE html>

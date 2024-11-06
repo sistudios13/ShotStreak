@@ -19,6 +19,11 @@ if (preg_match('/^[a-zA-Z0-9]+$/', $_POST['username']) == 0) {
 	echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Username&b=register.html', 700);</script>";
     exit();
 }
+
+if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+	exit("Invalid email format."); //ADD ERROR PAGE
+}
+
 if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
 	exit('Password must be between 5 and 20 characters long!');
 }

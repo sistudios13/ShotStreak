@@ -20,13 +20,22 @@ $conn = $con;
 $coach_id = $_SESSION['coach_id']; // Coach's user ID
 $coach_name = $_SESSION['name'];
 
+if (!filter_var($_POST['player_email'], FILTER_VALIDATE_EMAIL)) {
+    exit("Invalid email format."); //ADD ERROR PAGE
+}
 
+if (strlen($_POST['player_name']) > 20 || strlen($_POST['player_name']) < 2) {
+	exit('Username must be between 2 and 50 characters long!');
+}
 
+if (strlen($_POST['player_email']) > 200) {
+	exit('Email must be less than 200 characters long!');
+}
 
 // Always set content-type when sending HTML email
 $headers = "MIME-Version: 1.0" . "\r\n";
 $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-$headers .= "From: Shotstreak <shotstreak@shotstreak.simonsites.com> \r\n";
+$headers .= "From: Shotstreak <shotstreak@shotstreak.ca> \r\n";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $player_email = $_POST['player_email'];
@@ -41,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_param("isss", $coach_id, $player_name, $player_email, $token);
     if ($stmt->execute()) {
         // Send an email with the invitation link (Pseudo-code)
-        $invite_link = "https://shotstreak.simonsites.com/acceptinvite.php?token=" . $token;
+        $invite_link = "https://localhost/shotstreak/acceptinvite.php?token=" . $token;
 
         $message = "
         <!DOCTYPE html>

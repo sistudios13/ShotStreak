@@ -55,7 +55,7 @@ if ($_SESSION['type'] != 'coach') {
                     <!-- Name Input -->
                     <div>
                         <label for="player_name" class="block text-sm font-medium dark:text-lightgray text-gray-700">Player's Name:</label>
-                        <input type="text" name="player_name"  maxlength="255" class="mt-1 p-2 w-full border dark:border-lightgray rounded-md dark:text-lightgray dark:bg-darkslate dark: focus-visible:outline-coral" required>
+                        <input type="text" name="player_name" minlength="2"  maxlength="50" class="mt-1 p-2 w-full border dark:border-lightgray rounded-md dark:text-lightgray dark:bg-darkslate dark: focus-visible:outline-coral" required>
                     </div>
 
 
