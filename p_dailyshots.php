@@ -64,12 +64,12 @@ if ($_SESSION['type'] != 'player') {
                 <!-- Registration Form -->
                 <form action="p_input_daily.php" method="POST" class="flex flex-col justify-center gap-4">
                     <div>
-                    <label for="shotstaken" class="block dark:text-lightgray text-lg text-gray-700">How many shots did you take?</label>
-                    <input type="number" name="shotstaken" id="shotstaken" placeholder="100" class="mt-1 p-2 w-10/12 mx-auto border dark:bg-darkslate dark:text-lightgray rounded-md focus-visible:outline-coral" required min="1" max="999">
+                        <label for="shotstaken" class="block dark:text-lightgray text-lg text-gray-700">How many shots did you take?</label>
+                        <input type="number" name="shotstaken" id="shotstaken" placeholder="100" class="mt-1 p-2 w-10/12 mx-auto border dark:bg-darkslate dark:text-lightgray rounded-md focus-visible:outline-coral" required min="1" max="999">
                     </div>
                     <div>
-                    <label for="shotsmade" class="block dark:text-lightgray text-lg  text-gray-700">How many shots did you make?</label>
-                    <input type="number" name="shotsmade" id="shotsmade" placeholder="61" class="mt-1 p-2 w-10/12 dark:bg-darkslate dark:text-lightgray mx-auto border rounded-md focus-visible:outline-coral" required min="1" max="999">
+                        <label for="shotsmade" class="block dark:text-lightgray text-lg  text-gray-700">How many shots did you make?</label>
+                        <input type="number" name="shotsmade" id="shotsmade" placeholder="61" class="mt-1 p-2 w-10/12 dark:bg-darkslate dark:text-lightgray mx-auto border rounded-md focus-visible:outline-coral" required min="1" max="999">
                     </div>
     
     
