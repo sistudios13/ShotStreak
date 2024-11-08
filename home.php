@@ -253,6 +253,18 @@ if ($streak >= 3) {
     <meta name="apple-mobile-web-app-title" content="Shotstreak" />
     <link rel="manifest" href="assets/site.webmanifest" />
     <script src="https://cdn.jsdelivr.net/npm/preline@2.4.1/dist/preline.min.js"></script>
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="ShotStreak – See my profile!" />
+    <meta property="og:description" content="Stay on top of your game! Track your shots, view your stats, and keep up with the competition with ShotStreak." />
+    <meta property="og:image" content="https://shotstreak.ca/assets/fullLogo.svg" /> 
+    <meta property="og:url" content="https://shotstreak.ca/view.php?user_id=<?php echo $user_id?>" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Card Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ShotStreak – See my profile!" />
+    <meta name="twitter:description" content="Stay on top of your game! Track your shots, view your stats, and keep up with the competition with ShotStreak." />
+    <meta name="twitter:image" content="https://shotstreak.ca/assets/fullLogo.svg" /> 
     <script>
         var time = 2;
         function atime(number) {
@@ -260,6 +272,7 @@ if ($streak >= 3) {
              aupdate()    
         }  
     </script>
+
 
 </head>
 <body class="bg-lightgray dark:bg-almostblack min-h-screen" >
@@ -295,8 +308,22 @@ if ($streak >= 3) {
 
 
         
-        <div>
+        <div class="flex justify-between">
             <h2 class="text-2xl font-bold dark:text-lightgray py-8">&#x1F525; Streak: <span class="text-coral"><?php echo htmlspecialchars($streak)?></span></h2>
+            <button id="share-btn" title="Share My Profile" onclick="shareProfile()">
+                <svg fill="#ff6f61" class="mr-4" height="30px" width="30px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    viewBox="0 0 481.6 481.6" xml:space="preserve">
+                <g>
+                    <path d="M381.6,309.4c-27.7,0-52.4,13.2-68.2,33.6l-132.3-73.9c3.1-8.9,4.8-18.5,4.8-28.4c0-10-1.7-19.5-4.9-28.5l132.2-73.8
+                        c15.7,20.5,40.5,33.8,68.3,33.8c47.4,0,86.1-38.6,86.1-86.1S429,0,381.5,0s-86.1,38.6-86.1,86.1c0,10,1.7,19.6,4.9,28.5
+                        l-132.1,73.8c-15.7-20.6-40.5-33.8-68.3-33.8c-47.4,0-86.1,38.6-86.1,86.1s38.7,86.1,86.2,86.1c27.8,0,52.6-13.3,68.4-33.9
+                        l132.2,73.9c-3.2,9-5,18.7-5,28.7c0,47.4,38.6,86.1,86.1,86.1s86.1-38.6,86.1-86.1S429.1,309.4,381.6,309.4z M381.6,27.1
+                        c32.6,0,59.1,26.5,59.1,59.1s-26.5,59.1-59.1,59.1s-59.1-26.5-59.1-59.1S349.1,27.1,381.6,27.1z M100,299.8
+                        c-32.6,0-59.1-26.5-59.1-59.1s26.5-59.1,59.1-59.1s59.1,26.5,59.1,59.1S132.5,299.8,100,299.8z M381.6,454.5
+                        c-32.6,0-59.1-26.5-59.1-59.1c0-32.6,26.5-59.1,59.1-59.1s59.1,26.5,59.1,59.1C440.7,428,414.2,454.5,381.6,454.5z"/>
+                </g>
+                </svg>
+            </button>
         </div>
 
         <!-- Dashboard Grid -->
@@ -520,16 +547,28 @@ if ($streak >= 3) {
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
     
+    <!-- Share Script -->
+    <script>
+        function shareProfile() {
+            const shareData = {
+                title: 'ShotStreak – See my profile!',
+                text: 'Stay on top of your game! Track your shots, view your stats, and keep up with the competition with ShotStreak.',
+                url: "https://shotstreak.ca/view.php?user_id=<?php echo $user_id?>"
+            };
 
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => console.log('Content shared successfully'))
+                    .catch((error) => console.error('Error sharing:', error));
+            } else {
+                alert('Web Share API not supported in this browser.');
+            }
+        }
+    </script>
 
     <!-- Chart.js Script -->
     <script>
-    
-        
-        
-            
-            
-            const ctx = document.getElementById('progressChart').getContext('2d');
+        const ctx = document.getElementById('progressChart').getContext('2d');
             const progressChart = new Chart(ctx, {
                 type: 'line',
                 data: {

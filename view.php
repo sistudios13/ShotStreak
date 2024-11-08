@@ -1,6 +1,7 @@
 <?php
 require 'db/db_connect.php';
 $conn = $con;
+error_reporting(0);
 // Get the user ID from the URL
 $user_id = $_GET['user_id'];
 
@@ -90,96 +91,73 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
     <!-- Navbar -->
     <nav class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
-            <a href="#" class="text-2xl font-bold text-coral">ShotStreak</a>
+            <a href="index.html" class="text-2xl font-bold text-coral">ShotStreak</a>
             <div class="flex items-center gap-2">
-                <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
-                
-                <a href="index.html" class="text-almostblack dark:text-lightgray md:hover:text-coral">Home</a>
-                <a href="login.html" class="text-almostblack dark:text-lightgray md:hover:text-coral">Login</a>
+                <a href="register.html" class="text-almostblack font-bold dark:text-lightgray md:hover:text-coral">Join Shotstreak!</a>
             </div>
         </div>
     </nav>
     <div class="container mx-auto px-6 py-12 ">
         <?php if($exists): ?>
-        <div class="max-w-4xl mx-auto bg-white dark:bg-darkslate p-8 rounded-lg shadow-lg">
-            <div class="flex items-center">
+            <div class="max-w-4xl mx-auto bg-white dark:bg-darkslate p-8 rounded-lg shadow-lg">
+                <div class="flex items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-coral"><?php echo htmlspecialchars($user['username']); ?></h2>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <h3 class="text-2xl font-bold">Statistics</h3>
+                    <div class="mt-4 grid grid-cols-1 gap-4">
+                        <div class="bg-lightgray dark:bg-almostblack p-4 rounded-lg text-center shadow-md">
+                            <h4 class="text-xl font-bold text-light-gray">Total Shots Taken</h4>
+                            <p class="text-2xl font-bold text-golden-yellow"><?php echo $stats_data['total_taken']; ?></p>
+                        </div>
+                        <div class="bg-lightgray dark:bg-almostblack p-4 rounded-lg text-center shadow-md">
+                            <h4 class="text-xl font-bold text-light-gray">Total Shots Made</h4>
+                            <p class="text-2xl font-bold text-golden-yellow"><?php echo $stats_data['total_shots']; ?></p>
+                        </div>
+                        <div class="bg-lightgray dark:bg-almostblack p-4 rounded-lg text-center shadow-md">
+                            <h4 class="text-xl font-bold text-light-gray">Shooting Percentage</h4>
+                            <p class="text-2xl font-bold text-golden-yellow"><?php echo round($shooting_percentage, 0); ?>%</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 ">
+                    <h3 class="text-2xl font-bold text-coral-red">Achievements</h3>
+                    <div class="relative grid grid-cols-6 mt-2 lg:grid-cols-10" x-data="{b1 : false, b2 : false, b3 : false, b4: false, b5 : false}">
                 
-                <div>
-                    <h2 class="text-3xl font-bold text-coral"><?php echo htmlspecialchars($user['username']); ?></h2>
+                <div class=" <?php if(!$badge1) { echo 'hidden'; }?> ">
+                    <img x-on:click="b1 = !b1" @click.away="b1 = false" class="h-16 cursor-pointer" src="assets/icebreaker.svg" alt="badge1">    
                 </div>
-            </div>
-            <div class="mt-8">
-                <h3 class="text-2xl font-bold">Statistics</h3>
-                <div class="mt-4 grid grid-cols-1 gap-4">
-                    <div class="bg-lightgray dark:bg-almostblack p-4 rounded-lg text-center shadow-md">
-                        <h4 class="text-xl font-bold text-light-gray">Total Shots Taken</h4>
-                        <p class="text-2xl font-bold text-golden-yellow"><?php echo $stats_data['total_taken']; ?></p>
-                    </div>
-                    <div class="bg-lightgray dark:bg-almostblack p-4 rounded-lg text-center shadow-md">
-                        <h4 class="text-xl font-bold text-light-gray">Total Shots Made</h4>
-                        <p class="text-2xl font-bold text-golden-yellow"><?php echo $stats_data['total_shots']; ?></p>
-                    </div>
-                    <div class="bg-lightgray dark:bg-almostblack p-4 rounded-lg text-center shadow-md">
-                        <h4 class="text-xl font-bold text-light-gray">Shooting Percentage</h4>
-                        <p class="text-2xl font-bold text-golden-yellow"><?php echo round($shooting_percentage, 0); ?>%</p>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-8 ">
-                <h3 class="text-2xl font-bold text-coral-red">Achievements</h3>
-                <div class="relative grid grid-cols-6 mt-2 lg:grid-cols-10" x-data="{b1 : false, b2 : false, b3 : false, b4: false, b5 : false}">
-            
-            <div class=" <?php if(!$badge1) { echo 'hidden'; }?> ">
-                <img x-on:click="b1 = !b1" @click.away="b1 = false" class="h-16 cursor-pointer" src="assets/icebreaker.svg" alt="badge1">    
-            </div>
 
-            <div class=" <?php if(!$badge2) { echo 'hidden'; }?> ">
-                <img x-on:click="b2 = !b2" @click.away="b2 = false" class="h-16 cursor-pointer" src="assets/precision.svg" alt="badge2">
+                <div class=" <?php if(!$badge2) { echo 'hidden'; }?> ">
+                    <img x-on:click="b2 = !b2" @click.away="b2 = false" class="h-16 cursor-pointer" src="assets/precision.svg" alt="badge2">
+                </div>
+                <div class=" <?php if(!$badge3) { echo 'hidden'; }?> ">
+                    <img x-on:click="b3 = !b3" @click.away="b3 = false" class="h-16 cursor-pointer" src="assets/millenium.svg" alt="badge3">
+                </div>
+                <div class=" <?php if(!$badge4) { echo 'hidden'; }?> ">
+                    <img x-on:click="b4 = !b4" @click.away="b4 = false" class="h-16 cursor-pointer" src="assets/crusher.svg" alt="badge4">
+                </div>
+                <div class=" <?php if(!$badge5) { echo 'hidden'; }?> ">
+                    <img x-on:click="b5 = !b5" @click.away="b5 = false" class="h-16 cursor-pointer" src="assets/pinpoint.svg" alt="badge5">
+                </div>
+                <p x-show="b1" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Icebreaker: Take a total of over 500 shots</p>
+                <p x-show="b2" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Precision Shooter: Maintain a total average of over 40%</p>
+                <p x-show="b3" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Millenium Marksman: Make a total of over 1000 shots</p>
+                <p x-show="b4" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">On a Roll: Maintain a total streak over 3 days long. Keep it up!</p>
+                <p x-show="b5" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Pinpoint Shooter: Maintain a total average of over 70%</p>
             </div>
-            <div class=" <?php if(!$badge3) { echo 'hidden'; }?> ">
-                <img x-on:click="b3 = !b3" @click.away="b3 = false" class="h-16 cursor-pointer" src="assets/millenium.svg" alt="badge3">
+                </div>
             </div>
-            <div class=" <?php if(!$badge4) { echo 'hidden'; }?> ">
-                <img x-on:click="b4 = !b4" @click.away="b4 = false" class="h-16 cursor-pointer" src="assets/crusher.svg" alt="badge4">
-            </div>
-            <div class=" <?php if(!$badge5) { echo 'hidden'; }?> ">
-                <img x-on:click="b5 = !b5" @click.away="b5 = false" class="h-16 cursor-pointer" src="assets/pinpoint.svg" alt="badge5">
-            </div>
-            <p x-show="b1" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Icebreaker: Take a total of over 500 shots</p>
-            <p x-show="b2" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Precision Shooter: Maintain a total average of over 40%</p>
-            <p x-show="b3" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Millenium Marksman: Make a total of over 1000 shots</p>
-            <p x-show="b4" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">On a Roll: Maintain a total streak over 3 days long. Keep it up!</p>
-            <p x-show="b5" class="absolute w-60 bg-white dark:bg-darkslate text-almostblack dark:text-lightgray top-16 p-3 rounded-lg shadow-md">Pinpoint Shooter: Maintain a total average of over 70%</p>
         </div>
-            </div>
-        </div>
-    </div>
     <?php else: ?>
-    <div>
-        User Not Found!
-    </div>
+        <div class="flex justify-center text-xl font-bold">
+            User Not Found!
+        </div>
     <?php endif;?>
     <footer class="bg-lightgray py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
     </footer>
-    <script>
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-
-        themeToggleBtn.addEventListener('click', () => {
-            if (htmlElement.classList.contains('dark')) {
-            htmlElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
-            } else {
-            htmlElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-            }
-        });
-
-        // Check local storage for theme preference on page load
-        if (localStorage.getItem('theme') === 'dark') {
-            htmlElement.classList.add('dark');
-        }
-    </script>
 </body>
 </html>
