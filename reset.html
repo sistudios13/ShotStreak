@@ -4,18 +4,15 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Reset Password - ShotStreak</title>
-        
         <script src="https://cdn.tailwindcss.com"></script>
         <script src="tailwindextras.js"></script>
-        
-
         <link rel="stylesheet" href="main.css">
         <link rel="icon" type="image/png" href="assets/favicon-48x48.png" sizes="48x48" />
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="shortcut icon" href="assets/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Shotstreak" />
-    <link rel="manifest" href="assets/site.webmanifest" />
+        <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+        <link rel="shortcut icon" href="assets/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="Shotstreak" />
+        <link rel="manifest" href="assets/site.webmanifest" />
     </head>
     <body class="bg-light-gray">
 
@@ -25,26 +22,29 @@
                 <!-- Logo -->
                 <div class="text-center mb-6">
                     <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
-                    <h1 class="text-2xl font-bold text-almostblack mt-4">Reset Your Password</h1>
+                    <h2 class="text-xl font-bold text-almostblack mt-4">Email Sent!</h2>
+                </div>
+                <div>
+                    
+                    <p class="text-lg">
+                        We've sent a password reset link to your email. Please check your inbox and follow the instructions to reset your password. 
+                            <br>
+                            <br>
+                            <div class="flex gap-3 items-center">
+                                <svg width="40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ff6f61" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm0-384c13.3 0 24 10.7 24 24l0 112c0 13.3-10.7 24-24 24s-24-10.7-24-24l0-112c0-13.3 10.7-24 24-24zM224 352a32 32 0 1 1 64 0 32 32 0 1 1 -64 0z"/></svg>
+                                <b>Make sure to check your <span class="text-coral">spam and junk</span> inboxes!</b>
+                            </div>
+                            <br>
+                            <br>
+                        <span class="text-base">If you have not received an email, feel free to try again</span>
+                    </p>
                 </div>
     
-                <!-- Registration Form -->
-                <form id="registerForm" class="space-y-4" action="forgot_password.php" method="post" autocomplete="on">
-                    <!-- Name Input -->
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
-                        <input type="email" name="email"  id="email" maxlength="200" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
-                    </div>
-    
-
-    
-                    <!-- Submit Button -->
-                    <button type="submit" class="w-full bg-coral md:hover:bg-coralhov text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Send Reset Email</button>
-                </form>
+                
     
                 <!-- Already have an account -->
                 <div class="text-center mt-4">
-                    <p class="text-sm text-gray-600"> <a href="login.html" class="text-coral font-semibold">Back to login</a></p>
+                    <p class="text-sm text-gray-600"> <a href="login.html" class="text-coral font-semibold">Login</a></p>
                 </div>
             </div>
         </div>

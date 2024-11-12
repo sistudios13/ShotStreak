@@ -120,7 +120,7 @@ if (isset($_POST['email'])) {
 
         mail($email, "Shotstreak Password Reset", $message, $headers);
         
-        header("Location: success.php?b=login.html");
+        header("Location: success.php?b=reset.html");
         
     } else {
         header("Location: error.php?a=User Not Found&b=login.html");
