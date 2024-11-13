@@ -3,7 +3,7 @@
 session_start();
 // If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
-	header('Location: index.html');
+	header('Location: index.php');
 	exit;
 }
 require 'db/db_connect.php';
@@ -86,6 +86,6 @@ if ($user_type == 'coach') {
 
 // Logout the user and redirect to the homepage
 session_destroy();
-header("Location: success.php?b=index.html");
+header("Location: success.php?b=index.php");
 exit();
 

@@ -22,8 +22,8 @@ if (isset($_POST['password'], $_POST['token'])) {
         $stmt->bind_param("ss", $password, $token);
         $stmt->execute();
         
-        header("Location: success.php?b=login.html");
+        header("Location: success.php?b=login.php");
     } else {
-        header("Location: error.php?a=Invalid or expired token, try resetting again!&b=login.html");
+        header("Location: error.php?a=Invalid or expired token, try resetting again!&b=login.php");
     }
 }

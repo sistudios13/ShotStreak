@@ -91,9 +91,9 @@ if (($stats_data['total_shots'] / $stats_data['total_taken']) *100 >= 70 ) {
     <!-- Navbar -->
     <nav class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
-            <a href="index.html" class="text-2xl font-bold text-coral">ShotStreak</a>
+            <a href="index.php" class="text-2xl font-bold text-coral">ShotStreak</a>
             <div class="flex items-center gap-2">
-                <a href="register.html" class="text-almostblack font-bold dark:text-lightgray md:hover:text-coral">Join Shotstreak!</a>
+                <a href="register.php" class="text-almostblack font-bold dark:text-lightgray md:hover:text-coral">Join Shotstreak!</a>
             </div>
         </div>
     </nav>

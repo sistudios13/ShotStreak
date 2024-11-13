@@ -1,11 +1,17 @@
+<?php
+include "validation/log_check.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register - ShotStreak</title>
+    <title>Login - ShotStreak</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
+
+
     <link rel="stylesheet" href="main.css">
     <link rel="icon" type="image/png" href="assets/favicon-48x48.png" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -29,46 +35,40 @@
                 <!-- Logo -->
                 <div class="text-center mb-6">
                     <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
-                    <h1 class="text-2xl font-bold text-almostblack mt-4">Create a Coach Account</h1>
+                    <h1 class="text-2xl font-bold text-almostblack mt-4">Sign In</h1>
                 </div>
     
                 <!-- Registration Form -->
-                <form hx-post="register_coach.php" hx-trigger="submit" hx-target="#response" hx-swap="innerHTML" @submit="loading = true" class="space-y-4" autocomplete="off">
+                <form hx-post="authenticate.php" hx-trigger="submit" hx-target="#response" hx-swap="innerHTML" @submit="loading = true" class="space-y-4"  autocomplete="on">
                     <!-- Name Input -->
-                    <div>
-                        <label for="coach_name" class="block text-sm font-medium text-gray-700">Full Name</label>
-                        <input type="text" name="coach_name" pattern="[a-zA-Z0-9 \-]+" id="coach_name" minlength="1" maxlength="50" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
-                    </div>
-
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
                         <input type="email" name="email"  id="email" maxlength="200" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
                     </div>
 
-                    <div>
-                        <label for="team_name" class="block text-sm font-medium text-gray-700">Team Name</label>
-                        <input type="text" name="team_name"  id="team_name" maxlength="50" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
-                    </div>
-            
+
+
+    
                     <!-- Password Input -->
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="password" name="password"  id="password" minlength="5" maxlength="20" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
+                        <input type="password" name="password"  id="password" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
                     </div>
     
+
     
                     <!-- Submit Button -->
-                    <button type="submit" class="w-full md:hover:bg-coralhov bg-coral text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Register</button>
+                    <button type="submit"  class="w-full bg-coral md:hover:bg-coralhov text-white py-2 rounded-md font-semibold hover:bg-coral-red-light transition-colors">Login</button>
                 </form>
     
                 <!-- Already have an account -->
                 <div class="text-center mt-4">
-                    <p class="text-sm text-gray-600">Already have an account? <a href="login.html" class="text-coral font-semibold">Log in</a></p>
-                    <p class="text-sm text-gray-600">Not a coach? <a href="register.html" class="text-coral font-semibold">Create an account</a></p>
+                    <p class="text-sm text-gray-600">Don't have an account? <a href="register.php" class="text-coral font-semibold">Register</a></p>
+                    <p class="text-sm text-gray-600"><a href="resetpassword.php" class="text-coral font-semibold">Forgot Password?</a></p>
                 </div>
-                
             </div>
-            <!-- Response Div -->
+
+             <!-- Response Div -->
             <div id="response"></div>
 
 
@@ -79,10 +79,10 @@
         <footer class="bg-darkslate py-8 text-white">
             <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="footer-links flex flex-col justify-center items-center">
-                <a href="index.html" class="block mb-2 text-center">Home</a>
-                <a href="register.html" class="block mb-2 text-center">Register</a>
-                <a href="login.html" class="block mb-2 text-center">Login</a>
-                <a href="support.html" class="block mb-2 text-center">Support</a>
+                <a href="index.php" class="block mb-2 text-center">Home</a>
+                <a href="register.php" class="block mb-2 text-center">Register</a>
+                <a href="login.php" class="block mb-2 text-center">Login</a>
+                <a href="support.php" class="block mb-2 text-center">Support</a>
                 <!-- Add more links -->
               </div> 
               <div class="text-center flex flex-col justify-center items-center">
@@ -91,6 +91,5 @@
               </div>
             </div>
           </footer>
-
     </body>
     </html>

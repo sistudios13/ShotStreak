@@ -15,7 +15,7 @@
     <link rel="manifest" href="assets/site.webmanifest" />
 
     <script>
-        function next() {document.location.href = "<?php echo $_GET['b'] ?? 'index.html' ?>";}setTimeout(() => next(),  3500);
+        function next() {document.location.href = "<?php echo $_GET['b'] ?? 'index.php' ?>";}setTimeout(() => next(),  3500);
     </script>
 </head>
 <body class="container mx-auto">
@@ -28,7 +28,7 @@
         <p class="text-xl text-center text-gray-600 mt-6"><?php echo $_GET['a'] ?? 'none' ?></p>
     </div>
     <div class="flex justify-center mt-6">
-        <a class="text-lg text-coral text-center mx-auto font-bold" href="<?php echo $_GET['b'] ?? 'index.html' ?>">Back</a>
+        <a class="text-lg text-coral text-center mx-auto font-bold" href="<?php echo $_GET['b'] ?? 'index.php' ?>">Back</a>
     </div>
 </body>
 </html>

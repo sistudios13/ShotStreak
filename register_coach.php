@@ -21,7 +21,7 @@ $team_name = $_POST['team_name'];
 
 // Validate input
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid registration&b=index.html', 700);</script>";
+    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid registration&b=index.php', 700);</script>";
     exit(); 
 }
 
@@ -36,7 +36,7 @@ if (empty($_POST['coach_name']) || empty($_POST['password']) || empty($_POST['em
 }
 
 if (preg_match('/^[a-zA-Z0-9 \-]+$/', $_POST['coach_name']) == 0) {
-	echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Username&b=register.html', 700);</script>";
+	echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Username&b=register.php', 700);</script>";
     exit();
 }
 if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 5) {
@@ -63,7 +63,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE username = ? 
 	if ($stmt->num_rows > 0) {
 		// Username already exists
 		
-        echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=coachreg.html', 700);</script>";
+        echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=coachreg.php', 700);</script>";
             exit();
 	} else {
 
@@ -83,7 +83,7 @@ try {
         $password = password_hash($_POST['password'], PASSWORD_DEFAULT); 
         $stmt->bind_param('sss', $coach_name, $password, $email);
         $stmt->execute();
-        echo "<script>setTimeout(() => window.location.href = 'success.php?b=login.html', 700);</script>";
+        echo "<script>setTimeout(() => window.location.href = 'success.php?b=login.php', 700);</script>";
     } else {
         // Something is wrong with the SQL statement, so you must check to make sure your accounts table exists with all three fields.
         echo 'Could not prepare statement!'; // ERROR PAGE
@@ -92,7 +92,7 @@ try {
 
 catch (PDOException $e) {
     if ($e->getCode() == 23000) { // Duplicate entry
-        echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=coachreg.html', 700);</script>";
+        echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=coachreg.php', 700);</script>";
         exit(); //ERROR PAGE
     } else {
     die("An error occurred: " . $e->getMessage());

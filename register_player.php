@@ -53,17 +53,17 @@ $cr = $cn->get_result();
 $ca = $cr->fetch_assoc();
 
 if ($ca['coach_id'] != $coach_id) {
-    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Registration&b=index.html', 700);</script>";
+    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Registration&b=index.php', 700);</script>";
     exit();
 }
 
 if ($ca['player_name'] != $username) {
-    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Registration&b=index.html', 700);</script>";
+    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Registration&b=index.php', 700);</script>";
     exit();
 }
 
 if ($ca['email'] != $email) {
-    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Registration&b=index.html', 700);</script>";
+    echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Registration&b=index.php', 700);</script>";
 }
 
 
@@ -78,7 +78,7 @@ if ($stmt = $con->prepare('SELECT id, password FROM accounts WHERE email = ?')) 
 	// Store the result so we can check if the account exists in the database.
 	if ($stmt->num_rows > 0) {
 		// Username already exists
-		echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=index.html', 700);</script>";
+		echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=index.php', 700);</script>";
         exit();
 	} else {
 
@@ -109,7 +109,7 @@ if ($stmt = $con->prepare('INSERT INTO accounts (username, password, email, user
 if ($stmt = $con->prepare('UPDATE invitations SET status = "accepted" WHERE token = ?')) {
     $stmt->bind_param('s', $token);
     $stmt->execute();
-    echo "<script>setTimeout(() => window.location.href = 'success.php?b=login.html', 700);</script>";
+    echo "<script>setTimeout(() => window.location.href = 'success.php?b=login.php', 700);</script>";
 
 }
 
@@ -123,7 +123,7 @@ else {
 
 catch (PDOException $e) {
     if ($e->getCode() == 23000) { // Duplicate entry
-        echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=index.html', 700);</script>";
+        echo "<script>setTimeout(() => window.location.href = 'error.php?a=User already exists&b=index.php', 700);</script>";
         exit(); //ERROR PAGE
     } else {
     die("An error occurred: " . $e->getMessage());

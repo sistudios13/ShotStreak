@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+$logged = false;
+
+if (isset($_SESSION['loggedin'])) {
+	$logged = true;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,29 +48,40 @@
             <div class="space-y-4 md:px-16 md:pt-6">
               <h1 class="text-3xl font-bold">Welcome to Shotstreak Support!</h1>
               <p class="text-xl max-w-lg">See real progress and improve your skills with powerful analytics and statistics get started with Shotstreak today!</p>
-              <div class="space-x-4 hidden xl:block">
+              <div class="space-y-4 flex flex-col ">
                 <a href="#faq"><button class="mt-6 bg-coral text-white md:hover:bg-coralhov text-lg px-6 py-3 rounded-full md:hover:scale-110  transition-all">See our FAQ</button></a>
+                <?php if ($logged): ?>
+                  <a href="coachreg.php" class="text-coral text-sm font-semibold">Back to Home</a>
+                <?php endif; ?>
               </div>
-            </div>
-          </div>
-          <div>
-            <div class="space-x-4 xl:hidden">
-              <a href="register.html"><button class="mt-6 bg-coral text-white md:hover:bg-coralhov text-lg px-6 py-3 rounded-full md:hover:scale-110  transition-all">Get Started</button></a>
-              <a href="login.html" ><button class="outline-1 outline mt-6 py-3 px-6 rounded-full text-coral font-bold text-lg md:hover:text-coralhov md:hover:scale-110  transition-all">Log In</button></a>
             </div>
           </div>
         </div>
     </section>
 
     <section id="troubleshooting">
-      <div class="px-8 xl:px-24">
+      <div class="px-8 xl:px-24 pb-12">
         <h2 class="text-3xl font-bold">
           Troubleshooting Tips
         </h2>
         <div>
-          <h3 class="text-2xl font-semibold text-coral">Common Issues</h3>
+          <h3 class="text-2xl font-semibold mb-6 mt-2 text-coral">Common Issues</h3>
           <div>
-            
+            <ul class="space-y-4">
+              <li>
+                <p class="text-lg ml-1 font-bold">Having trouble logging in?</p>
+                <p>Double-check your credentials or use the “Forgot Password” link to reset your login.</p>
+              </li>
+              <li>
+                <p class="text-lg ml-1 font-bold">Shot tracking not saving?</p>
+                <p>Make sure you’re connected to the internet and refresh your page. If the issue persists, try clearing your browser’s cache.</p>
+              </li>
+              <li>
+                <p class="text-lg ml-1 font-bold">Leaderboard not updating?</p>
+                <p>This can be due to recent changes. Wait a moment and refresh your dashboard to see the latest results.</p>
+              </li>
+              
+            </ul>
           </div>
         </div>
       </div>
@@ -73,11 +94,14 @@
       <footer class="bg-darkslate py-8 text-white">
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="footer-links flex flex-col justify-center items-center">
-            <a href="index.html" class="block mb-2 text-center">Home</a>
-            <a href="register.html" class="block mb-2 text-center">Register</a>
-            <a href="login.html" class="block mb-2 text-center">Login</a>
-            <a href="support.html" class="block mb-2 text-center">Support</a>
-            <!-- Add more links -->
+            <?php if ($logged): ?>
+              <a href="index.php" class="block mb-2 text-center">Home</a>
+            <?php else: ?>
+              <a href="index.php" class="block mb-2 text-center">Home</a>
+              <a href="register.php" class="block mb-2 text-center">Register</a>
+              <a href="login.php" class="block mb-2 text-center">Login</a>
+              <a href="support.php" class="block mb-2 text-center">Support</a>
+            <?php endif;?>
           </div> 
           <div class="text-center flex flex-col justify-center items-center">
             <p class="text-xs">© 2024 ShotStreak. All rights reserved.</p>

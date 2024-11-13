@@ -4,12 +4,12 @@ session_start();
 include 'db/db_connect.php'; // Your database connection
 
 if (!isset($_SESSION['loggedin'])) {
-	header('Location: index.html');
+	header('Location: index.php');
 	exit;
 }
 
 if ($_SESSION['type'] != 'user') {
-	header('Location: index.html');
+	header('Location: index.php');
 	exit;
 }
 

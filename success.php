@@ -15,7 +15,7 @@
     <link rel="manifest" href="assets/site.webmanifest" />
 
     <script>
-        function next() {document.location.href = "<?php echo $_GET['b'] ?? 'index.html' ?>";}setTimeout(() => next(),  2000);
+        function next() {document.location.href = "<?php echo $_GET['b'] ?? 'index.php' ?>";}setTimeout(() => next(),  2000);
     </script>
 </head>
 <body class="container mx-auto">

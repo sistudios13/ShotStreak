@@ -1,3 +1,7 @@
+<?php
+include "validation/log_check.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -44,17 +48,17 @@
     
                 <!-- Already have an account -->
                 <div class="text-center mt-4">
-                    <p class="text-sm text-gray-600"> <a href="login.html" class="text-coral font-semibold">Back to login</a></p>
+                    <p class="text-sm text-gray-600"> <a href="login.php" class="text-coral font-semibold">Back to login</a></p>
                 </div>
             </div>
         </div>
         <footer class="bg-darkslate py-8 text-white">
             <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
               <div class="footer-links flex flex-col justify-center items-center">
-                <a href="index.html" class="block mb-2 text-center">Home</a>
-                <a href="register.html" class="block mb-2 text-center">Register</a>
-                <a href="login.html" class="block mb-2 text-center">Login</a>
-                <a href="support.html" class="block mb-2 text-center">Support</a>
+                <a href="index.php" class="block mb-2 text-center">Home</a>
+                <a href="register.php" class="block mb-2 text-center">Register</a>
+                <a href="login.php" class="block mb-2 text-center">Login</a>
+                <a href="support.php" class="block mb-2 text-center">Support</a>
                 <!-- Add more links -->
               </div> 
               <div class="text-center flex flex-col justify-center items-center">

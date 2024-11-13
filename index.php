@@ -1,3 +1,7 @@
+<?php
+include "validation/log_check.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,8 +46,8 @@
               <h1 class="text-3xl font-bold">Track Your Shooting Progress With Shotstreak</h1>
               <p class="text-xl">See real progress and improve your skills with powerful analytics and statistics get started with Shotstreak today!</p>
               <div class="space-x-4 hidden xl:block">
-                <a href="register.html"><button class="mt-6 bg-coral text-white md:hover:bg-coralhov text-lg px-6 py-3 rounded-full md:hover:scale-110  transition-all">Get Started</button></a>
-                <a href="login.html" ><button class="outline-1 outline mt-6 py-3 px-6 rounded-full text-coral font-bold text-lg md:hover:text-coralhov md:hover:scale-110  transition-all">Log In</button></a>
+                <a href="register.php"><button class="mt-6 bg-coral text-white md:hover:bg-coralhov text-lg px-6 py-3 rounded-full md:hover:scale-110  transition-all">Get Started</button></a>
+                <a href="login.php" ><button class="outline-1 outline mt-6 py-3 px-6 rounded-full text-coral font-bold text-lg md:hover:text-coralhov md:hover:scale-110  transition-all">Log In</button></a>
               </div>
             </div>
             <div class="md:w-10/12 max-w-[50rem]">
@@ -53,8 +57,8 @@
           </div>
           <div>
             <div class="space-x-4 xl:hidden">
-              <a href="register.html"><button class="mt-6 bg-coral text-white md:hover:bg-coralhov text-lg px-6 py-3 rounded-full md:hover:scale-110  transition-all">Get Started</button></a>
-              <a href="login.html" ><button class="outline-1 outline mt-6 py-3 px-6 rounded-full text-coral font-bold text-lg md:hover:text-coralhov md:hover:scale-110  transition-all">Log In</button></a>
+              <a href="register.php"><button class="mt-6 bg-coral text-white md:hover:bg-coralhov text-lg px-6 py-3 rounded-full md:hover:scale-110  transition-all">Get Started</button></a>
+              <a href="login.php" ><button class="outline-1 outline mt-6 py-3 px-6 rounded-full text-coral font-bold text-lg md:hover:text-coralhov md:hover:scale-110  transition-all">Log In</button></a>
             </div>
           </div>
         </div>
@@ -94,7 +98,7 @@
           <img src="assets/social.svg" alt="Goal setting" class="mx-auto mb-4 size-32">
           <h3 class="text-2xl font-semibold">Shotstreak for Teams</h3>
           <p class="mt-2 text-gray-600">Set up Shotstreak for your team. Coaches, track your player's progress</p>
-          <a href="coachreg.html"><button class="mt-6 bg-coral text-white md:hover:bg-coralhov text-lg px-6 py-3 rounded-full md:hover:scale-110  transition-all">Create a team</button></a>
+          <a href="coachreg.php"><button class="mt-6 bg-coral text-white md:hover:bg-coralhov text-lg px-6 py-3 rounded-full md:hover:scale-110  transition-all">Create a team</button></a>
         </div>
         <!-- Repeat for other features -->
       </div>
@@ -157,10 +161,10 @@
     <footer class="bg-darkslate py-8 text-white">
       <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="footer-links flex flex-col justify-center items-center">
-          <a href="index.html" class="block mb-2 text-center">Home</a>
-          <a href="register.html" class="block mb-2 text-center">Register</a>
-          <a href="login.html" class="block mb-2 text-center">Login</a>
-          <a href="support.html" class="block mb-2 text-center">Support</a>
+          <a href="index.php" class="block mb-2 text-center">Home</a>
+          <a href="register.php" class="block mb-2 text-center">Register</a>
+          <a href="login.php" class="block mb-2 text-center">Login</a>
+          <a href="support.php" class="block mb-2 text-center">Support</a>
           <!-- Add more links -->
         </div> 
         <div class="text-center flex flex-col justify-center items-center">
