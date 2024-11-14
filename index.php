@@ -1,6 +1,12 @@
 <?php
+
 include "validation/log_check.php";
+include "db/db_connect.php";
+include "validation/autolog.php";
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,7 +56,7 @@ include "validation/log_check.php";
                 <a href="login.php" ><button class="outline-1 outline mt-6 py-3 px-6 rounded-full text-coral font-bold text-lg md:hover:text-coralhov md:hover:scale-110  transition-all">Log In</button></a>
               </div>
             </div>
-            <div class="md:w-10/12 max-w-[50rem]">
+            <div class="md:w-10/12 max-w-[30rem]">
               <img src="assets/dashcomputer.webp" alt="screen" class="md:w-full">
             </div>
             

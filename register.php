@@ -1,5 +1,8 @@
 <?php
 include "validation/log_check.php";
+include "db/db_connect.php";
+include "validation/autolog.php";
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

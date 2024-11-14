@@ -1,5 +1,8 @@
 <?php
-include "validation/log_check.php";
+    include "validation/log_check.php";
+    include "db/db_connect.php";
+    include "validation/autolog.php";
+
 ?>
 
 <!DOCTYPE html>
@@ -53,6 +56,11 @@ include "validation/log_check.php";
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <input type="password" name="password"  id="password" class="mt-1 p-2 w-full border rounded-md focus-visible:outline-coral" required>
+                    </div>
+
+                    <div class="flex items-center gap-1">
+                        <input type="checkbox" name="remember_me" id="remember_me">
+                        <label for="remember_me" class=" text-sm font-medium text-gray-700">Remember Me</label>
                     </div>
     
 

@@ -464,7 +464,7 @@ if ($streak >= 3) {
         </div>
     </div>
     <div class="container mx-auto text-almostblack">
-        <div class="bg-white dark:bg-darkslate p-8 rounded-lg shadow-md max-w-md">
+        <div class="bg-white dark:bg-darkslate p-8 rounded-lg shadow-md ">
             <h3 class="text-lg font-semibold text-almostblack dark:text-lightgray mb-4">Leaderboard</h3>
             <table class="min-w-full table-auto text-left dark:text-lightgray">
                 <thead class="">

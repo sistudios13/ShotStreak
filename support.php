@@ -1,6 +1,52 @@
 <?php
 session_start();
+include "db/db_connect.php";
+function autoLogin($con) {
+  if (isset($_COOKIE['remember_me']) && !isset($_SESSION['loggedin'])) {
+      $token = $_COOKIE['remember_me'];
 
+      // Query to find the user with this token
+      $stmt = $con->prepare("SELECT id, user_type, username FROM accounts WHERE remember_token = ? AND remember_expiration > NOW()");
+      $stmt->bind_param("s", $token);
+      $stmt->execute();
+      $stmt->bind_result($id, $type, $usern);
+
+      if ($stmt->fetch()) {
+          // Log in the user by setting the session
+          
+          // Optionally, regenerate session ID for security
+          session_regenerate_id();
+          $_SESSION['loggedin'] = TRUE;
+          $_SESSION['name'] = $usern;
+          $_SESSION['id'] = $id;
+
+          if ($type === 'user') {
+              
+              $_SESSION['type'] = $type;
+              echo "<script>window.location.href = 'home.php'</script>";
+          }
+
+          if ($type === 'coach') {
+              
+              $_SESSION['type'] = $type;
+              $_SESSION['email'] = $_POST['email'];
+              echo "<script>window.location.href = 'coach_dashboard.php'</script>";
+          }
+
+          if ($type === 'player') {
+              $_SESSION['email'] = $_POST['email'];
+              $_SESSION['type'] = $type;
+              echo "<script>window.location.href = 'player_dashboard.php'</script>";
+          }
+      } else {
+          // Token is invalid or expired, remove the cookie
+          setcookie('remember_me', '', time() - 3600, '/'); // Delete the cookie
+      }
+  }
+}
+
+
+autoLogin($con);
 $logged = false;
 
 if (isset($_SESSION['loggedin'])) {
@@ -109,7 +155,7 @@ if (isset($_SESSION['loggedin'])) {
           </div>
           <div x-data="{ isExpanded: false }" class="divide-y divide-neutral-300 dark:divide-neutral-700">
               <button id="controlsAccordionItemTwo" type="button" class="flex w-full items-center justify-between gap-4 bg-neutral-50 p-4 text-left underline-offset-2 hover:bg-neutral-50/75 focus-visible:bg-neutral-50/75 focus-visible:underline focus-visible:outline-none dark:bg-neutral-900 dark:hover:bg-neutral-900/75 dark:focus-visible:bg-neutral-900/75" aria-controls="accordionItemTwo" @click="isExpanded = ! isExpanded" :class="isExpanded ? 'text-onSurfaceStrong dark:text-onSurfaceDarkStrong font-bold'  : 'text-onSurface dark:text-onSurfaceDark font-medium'" :aria-expanded="isExpanded ? 'true' : 'false'">
-                  How can I contact customer support?
+                  How can I contact support?
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" class="size-5 shrink-0 transition" aria-hidden="true" :class="isExpanded  ?  'rotate-180'  :  ''">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
                   </svg>
@@ -155,22 +201,13 @@ if (isset($_SESSION['loggedin'])) {
           Get in Touch
         </h2>
         <div>
-          <h3 class="text-2xl font-semibold mb-6 mt-2 text-coral">Common Issues</h3>
+          <h3 class="text-2xl font-semibold mb-6 mt-2 text-coral">Need more help? We’re here to support you!</h3>
           <div>
             <ul class="space-y-4">
               <li>
-                <p class="text-lg ml-1 font-bold">Having trouble logging in?</p>
-                <p>Double-check your credentials or use the “Forgot Password” link to reset your login.</p>
+                <p class="text-lg font-bold">Email:</p>
+                <a href="mailto:support@shotstreak.ca">support@shotstreak.ca</a>
               </li>
-              <li>
-                <p class="text-lg ml-1 font-bold">Shot tracking not saving?</p>
-                <p>Make sure you’re connected to the internet and refresh your page. If the issue persists, try clearing your browser’s cache.</p>
-              </li>
-              <li>
-                <p class="text-lg ml-1 font-bold">Leaderboard not updating?</p>
-                <p>This can be due to recent changes. Wait a moment and refresh your dashboard to see the latest results.</p>
-              </li>
-              
             </ul>
           </div>
         </div>
@@ -181,7 +218,7 @@ if (isset($_SESSION['loggedin'])) {
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
           <div class="footer-links flex flex-col justify-center items-center">
             <?php if ($logged): ?>
-              <a href="index.php" class="block mb-2 text-center">Home</a>
+              <a href="index.php" class="block text-center">Home</a>
             <?php else: ?>
               <a href="index.php" class="block mb-2 text-center">Home</a>
               <a href="register.php" class="block mb-2 text-center">Register</a>
