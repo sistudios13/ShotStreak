@@ -23,6 +23,11 @@ if (isset($_SESSION['loggedin'])) {
     <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-title" content="Shotstreak" />
     <link rel="manifest" href="assets/site.webmanifest" />
+    <!-- Alpine Plugins -->
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+    
+    <!-- Alpine Core -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
       .box {
           --mask:
@@ -86,9 +91,90 @@ if (isset($_SESSION['loggedin'])) {
         </div>
       </div>
     </section>
-
     <section id="faq">
-
+      <div class="px-8 xl:px-24 pb-12">
+        <div class="w-full divide-y divide-neutral-300 overflow-hidden rounded-2xl border border-neutral-300 bg-neutral-50/40 dark:divide-neutral-700 dark:border-neutral-700 dark:bg-neutral-900/50 dark:text-neutral-300">
+          <div x-data="{ isExpanded: false }" class="divide-y divide-neutral-300 dark:divide-neutral-700">
+              <button id="controlsAccordionItemOne" type="button" class="flex w-full items-center justify-between gap-4 bg-neutral-50 p-4 text-left underline-offset-2 hover:bg-neutral-50/75 focus-visible:bg-neutral-50/75 focus-visible:underline focus-visible:outline-none dark:bg-neutral-900 dark:hover:bg-neutral-900/75 dark:focus-visible:bg-neutral-900/75" aria-controls="accordionItemOne" @click="isExpanded = ! isExpanded" :class="isExpanded ? 'text-onSurfaceStrong dark:text-onSurfaceDarkStrong font-bold'  : 'text-onSurface dark:text-onSurfaceDark font-medium'" :aria-expanded="isExpanded ? 'true' : 'false'">
+                  How do I set a new shot goal?
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" class="size-5 shrink-0 transition" aria-hidden="true" :class="isExpanded  ?  'rotate-180'  :  ''">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+                  </svg>
+              </button>
+              <div x-cloak x-show="isExpanded" id="accordionItemOne" role="region" aria-labelledby="controlsAccordionItemOne" x-collapse>
+                  <div class="p-4 text-sm sm:text-base text-pretty">
+                    You can set or update your daily shot goal from your profile settings or dashboard. Just head to the “Change Goal” section, enter your new target, and save it.
+                  </div>
+              </div>
+          </div>
+          <div x-data="{ isExpanded: false }" class="divide-y divide-neutral-300 dark:divide-neutral-700">
+              <button id="controlsAccordionItemTwo" type="button" class="flex w-full items-center justify-between gap-4 bg-neutral-50 p-4 text-left underline-offset-2 hover:bg-neutral-50/75 focus-visible:bg-neutral-50/75 focus-visible:underline focus-visible:outline-none dark:bg-neutral-900 dark:hover:bg-neutral-900/75 dark:focus-visible:bg-neutral-900/75" aria-controls="accordionItemTwo" @click="isExpanded = ! isExpanded" :class="isExpanded ? 'text-onSurfaceStrong dark:text-onSurfaceDarkStrong font-bold'  : 'text-onSurface dark:text-onSurfaceDark font-medium'" :aria-expanded="isExpanded ? 'true' : 'false'">
+                  How can I contact customer support?
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" class="size-5 shrink-0 transition" aria-hidden="true" :class="isExpanded  ?  'rotate-180'  :  ''">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+                  </svg>
+              </button>
+              <div x-cloak x-show="isExpanded" id="accordionItemTwo" role="region" aria-labelledby="controlsAccordionItemTwo" x-collapse>
+                  <div class="p-4 text-sm sm:text-base text-pretty">
+                      Reach out to our support team via email at <a href="mailto:support@shotstreak.ca" class="underline underline-offset-2 text-black dark:text-white">support@shotstreak.ca</a>.
+                  </div>
+              </div>
+          </div>
+          <div x-data="{ isExpanded: false }" class="divide-y divide-neutral-300 dark:divide-neutral-700">
+              <button id="controlsAccordionItemThree" type="button" class="flex w-full items-center justify-between gap-4 bg-neutral-50 p-4 text-left underline-offset-2 hover:bg-neutral-50/75 focus-visible:bg-neutral-50/75 focus-visible:underline focus-visible:outline-none dark:bg-neutral-900 dark:hover:bg-neutral-900/75 dark:focus-visible:bg-neutral-900/75" aria-controls="accordionItemThree" @click="isExpanded = ! isExpanded" :class="isExpanded ? 'text-onSurfaceStrong dark:text-onSurfaceDarkStrong font-bold'  : 'text-onSurface dark:text-onSurfaceDark font-medium'" :aria-expanded="isExpanded ? 'true' : 'false'">
+              Can I see my overall shooting percentage?
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" class="size-5 shrink-0 transition" aria-hidden="true" :class="isExpanded  ?  'rotate-180'  :  ''">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+                  </svg>
+              </button>
+              <div x-cloak x-show="isExpanded" id="accordionItemThree" role="region" aria-labelledby="controlsAccordionItemThree" x-collapse>
+                  <div class="p-4 text-sm sm:text-base text-pretty">
+                  Yes! Your dashboard includes stats on your shooting performance, including your daily and overall shot percentages.
+                  </div>
+              </div>
+          </div>
+          <div x-data="{ isExpanded: false }" class="divide-y divide-neutral-300 dark:divide-neutral-700">
+              <button id="controlsAccordionItemFour" type="button" class="flex w-full items-center justify-between gap-4 bg-neutral-50 p-4 text-left underline-offset-2 hover:bg-neutral-50/75 focus-visible:bg-neutral-50/75 focus-visible:underline focus-visible:outline-none dark:bg-neutral-900 dark:hover:bg-neutral-900/75 dark:focus-visible:bg-neutral-900/75" aria-controls="accordionItemThree" @click="isExpanded = ! isExpanded" :class="isExpanded ? 'text-onSurfaceStrong dark:text-onSurfaceDarkStrong font-bold'  : 'text-onSurface dark:text-onSurfaceDark font-medium'" :aria-expanded="isExpanded ? 'true' : 'false'">
+              How do I export my shot data?
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke="currentColor" class="size-5 shrink-0 transition" aria-hidden="true" :class="isExpanded  ?  'rotate-180'  :  ''">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
+                  </svg>
+              </button>
+              <div x-cloak x-show="isExpanded" id="accordionItemFour" role="region" aria-labelledby="controlsAccordionItemFour" x-collapse>
+                  <div class="p-4 text-sm sm:text-base text-pretty">
+                  Go to your profile and look for the “Export All Data” option. You can download your shot history as a CSV file to keep track and share with others.
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="support">
+      <div class="px-8 xl:px-24 pb-12">
+        <h2 class="text-3xl font-bold">
+          Get in Touch
+        </h2>
+        <div>
+          <h3 class="text-2xl font-semibold mb-6 mt-2 text-coral">Common Issues</h3>
+          <div>
+            <ul class="space-y-4">
+              <li>
+                <p class="text-lg ml-1 font-bold">Having trouble logging in?</p>
+                <p>Double-check your credentials or use the “Forgot Password” link to reset your login.</p>
+              </li>
+              <li>
+                <p class="text-lg ml-1 font-bold">Shot tracking not saving?</p>
+                <p>Make sure you’re connected to the internet and refresh your page. If the issue persists, try clearing your browser’s cache.</p>
+              </li>
+              <li>
+                <p class="text-lg ml-1 font-bold">Leaderboard not updating?</p>
+                <p>This can be due to recent changes. Wait a moment and refresh your dashboard to see the latest results.</p>
+              </li>
+              
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
     
       <footer class="bg-darkslate py-8 text-white">
