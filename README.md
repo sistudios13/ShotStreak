@@ -1,6 +1,6 @@
-# 🏀 ShotStreak
+# 🏀 Shotstreak
 
-Welcome to **ShotStreak**! 🎯 This is your ultimate basketball shot tracking app that helps you log your shooting goals, track progress, and stay consistent with your training. Whether you're aiming for a perfect streak or climbing the leaderboard, ShotStreak is here to keep you motivated and improving. 💪
+Welcome to **Shotstreak**! 🎯 This is your ultimate basketball shot tracking app that helps you log your shooting goals, track progress, and stay consistent with your training. Whether you're aiming for a perfect streak or climbing the leaderboard, Shotstreak is here to keep you motivated and improving. 💪
 
 ---
 
@@ -22,13 +22,13 @@ Welcome to **ShotStreak**! 🎯 This is your ultimate basketball shot tracking a
 
 ---
 
-## 🌐 Visit ShotStreak
-To use ShotStreak, visit the live site here: [https://www.shotstreak.simonsites.com](https://www.shotstreak.simonsites.com)
+## 🌐 Visit Shotstreak
+To use Shotstreak, visit the live site here: [https://www.shotstreak.simonsites.com](https://www.shotstreak.simonsites.com)
 
 ---
 
 ## 🛠️ Feedback
-Have ideas, feature requests, or found a bug? Open an issue or drop your suggestions here. We love hearing from the ShotStreak community! 🎤
+Have ideas, feature requests, or found a bug? Open an issue or drop your suggestions here. We love hearing from the Shotstreak community! 🎤
 
 ---
 
