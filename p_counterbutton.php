@@ -110,7 +110,7 @@ if ($_SESSION['type'] != 'player') {
                     <p class="text-sm text-gray-600"> <a href="player_dashboard.php" class="text-coral font-semibold">Back to Dashboard</a></p>
                 </div>
     </div>
-    <footer class="bg-white py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
+    <footer class=" py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
           <p class="text-sm text-center">© 2024 Shotstreak. All rights reserved.</p>
     </footer>
     <script>

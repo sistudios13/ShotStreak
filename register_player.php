@@ -62,7 +62,7 @@ if ($ca['player_name'] != $username) {
     exit();
 }
 
-if ($ca['email'] != $email) {
+if ($ca['player_email'] != $email) {
     echo "<script>setTimeout(() => window.location.href = 'error.php?a=Invalid Registration&b=index.php', 700);</script>";
 }
 
