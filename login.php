@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ShotStreak</title>
+    <title>Login - Shotstreak</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
 
@@ -37,7 +37,7 @@
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
                 <!-- Logo -->
                 <div class="text-center mb-6">
-                    <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
+                    <img src="assets/isoLogo.svg" alt="Shotstreak Logo" class="mx-auto h-16">
                     <h1 class="text-2xl font-bold text-almostblack mt-4">Sign In</h1>
                 </div>
     
@@ -60,7 +60,7 @@
 
                     <div class="flex items-center gap-1">
                         <input type="checkbox" name="remember_me" id="remember_me">
-                        <label for="remember_me" class=" text-sm font-medium text-gray-700">Remember Me</label>
+                        <label for="remember_me" class="select-none text-sm font-medium text-gray-700">Remember Me</label>
                     </div>
     
 
@@ -94,7 +94,7 @@
                 <!-- Add more links -->
               </div> 
               <div class="text-center flex flex-col justify-center items-center">
-                <p class="text-xs">© 2024 ShotStreak. All rights reserved.</p>
+                <p class="text-xs">© 2024 Shotstreak. All rights reserved.</p>
                 <p class="text-xs">Website Created by <a target="_blank" class="font-bold" href="https://portfolio.simonsites.com">Simon Papp</a> - <a target="_blank" class="font-bold" href="https://simonsites.com">SimonSites</a></p>
               </div>
             </div>

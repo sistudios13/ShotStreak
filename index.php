@@ -13,14 +13,14 @@ include "validation/autolog.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="title" content="ShotStreak">
-    <meta name="description" content="ShotStreak helps you keep track of your basketball shotting data. It helps user's stay on track with their goals.">
+    <meta name="title" content="Shotstreak">
+    <meta name="description" content="Shotstreak helps you keep track of your basketball shotting data. It helps user's stay on track with their goals.">
     <meta name="keywords" content="basketball, shot tracking, shooting">
     <meta name="robots" content="index, follow">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="language" content="English">
     <meta name="author" content="Simon P">
-    <title>ShotStreak</title>
+    <title>Shotstreak</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -73,7 +73,7 @@ include "validation/autolog.php";
         <div class="container mx-auto my-8 grid grid-cols-1 lg:grid-cols-2 lg:gap-12 items-center">
           <div class="px-8">
             <h2 class="text-3xl font-bold">What Is Shotstreak?</h2>
-            <p class="text-lg mt-4 text-gray-600">ShotStreak is your personal basketball shot-tracking assistant designed to help you improve your game. Whether you're practicing on your own or competing with friends, ShotStreak allows you to set daily shooting goals, track your progress, and stay motivated. With an easy-to-use interface and powerful analytics, you can visualize your performance, push your limits, and see real results.</p>
+            <p class="text-lg mt-4 text-gray-600">Shotstreak is your personal basketball shot-tracking assistant designed to help you improve your game. Whether you're practicing on your own or competing with friends, Shotstreak allows you to set daily shooting goals, track your progress, and stay motivated. With an easy-to-use interface and powerful analytics, you can visualize your performance, push your limits, and see real results.</p>
           </div>
           <!-- Progress Chart Card -->
           <div class="bg-white p-6 mt-6 rounded-lg shadow-md mx-4">
@@ -149,17 +149,17 @@ include "validation/autolog.php";
         <div class="flex flex-col gap-2">
           <img class="size-20" src="assets/improve.svg" alt="icon">
           <h3 class="text-2xl font-bold">Improve Your Shooting</h3>
-          <p class="text-lg">ShotStreak helps you track your daily shooting performance, giving you real-time data on shot attempts and accuracy. This lets you easily identify areas for improvement, refine your technique, and watch your shooting percentage rise over time.</p>
+          <p class="text-lg">Shotstreak helps you track your daily shooting performance, giving you real-time data on shot attempts and accuracy. This lets you easily identify areas for improvement, refine your technique, and watch your shooting percentage rise over time.</p>
         </div>
         <div class="flex flex-col gap-2">
           <img class="size-20" src="assets/thumbsup.svg" alt="icon">
           <h3 class="text-2xl font-bold">Stay Consistent</h3>
-          <p class="text-lg">Consistency is key, and ShotStreak keeps you on track by helping you set daily shot goals. With streak tracking, you'll stay motivated, knowing that every day counts toward reaching your basketball goals.</p>
+          <p class="text-lg">Consistency is key, and Shotstreak keeps you on track by helping you set daily shot goals. With streak tracking, you'll stay motivated, knowing that every day counts toward reaching your basketball goals.</p>
         </div>
         <div class="flex flex-col gap-2">
           <img class="size-20" src="assets/motivate.svg" alt="icon">
           <h3 class="text-2xl font-bold">Motivate with Achievements</h3>
-          <p class="text-lg">ShotStreak rewards your hard work with achievements and badges as you reach milestones. Whether it's making 100 shots or improving your accuracy, these rewards push you to stay motivated and improve further.</p>
+          <p class="text-lg">Shotstreak rewards your hard work with achievements and badges as you reach milestones. Whether it's making 100 shots or improving your accuracy, these rewards push you to stay motivated and improve further.</p>
         </div>
       </div>
     </section>
@@ -174,7 +174,7 @@ include "validation/autolog.php";
           <!-- Add more links -->
         </div> 
         <div class="text-center flex flex-col justify-center items-center">
-          <p class="text-xs">© 2024 ShotStreak. All rights reserved.</p>
+          <p class="text-xs">© 2024 Shotstreak. All rights reserved.</p>
           <p class="text-xs">Website Created by <a target="_blank" class="font-bold" href="https://portfolio.simonsites.com">Simon Papp</a> - <a target="_blank" class="font-bold" href="https://simonsites.com">SimonSites</a></p>
         </div>
       </div>

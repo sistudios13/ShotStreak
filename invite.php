@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <meta charset='UTF-8'>
             <meta http-equiv='X-UA-Compatible' content='IE=edge'>
             <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-            <title>Invitation to Join ShotStreak</title>
+            <title>Invitation to Join Shotstreak</title>
             <style>
                 body {
                     font-family: Arial, sans-serif;
@@ -117,23 +117,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <div class='email-container'>
             <div class='email-header'>
-                <h1>Join ShotStreak!</h1>
+                <h1>Join Shotstreak!</h1>
                 <img title='logo' src='https://shotstreak.simonsites.com/assets/isoLogo.svg' alt='Logo' height='200' width='200'>
             </div>
             
             <div class='email-body'>
                 <p><b>Hello, $player_name</b></p>
-                <p>You’ve been invited by <b>$coach_name</b> to join ShotStreak, a basketball shot tracking platform that helps you monitor your daily shot goals and performance.</p>
+                <p>You’ve been invited by <b>$coach_name</b> to join Shotstreak, a basketball shot tracking platform that helps you monitor your daily shot goals and performance.</p>
                 <p>To get started, simply click the link below to register and join your coach's team:</p>
                 
-                <a href='$invite_link' class='cta-button'>Join ShotStreak</a>
+                <a href='$invite_link' class='cta-button'>Join Shotstreak</a>
                 
                 <p>If you did not expect this email, feel free to ignore it.</p>
                 <p>Looking forward to seeing you on the court!</p>
             </div>
             
             <div class='footer'>
-                <p>&copy; 2024 ShotStreak. All rights reserved.</p>
+                <p>&copy; 2024 Shotstreak. All rights reserved.</p>
             </div>
         </div>
 
@@ -142,7 +142,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         ";
 
-        if (mail($player_email, "You've been invited to join ShotStreak!", $message, $headers)) {
+        if (mail($player_email, "You've been invited to join Shotstreak!", $message, $headers)) {
             header("Location: coach_dashboard.php");
         }
         else {

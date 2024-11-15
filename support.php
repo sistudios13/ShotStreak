@@ -59,7 +59,7 @@ if (isset($_SESSION['loggedin'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support - ShotStreak</title>
+    <title>Support - Shotstreak</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -227,7 +227,7 @@ if (isset($_SESSION['loggedin'])) {
             <?php endif;?>
           </div> 
           <div class="text-center flex flex-col justify-center items-center">
-            <p class="text-xs">© 2024 ShotStreak. All rights reserved.</p>
+            <p class="text-xs">© 2024 Shotstreak. All rights reserved.</p>
             <p class="text-xs">Website Created by <a target="_blank" class="font-bold" href="https://portfolio.simonsites.com">Simon Papp</a> - <a target="_blank" class="font-bold" href="https://simonsites.com">SimonSites</a></p>
           </div>
         </div>

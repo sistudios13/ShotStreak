@@ -33,7 +33,7 @@ $team_name = $res->fetch_assoc()['team_name'];
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile - ShotStreak</title>
+    <title>Profile - Shotstreak</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
 
@@ -52,7 +52,7 @@ $team_name = $res->fetch_assoc()['team_name'];
     <!-- Navbar -->
     <nav class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
-            <a href="#" class="text-2xl font-bold text-coral">ShotStreak</a>
+            <a href="#" class="text-2xl font-bold text-coral">Shotstreak</a>
             <div class="flex items-center gap-2">
                 <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
                 
@@ -87,7 +87,7 @@ $team_name = $res->fetch_assoc()['team_name'];
                     </div>
                     <div class="pt-2"><a href="p_export.php" class="py-2 text-coral text-lg font-bold">Export All Data</a></div>
                     <div>
-                        <a href="support.php">Support Page</a>
+                        <a href="support.php" class="dark:text-lightgray">Support Page</a>
                     </div>
                     <div x-data="{de: false}">
                     <a @click="de = !de" class="text-lg text-coral font-bold mb-3 cursor-pointer">Delete Account</a>
@@ -127,7 +127,7 @@ $team_name = $res->fetch_assoc()['team_name'];
     </div>
     </div>
     <footer class="bg-lightgray py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
-          <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
+          <p class="text-sm text-center">© 2024 Shotstreak. All rights reserved.</p>
     </footer>
     <script src="confirmpass.js"></script>
     <script>

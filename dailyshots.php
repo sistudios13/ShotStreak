@@ -18,7 +18,7 @@ if ($_SESSION['type'] != 'user') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Today's Shots - ShotStreak</title>
+    <title>Today's Shots - Shotstreak</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
     <link rel="stylesheet" href="main.css">
@@ -42,7 +42,7 @@ if ($_SESSION['type'] != 'user') {
       <!-- Navbar -->
       <nav class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
-            <a href="#" class="text-2xl font-bold text-coral">ShotStreak</a>
+            <a href="#" class="text-2xl font-bold text-coral">Shotstreak</a>
             <div class="flex items-center gap-2">
                 <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
                 
@@ -86,7 +86,7 @@ if ($_SESSION['type'] != 'user') {
             <div class="bg-white dark:bg-darkslate mt-6 p-8 rounded-lg shadow-lg max-w-md w-full">
                 <!-- Logo -->
                 <div class="text-center mb-6">
-                <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
+                <img src="assets/isoLogo.svg" alt="Shotstreak Logo" class="mx-auto h-16">
                     <h1 class="text-2xl dark:text-lightgray font-bold text-almostblack mt-4">Shot Counter</h1>
                 </div>
     
@@ -101,7 +101,7 @@ if ($_SESSION['type'] != 'user') {
         </div>
         <div x-data="{show: $persist(true)}">
             <div x-show="show" x-cloak class="fixed bottom-0 bg-coral p-6 w-full flex justify-between shadow-md">
-                <p><b>Please enter accurate information about your shots!</b> This will help you track your progress more effectively and make ShotStreak a better experience for everyone. Honest data, honest results!</p>
+                <p><b>Please enter accurate information about your shots!</b> This will help you track your progress more effectively and make Shotstreak a better experience for everyone. Honest data, honest results!</p>
                 <button @click="show = false">
                     <svg fill="#000000" height="17" width="17px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                         viewBox="0 0 460.775 460.775" xml:space="preserve">
@@ -116,7 +116,7 @@ if ($_SESSION['type'] != 'user') {
             </div>
         </div>
         <footer class="bg-lightgray  py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
-          <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
+          <p class="text-sm text-center">© 2024 Shotstreak. All rights reserved.</p>
         </footer>
         <script>
         const themeToggleBtn = document.getElementById('theme-toggle');

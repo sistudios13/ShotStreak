@@ -238,7 +238,7 @@ if ($streak >= 3) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - ShotStreak</title>
+    <title>Dashboard - Shotstreak</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
@@ -254,16 +254,16 @@ if ($streak >= 3) {
     <link rel="manifest" href="assets/site.webmanifest" />
     <script src="https://cdn.jsdelivr.net/npm/preline@2.4.1/dist/preline.min.js"></script>
     <!-- Open Graph Tags -->
-    <meta property="og:title" content="ShotStreak – See my profile!" />
-    <meta property="og:description" content="Stay on top of your game! Track your shots, view your stats, and keep up with the competition with ShotStreak." />
+    <meta property="og:title" content="Shotstreak – See my profile!" />
+    <meta property="og:description" content="Stay on top of your game! Track your shots, view your stats, and keep up with the competition with Shotstreak." />
     <meta property="og:image" content="https://shotstreak.ca/assets/fullLogo.svg" /> 
     <meta property="og:url" content="https://shotstreak.ca/view.php?user_id=<?php echo $user_id?>" />
     <meta property="og:type" content="website" />
 
     <!-- Twitter Card Tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="ShotStreak – See my profile!" />
-    <meta name="twitter:description" content="Stay on top of your game! Track your shots, view your stats, and keep up with the competition with ShotStreak." />
+    <meta name="twitter:title" content="Shotstreak – See my profile!" />
+    <meta name="twitter:description" content="Stay on top of your game! Track your shots, view your stats, and keep up with the competition with Shotstreak." />
     <meta name="twitter:image" content="https://shotstreak.ca/assets/fullLogo.svg" /> 
     <script>
         var time = 2;
@@ -280,7 +280,7 @@ if ($streak >= 3) {
     <!-- Navbar -->
     <nav id="test" class="bg-white dark:bg-darkslate shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
-            <a href="#" class="text-2xl font-bold text-coral">ShotStreak</a>
+            <a href="#" class="text-2xl font-bold text-coral">Shotstreak</a>
             <div class="flex items-center gap-2">
                 <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
                 
@@ -516,7 +516,7 @@ if ($streak >= 3) {
                 </div>
                 <div class="p-6 pt-0 text-white dark:text-lightgray space-y-2">
                 <div class="text-center mb-6">
-                        <img src="assets/isoLogo.svg" alt="ShotStreak Logo" class="mx-auto h-16">
+                        <img src="assets/isoLogo.svg" alt="Shotstreak Logo" class="mx-auto h-16">
                         <h1 class="text-2xl font-bold dark:text-lightgray text-almostblack mt-4">Enjoying Shotstreak?</h1>
                     </div>
                     <p class="font-semibold text-almostblack dark:text-lightgray text-lg">Add Shotstreak to your home screen with these steps:</p>
@@ -544,15 +544,15 @@ if ($streak >= 3) {
     </script>
 
     <footer class="bg-lightgray py-8 text-almostblack dark:text-lightgray dark:bg-almostblack static bottom-0 left-0 w-full">
-          <p class="text-sm text-center">© 2024 ShotStreak. All rights reserved.</p>
+          <p class="text-sm text-center">© 2024 Shotstreak. All rights reserved.</p>
     </footer>
     
     <!-- Share Script -->
     <script>
         function shareProfile() {
             const shareData = {
-                title: 'ShotStreak – See my profile!',
-                text: 'Stay on top of your game! Track your shots, view your stats, and keep up with the competition with ShotStreak.',
+                title: 'Shotstreak – See my profile!',
+                text: 'Stay on top of your game! Track your shots, view your stats, and keep up with the competition with Shotstreak.',
                 url: "https://shotstreak.ca/view.php?user_id=<?php echo $user_id?>"
             };
 
@@ -561,7 +561,7 @@ if ($streak >= 3) {
                     .then(() => console.log('Content shared successfully'))
                     .catch((error) => console.error('Error sharing:', error));
             } else {
-                alert('Web Share API not supported in this browser.');
+                alert('Unfortunately, your browser does not support this feature!');
             }
         }
     </script>
