@@ -35,7 +35,7 @@ include "validation/autolog.php";
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
                 <!-- Logo -->
                 <div class="text-center mb-6">
-                    <img src="assets/isoLogo.svg" alt="Shotstreak Logo" class="mx-auto h-16">
+                    <a href="index.php"><img src="assets/isoLogo.svg" alt="Shotstreak Logo" class="mx-auto h-16"></a>
                     <h1 class="text-2xl font-bold text-almostblack mt-4">Create a Coach Account</h1>
                 </div>
     

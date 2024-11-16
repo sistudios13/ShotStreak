@@ -92,7 +92,7 @@ if (isset($_SESSION['loggedin'])) {
     <section>
         <div class="h-fit w-full bg-white flex flex-col px-4 pt-4 items-center box gap-6 pb-32">
           <div class="flex flex-row gap-4 items-center">
-            <img src="assets/isoLogo.svg" class="size-24" alt="logo">
+            <a href="index.php"><img src="assets/isoLogo.svg" class="size-24" alt="logo"></a>
             <h1 class="text-2xl font-bold text-left">Shotstreak <br><span class="text-coral"> Support</span></h1>
           </div>
           <div class="space-y-4 flex flex-col text-center items-center xl:flex-row xl:gap-12 gap-6 xl:px-12">
@@ -102,7 +102,7 @@ if (isset($_SESSION['loggedin'])) {
               <div class="space-y-4 flex flex-col ">
                 <a href="#faq"><button class="mt-6 bg-coral text-white md:hover:bg-coralhov text-lg px-6 py-3 rounded-full md:hover:scale-110  transition-all">See our FAQ</button></a>
                 <?php if ($logged): ?>
-                  <a href="coachreg.php" class="text-coral text-sm font-semibold">Back to Home</a>
+                  <a href="index.php" class="text-coral text-sm font-semibold">Back to Home</a>
                 <?php endif; ?>
               </div>
             </div>

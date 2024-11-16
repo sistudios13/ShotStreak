@@ -35,12 +35,12 @@ include "validation/autolog.php";
             <div class="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
                 <!-- Logo -->
                 <div class="text-center mb-6">
-                    <img src="assets/isoLogo.svg" alt="Shotstreak Logo" class="mx-auto h-16">
+                    <a href="index.php"><img src="assets/isoLogo.svg" alt="Shotstreak Logo" class="mx-auto h-16"></a>
                     <h1 class="text-2xl font-bold text-almostblack mt-4">Create an Account</h1>
                 </div>
     
                 <!-- Registration Form -->
-                <form id="registerForm" hx-post="register_player.php" hx-trigger="submit" hx-target="#response" hx-swap="innerHTML" @submit="loading = true" class="space-y-4"  autocomplete="off">
+                <form id="registerForm" hx-post="register_user.php" hx-trigger="submit" hx-target="#response" hx-swap="innerHTML" @submit="loading = true" class="space-y-4"  autocomplete="off">
                     <!-- Name Input -->
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
