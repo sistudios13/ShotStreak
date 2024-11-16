@@ -46,17 +46,22 @@
             </div>
         </div>
         <footer class="bg-darkslate py-8 text-white">
-            <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div class="footer-links flex flex-col justify-center items-center">
-                <a href="index.php" class="block mb-2 text-center">Home</a>
-                <a href="register.php" class="block mb-2 text-center">Register</a>
-                <a href="login.php" class="block mb-2 text-center">Login</a>
-                <!-- Add more links -->
-              </div> 
-              <div class="text-center flex justify-center items-center">
-                <p class="text-xs">© 2024 Shotstreak. All rights reserved.</p>
-              </div>
-            </div>
-          </footer>
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="footer-links flex flex-col justify-center items-center">
+            <?php if ($logged): ?>
+              <a href="index.php" class="block text-center">Home</a>
+            <?php else: ?>
+              <a href="index.php" class="block mb-2 text-center">Home</a>
+              <a href="register.php" class="block mb-2 text-center">Register</a>
+              <a href="login.php" class="block mb-2 text-center">Login</a>
+              <a href="support.php" class="block mb-2 text-center">Support</a>
+            <?php endif;?>
+          </div> 
+          <div class="text-center flex flex-col justify-center items-center">
+            <p class="text-xs">© 2024 Shotstreak. All rights reserved.</p>
+            <p class="text-xs">Website Created by Simon Papp - <a target="_blank" class="font-bold" href="https://simonsites.com">SimonSites</a></p>
+          </div>
+        </div>
+      </footer>
     </body>
     </html>

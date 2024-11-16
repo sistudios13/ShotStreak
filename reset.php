@@ -66,7 +66,7 @@ include "validation/autolog.php";
               </div> 
               <div class="text-center flex flex-col justify-center items-center">
                 <p class="text-xs">© 2024 Shotstreak. All rights reserved.</p>
-                <p class="text-xs">Website Created by <a target="_blank" class="font-bold" href="https://portfolio.simonsites.com">Simon Papp</a> - <a target="_blank" class="font-bold" href="https://simonsites.com">SimonSites</a></p>
+                <p class="text-xs">Website Created by Simon Papp - <a target="_blank" class="font-bold" href="https://simonsites.com">SimonSites</a></p>
               </div>
             </div>
           </footer>
