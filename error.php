@@ -31,7 +31,7 @@
         <a class="text-lg text-coral text-center mx-auto font-bold" href="<?php echo $_GET['b'] ?? 'index.php' ?>">Back</a>
     </div>
     <div>
-        <p class="text-center text-gray-600 mt-6">Contact Support at <a class="font-bold" href="mailto:support@shotstreak.ca">support@shotstreak.ca</a></p>
+        <p class="text-center text-gray-600 mt-6">Support Page <a class="font-bold" href="support.php">Here</a></p>
     </div>
 </body>
 </html>

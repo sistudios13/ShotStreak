@@ -272,18 +272,25 @@ if ($streak >= 3) {
              aupdate()    
         }  
     </script>
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
 
 
 </head>
 <body class="bg-lightgray dark:bg-almostblack min-h-screen" >
     
     <!-- Navbar -->
-    <nav id="test" class="bg-white dark:bg-darkslate shadow-md py-4">
+    <nav id="test" class="bg-white dark:bg-darkslate shadow-md py-2 md:py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
-            <a href="#" class="text-2xl font-bold text-coral">Shotstreak</a>
+            <a href="index.php" class="text-2xl font-bold text-coral">
+                <img src="assets/isoLogo.svg" class="size-12 md:hidden" alt="logo">
+                <span class="hidden md:block">Shotstreak</span>
+            </a>
             <div class="flex items-center gap-2">
                 <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
-                
                 <a href="profile.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Profile</a>
                 <a href="logout.php" class="text-almostblack dark:text-lightgray md:hover:text-coral">Logout</a>
             </div>
@@ -497,7 +504,7 @@ if ($streak >= 3) {
     </div>
 
     <div id="add-to" class="w-full hidden" x-data="{showModal : $persist(true)}">
-        <div x-show="showModal" class="fixed top-0 lg:flex lg:justify-center backdrop-blur-sm lg:items-center p-4 w-full h-full">
+        <div x-show="showModal" x-cloak class="fixed top-0 lg:flex lg:justify-center backdrop-blur-sm lg:items-center p-4 w-full h-full">
             <div class="bg-white dark:bg-darkslate shadow-lg lg:max-w-lg lg:max-h-[630px] h-full w-full rounded-md h-full">
                 <div class="flex justify-end p-4 w-full">
                     <button @click="showModal = false">

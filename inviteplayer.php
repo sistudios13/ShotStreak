@@ -18,7 +18,7 @@ if ($_SESSION['type'] != 'coach') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Shotstreak</title>
+    <title>Invite player - Shotstreak</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.tailwindcss.com"></script>
     <script src="tailwindextras.js"></script>
@@ -35,9 +35,12 @@ if ($_SESSION['type'] != 'coach') {
 <body class="bg-lightgray dark:bg-almostblack min-h-screen">
 
     <!-- Navbar -->
-    <nav class="bg-white dark:bg-darkslate shadow-md py-4">
+    <nav id="test" class="bg-white dark:bg-darkslate shadow-md py-2 md:py-4">
         <div class="container mx-auto flex justify-between items-center px-6">
-            <a href="#" class="text-2xl font-bold text-coral">Shotstreak</a>
+            <a href="index.php" class="text-2xl font-bold text-coral">
+                <img src="assets/isoLogo.svg" class="size-12 md:hidden" alt="logo">
+                <span class="hidden md:block">Shotstreak</span>
+            </a>
             <div class="flex items-center gap-2">
                 <button id="theme-toggle"><img class="size-5 dark:hidden" src="assets/dark.svg" alt="dark"><img class="size-5 hidden dark:block" src="assets/light.svg" alt="dark"></button>
                 
