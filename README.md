@@ -23,7 +23,7 @@ Welcome to **Shotstreak**! 🎯 This is your ultimate basketball shot tracking a
 ---
 
 ## 🌐 Visit Shotstreak
-To use Shotstreak, visit the live site here: [https://www.shotstreak.simonsites.com](https://www.shotstreak.simonsites.com)
+To use Shotstreak, visit the live site here: [https://www.shotstreak.ca](https://www.shotstreak.ca)
 
 ---
 
@@ -34,4 +34,4 @@ Have ideas, feature requests, or found a bug? Open an issue or drop your suggest
 
 Lines of code: 7515 (no blanks)
 
-![Shooting Streak Progress](https://www.shotstreak.simonsites.com/assets/isoLogo.svg)
+![Shooting Streak Progress](https://www.shotstreak.ca/assets/isoLogo.svg)
