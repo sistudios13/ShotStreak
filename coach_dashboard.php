@@ -179,8 +179,7 @@ $stmt2->close();
                     <h3 class="text-2xl font-bold text-coral mb-4"><?php echo $goal; ?></h3>
                     <p class="text-almostblack dark:text-lightgray">Each player needs to take <b class="text-coral"><?php echo $goal; ?></b> shots per day</p>
                 </div>
-                <a href="c_changegoal.php"><button
-                        class=" text-white mt-6 p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Change Goal</button></a>
+                <a href="c_changegoal.php"><button class="mt-3 text-coral bg-coral font-bold p-1 px-1.5 md:px-5 md:py-3 w-fit mx-auto border-2 border-coral md:hover:bg-white md:hover:text-coral dark:md:hover:bg-darkslate text-white transition-colors rounded-md ">Change Shot Goal</button></a>
 
 
             </div>
@@ -251,9 +250,8 @@ $stmt2->close();
             </table>
 
             <div class="flex flex-row justify-between">
-                <a href="inviteplayer.php"><button
-                        class="mt-1 text-white p-2 w-fit mx-auto border dark:border-darkslate bg-coral rounded-md md:hover:bg-coralhov">Invite
-                        Player</button></a>
+            <a href="inviteplayer.php"><button class="mt-3 text-coral bg-coral font-bold p-1 px-1.5 md:px-5 md:py-3 w-fit mx-auto border-2 border-coral md:hover:bg-white md:hover:text-coral dark:md:hover:bg-darkslate text-white transition-colors rounded-md ">Invite Player</button></a>
+
 
 
 

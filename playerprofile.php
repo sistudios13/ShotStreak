@@ -145,6 +145,7 @@ while ($brow = $bresult_chart->fetch_assoc()) {
 
     <link rel="stylesheet" href="main.css">
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/focus@3.x.x/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link rel="icon" type="image/png" href="assets/favicon-48x48.png" sizes="48x48" />
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
@@ -278,15 +279,26 @@ while ($brow = $bresult_chart->fetch_assoc()) {
                     <li class=" text-almostblack flex justify-between dark:text-lightgray"><b>Email:</b> <?php echo $player_email; ?></li>
                     <li class=" text-almostblack flex justify-between dark:text-lightgray"><b>Joined On:</b> <?php echo $created_at; ?></li>
                 </ul>
-                <form action="c_export.php" method="POST">
-                    <input type="hidden" name="player_id" value="<?php echo htmlspecialchars($player_id); ?>">
-                    <button type="submit" class="py-2 text-coral text-lg font-bold">Export All Data</button>
-                </form>
-                <form id="removeform" onsubmit="return confirm('Are you sure you want to remove this player? This action is permanent')" action="remove_player.php" method="POST">
-                    <input type="hidden" name="player_id" value="<?php echo htmlspecialchars($player_id); ?>">
-                    <input type="hidden" name="player_email" value="<?php echo htmlspecialchars($player_email); ?>">
-                    <button type="submit" class="mt-1 text-coral w-fit mx-auto ">Remove Player</button>
-                </form>
+                <div class="pt-2 flex items-center gap-2">
+                    <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ff6f61" d="M64 256l0-96 160 0 0 96L64 256zm0 64l160 0 0 96L64 416l0-96zm224 96l0-96 160 0 0 96-160 0zM448 256l-160 0 0-96 160 0 0 96zM64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32z"/></svg>
+                    <form action="c_export.php" method="POST">
+                        <input type="hidden" name="player_id" value="<?php echo htmlspecialchars($player_id); ?>">
+                        <button type="submit" class="py-2 text-almostblack dark:text-lightgray font-semibold">Export All Data</button>
+                    </form>
+                </div>
+
+                
+                
+               
+
+                <div x-data="{de: false}" @click.away="de = false" class="pt-4 flex gap-2 items-center">
+                    <a @click="de = !de" class=" select-none  h-[32px] pt-1 text-almostblack dark:text-lightgray font-semibold cursor-pointer">Remove Player</a>
+                    <form action="remove_player.php"  method="POST" onsubmit="return confirm('Are you sure you want to remove this player? This action is permanent.')" x-show="de" x-collapse>
+                        <input type="hidden" name="player_id" value="<?php echo htmlspecialchars($player_id); ?>">
+                        <input type="hidden" name="player_email" value="<?php echo htmlspecialchars($player_email); ?>">
+                        <button type="submit" class="bg-red-600 text-white p-1 px-2 rounded">Remove Player</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
